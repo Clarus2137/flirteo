@@ -14,11 +14,6 @@ const routes: RouteRecordRaw[] = [
    //   component: () => import('pages/ErrorNotFound.vue'),
    // },
 
-   // {
-   //    path: '/',
-   //    component: () => import('pages/StartPage.vue')
-   // },
-
    {
       path: '/registration',
       component: () => import('layouts/RegLayout.vue'),
@@ -26,9 +21,15 @@ const routes: RouteRecordRaw[] = [
    },
 
    {
-      path: '/profile',
+      path: '/profile/details',
       component: () => import('layouts/BaseLayout.vue'),
-      children: [{ path: '', component: () => import('pages/ProfilePage.vue') }],
+      children: [{ path: '', component: () => import('pages/DetailsPage.vue') }],
+   },
+
+   {
+      path: '/profile/gender',
+      component: () => import('layouts/BaseLayout.vue'),
+      children: [{ path: '', component: () => import('pages/GenderPage.vue') }],
    },
 ];
 

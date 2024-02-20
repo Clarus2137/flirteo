@@ -14,7 +14,7 @@
       <q-form class="email__form mt-5">
          <CustomInput type="email" required />
          <!-- <CustomBtn type="submit" class="mt-5">Continue</CustomBtn> -->
-         <CustomBtn type="submit" class="mt-5" @click="$router.push('/profile')">Continue</CustomBtn>
+         <CustomBtn type="submit" class="mt-5" @click="$router.push('/profile/details')">Continue</CustomBtn>
       </q-form>
    </div>
 </template>

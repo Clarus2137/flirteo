@@ -18,7 +18,8 @@ module.exports = {
                '800': '#a5133f',
                '900': '#8e0831',
                DEFAULT: '#f24e80',
-            }
+            },
+            'inactive': '#eae9ea'
          }
       },
    },
