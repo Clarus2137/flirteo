@@ -20,6 +20,10 @@ body {
    color: $text_primary;
 }
 
+.title-center>* {
+   text-align: center;
+}
+
 .headline {
    font-size: 1.75rem;
    line-height: 2.15rem;
@@ -50,17 +54,9 @@ body {
    }
 }
 
-.text-primary {
-   color: $text_primary !important;
-}
-
 .text-secondary {
    color: $text_secondary !important;
 }
-
-// .bg-primary {
-//    background: $bg_primary !important;
-// }
 
 .gradient-primary {
    background: $bg_gradient;
@@ -89,7 +85,7 @@ button.gradient-primary {
    line-height: 1.25;
 }
 
-.p-\[4\.5\] {
+.p-4\.5 {
    padding: 1.125rem;
 }
 

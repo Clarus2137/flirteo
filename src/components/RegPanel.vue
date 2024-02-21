@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import PrivacyAndTerms from './PrivacyAndTerms.vue';
 
+
+const title = {
+   title: 'Sign Up to Continue',
+   subtitle: 'Please login to continue'
+}
+
 const emit = defineEmits(['goToEmailEntering'])
 
 const goToEmailEntering = () => {
@@ -32,9 +38,8 @@ const goToEmailEntering = () => {
             <p class="brand-name mt-[6px] pacifico-regular text-4xl text-gradient-primary">Flirteo</p>
          </div>
          <div class="reg__form form w-full flex gap-y-[30px]">
-            <div class="form__title justify-center">
-               <h1 class="headline lexend-bold text-center">Sign Up to Continue</h1>
-               <p class="body-text text-secondary text-center">Please login to continue</p>
+            <div class="form__title justify-center title-center">
+               <TitleRow :title="title" />
             </div>
             <CustomBtn @click="goToEmailEntering">Continue with Email</CustomBtn>
             <div class="choice flex justify-between items-center">

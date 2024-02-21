@@ -21,16 +21,15 @@ const routes: RouteRecordRaw[] = [
    },
 
    {
-      path: '/profile/details',
+      path: '/profile',
       component: () => import('layouts/BaseLayout.vue'),
-      children: [{ path: '', component: () => import('pages/DetailsPage.vue') }],
-   },
-
-   {
-      path: '/profile/gender',
-      component: () => import('layouts/BaseLayout.vue'),
-      children: [{ path: '', component: () => import('pages/GenderPage.vue') }],
-   },
+      children: [
+         { path: 'details', component: () => import('pages/DetailsPage.vue') },
+         { path: 'gender', component: () => import('pages/GenderPage.vue') },
+         { path: 'interests', component: () => import('pages/InterestsPage.vue') },
+         { path: 'match', component: () => import('pages/SetMatchPage.vue') }
+      ],
+   }
 ];
 
 export default routes;

@@ -2,6 +2,11 @@
 import { ref } from 'vue';
 
 
+const title = {
+   title: 'Add profile details',
+   subtitle: 'Please add your profile detrails here'
+}
+
 const date = ref('');
 
 const isVisible = ref(false);
@@ -15,8 +20,7 @@ const isVisible = ref(false);
 <template>
    <div class="profile__details details flex flex-col items-center gap-y-6">
       <div class="details__title w-full" :class="{ 'blur': isVisible }">
-         <h1 class="headline lexend-bold capitalize">Add profile details</h1>
-         <p class="body-text lexend-light text-secondary">Please add your profile detrails here</p>
+         <TitleRow :title="title" />
       </div>
       <div class="details__photo photo" :class="{ 'blur': isVisible }">
          <div class="photo__img w-20 h-20 mx-auto rounded-2xl bg-primary-400"></div>
