@@ -18,6 +18,7 @@ module.exports = {
             '900': '#8e0831',
             DEFAULT: '#f24e80 !important',
          },
+         'seconadry': '#989394',
          'inactive': '#eae9ea'
       }
    },
