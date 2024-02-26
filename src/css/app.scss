@@ -41,7 +41,15 @@ body {
 
 .q-page-container {
    flex-grow: 1;
-   padding: 25px 20px 45px;
+   padding: 25px 20px;
+}
+
+.q-tabs {
+   box-shadow: 0 0 3px 1px rgba(0, 0, 0, .4);
+
+   .q-tab {
+      min-height: 36px;
+   }
 }
 
 [class*="__title"] {

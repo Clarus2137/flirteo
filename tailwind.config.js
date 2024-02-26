@@ -16,7 +16,7 @@ module.exports = {
             '700': '#b4224e',
             '800': '#a5133f',
             '900': '#8e0831',
-            DEFAULT: '#f24e80 !important',
+            DEFAULT: '#f24e80',
          },
          'seconadry': '#989394',
          'inactive': '#eae9ea'

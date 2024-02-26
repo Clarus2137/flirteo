@@ -4,6 +4,11 @@ import CustomBtn from 'src/components/UI/CustomBtn.vue'
 import BackBtn from 'src/components/UI/BackBtn.vue'
 import CustomInput from 'src/components/UI/CustomInput.vue'
 import TitleRow from 'src/components/UI/TitleRow.vue'
+import HomeTab from 'src/components/UI/HomeTab.vue'
+import SearchTab from 'src/components/UI/SearchTab.vue'
+import FavoritesTab from 'src/components/UI/FavoritesTab.vue'
+import ChatTab from 'src/components/UI/ChatTab.vue'
+import ProfileTab from 'src/components/UI/ProfileTab.vue'
 
 const components = [
    { name: 'HomeBtn', component: HomeBtn },
@@ -11,6 +16,11 @@ const components = [
    { name: 'BackBtn', component: BackBtn },
    { name: 'CustomInput', component: CustomInput },
    { name: 'TitleRow', component: TitleRow },
+   { name: 'HomeTab', component: HomeTab },
+   { name: 'SearchTab', component: SearchTab },
+   { name: 'FavoritesTab', component: FavoritesTab },
+   { name: 'ChatTab', component: ChatTab },
+   { name: 'ProfileTab', component: ProfileTab }
 ];
 
 export default boot(({ app }) => {

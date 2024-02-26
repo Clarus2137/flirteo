@@ -71,7 +71,7 @@ onMounted(() => {
             </div>
          </div>
       </div>
-      <CustomBtn type="button">Continue</CustomBtn>
+      <CustomBtn type="button" @click="$router.push('/home')">Continue</CustomBtn>
    </div>
 </template>
 
@@ -88,6 +88,10 @@ onMounted(() => {
    &.active {
       box-shadow: 0 0 50px 20px rgba(225, 231, 231, .6),
          inset 0 0 1px 1px $primary;
+   }
+
+   &:hover {
+      cursor: pointer;
    }
 }
 </style>

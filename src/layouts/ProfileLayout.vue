@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import TabMenu from 'src/components/TabMenu.vue';
-
 
 </script>
 
 
 
 <template>
-   <q-layout class="pb-[40px]">
+   <q-layout>
       <q-page-container>
+         <BackBtn />
          <router-view />
       </q-page-container>
-      <TabMenu />
    </q-layout>
 </template>

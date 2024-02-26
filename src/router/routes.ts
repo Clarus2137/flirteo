@@ -22,13 +22,37 @@ const routes: RouteRecordRaw[] = [
 
    {
       path: '/profile',
-      component: () => import('layouts/BaseLayout.vue'),
+      component: () => import('layouts/ProfileLayout.vue'),
       children: [
          { path: 'details', component: () => import('pages/DetailsPage.vue') },
          { path: 'gender', component: () => import('pages/GenderPage.vue') },
          { path: 'interests', component: () => import('pages/InterestsPage.vue') },
          { path: 'match', component: () => import('pages/SetMatchPage.vue') }
       ],
+   },
+
+   {
+      path: '/home',
+      component: () => import('layouts/BaseLayout.vue'),
+      children: [{ path: '', component: () => import('pages/HomePage.vue') }]
+   },
+
+   {
+      path: '/search',
+      component: () => import('layouts/BaseLayout.vue'),
+      children: [{ path: '', component: () => import('pages/SearchPage.vue') }]
+   },
+
+   {
+      path: '/favorites',
+      component: () => import('layouts/BaseLayout.vue'),
+      children: [{ path: '', component: () => import('pages/FavoritesPage.vue') }]
+   },
+
+   {
+      path: '/chats',
+      component: () => import('layouts/BaseLayout.vue'),
+      children: [{ path: '', component: () => import('pages/ChatsPage.vue') }]
    }
 ];
 

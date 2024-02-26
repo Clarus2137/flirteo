@@ -9,6 +9,5 @@
       <q-page-container class="flex flex-col reg-wrapper">
          <router-view></router-view>
       </q-page-container>
-      <HomeBtn />
    </q-layout>
 </template>
