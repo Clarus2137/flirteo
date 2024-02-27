@@ -21,8 +21,8 @@ const routes: RouteRecordRaw[] = [
    },
 
    {
-      path: '/profile',
-      component: () => import('layouts/ProfileLayout.vue'),
+      path: '/info',
+      component: () => import('layouts/InfoLayout.vue'),
       children: [
          { path: 'details', component: () => import('pages/DetailsPage.vue') },
          { path: 'gender', component: () => import('pages/GenderPage.vue') },
@@ -53,6 +53,24 @@ const routes: RouteRecordRaw[] = [
       path: '/chats',
       component: () => import('layouts/BaseLayout.vue'),
       children: [{ path: '', component: () => import('pages/ChatsPage.vue') }]
+   },
+
+   {
+      path: '/profile',
+      component: () => import('layouts/BaseLayout.vue'),
+      children: [{ path: '', component: () => import('pages/ProfilePage.vue') }]
+   },
+
+   {
+      path: '/terms',
+      component: () => import('layouts/InfoLayout.vue'),
+      children: [{ path: '', component: () => import('pages/TermsPage.vue') }]
+   },
+
+   {
+      path: '/privacy',
+      component: () => import('layouts/InfoLayout.vue'),
+      children: [{ path: '', component: () => import('pages/PrivacyPage.vue') }]
    }
 ];
 

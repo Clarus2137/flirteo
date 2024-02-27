@@ -48,7 +48,7 @@ const isVisible = ref(false);
             <label for="address">Address</label>
          </div>
       </div>
-      <CustomBtn type="button" :class="{ 'blur': isVisible }" @click="$router.push('/profile/gender')">Continue</CustomBtn>
+      <CustomBtn type="button" :class="{ 'blur': isVisible }" @click="$router.push('gender')">Continue</CustomBtn>
       <div class="w-full h-full absolute hover:cursor-pointer" :class="{ 'hidden': !isVisible, 'block': isVisible }"
          @click="isVisible = !isVisible"></div>
       <div class="date-picker w-full text-center absolute bottom-[-100%] opacity-0 duration-300"

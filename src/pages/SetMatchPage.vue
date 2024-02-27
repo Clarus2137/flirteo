@@ -5,5 +5,7 @@ import ProfileMatch from 'src/components/ProfileMatch.vue';
 
 
 <template>
-   <ProfileMatch />
+   <div class="profile">
+      <ProfileMatch />
+   </div>
 </template>

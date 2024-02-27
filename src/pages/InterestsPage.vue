@@ -5,5 +5,7 @@ import ProfileInterests from 'src/components/ProfileInterests.vue';
 
 
 <template>
-   <ProfileInterests />
+   <div class="profile">
+      <ProfileInterests />
+   </div>
 </template>

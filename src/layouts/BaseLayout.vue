@@ -7,8 +7,8 @@ import TabMenu from 'src/components/TabMenu.vue';
 
 
 <template>
-   <q-layout class="pb-[40px]">
-      <q-page-container>
+   <q-layout class="pb-[40px] grid">
+      <q-page-container class="grid">
          <router-view />
       </q-page-container>
       <TabMenu />

@@ -9,6 +9,12 @@ import SearchTab from 'src/components/UI/SearchTab.vue'
 import FavoritesTab from 'src/components/UI/FavoritesTab.vue'
 import ChatTab from 'src/components/UI/ChatTab.vue'
 import ProfileTab from 'src/components/UI/ProfileTab.vue'
+import ArrowTriangle from 'src/components/UI/ArrowTriangle.vue'
+import DetailsIcon from 'src/components/UI/DetailsIcon.vue'
+import SettingsIcon from 'src/components/UI/SettingsIcon.vue'
+import TermsIcon from 'src/components/UI/TermsIcon.vue'
+import PrivacyIcon from 'src/components/UI/PrivacyIcon.vue'
+import AboutIcon from 'src/components/UI/AboutIcon.vue'
 
 const components = [
    { name: 'HomeBtn', component: HomeBtn },
@@ -20,7 +26,13 @@ const components = [
    { name: 'SearchTab', component: SearchTab },
    { name: 'FavoritesTab', component: FavoritesTab },
    { name: 'ChatTab', component: ChatTab },
-   { name: 'ProfileTab', component: ProfileTab }
+   { name: 'ProfileTab', component: ProfileTab },
+   { name: 'ArrowTriangle', component: ArrowTriangle },
+   { name: 'DetailsIcon', component: DetailsIcon },
+   { name: 'SettingsIcon', component: SettingsIcon },
+   { name: 'TermsIcon', component: TermsIcon },
+   { name: 'PrivacyIcon', component: PrivacyIcon },
+   { name: 'AboutIcon', component: AboutIcon }
 ];
 
 export default boot(({ app }) => {
