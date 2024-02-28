@@ -2,60 +2,44 @@
 import { ref } from 'vue';
 
 
-const title = {
-   title: 'Add profile details',
-   subtitle: 'Please add your profile detrails here'
-}
-
 const date = ref('');
 
 const isVisible = ref(false);
-
-
-
 </script>
 
 
 
 <template>
-   <div class="profile__details details flex flex-col items-center gap-y-6">
-      <div class="details__title w-full" :class="{ 'blur': isVisible }">
-         <TitleRow :title="title" />
+   <div class="details__photo photo text-center">
+      <div class="photo__img inline-block rounded-[50%] w-[100px] aspect-square"></div>
+   </div>
+   <div class="details__personal-data flex flex-col gap-y-3">
+      <div class="name">
+         <CustomInput id="name" type="text" />
+         <label for="name">Name</label>
       </div>
-      <div class="details__photo photo" :class="{ 'blur': isVisible }">
-         <div class="photo__img w-20 h-20 mx-auto rounded-2xl bg-primary-400"></div>
+      <div class="email">
+         <CustomInput id="email" type="email" />
+         <label for="email">Email</label>
       </div>
-      <div class="details__personal-data flex flex-col gap-y-3 w-full" :class="{ 'blur': isVisible }">
-         <div class="name">
-            <CustomInput id="name" type="text" />
-            <label for="name">Name</label>
-         </div>
-         <div class="email">
-            <CustomInput id="email" type="email" />
-            <label for="email">Email</label>
-         </div>
-         <div class="phone">
-            <CustomInput id="phone" type="text" />
-            <label for="phone">Mobile</label>
-         </div>
-         <div class="date">
-            <CustomInput id="date" type="text" @click="isVisible = !isVisible" class="hover:cursor-pointer"
-               :value="date" />
-            <label for="date">Date of birth</label>
-         </div>
-         <div class="address">
-            <CustomInput id="address" type="text" />
-            <label for="address">Address</label>
-         </div>
+      <div class="phone">
+         <CustomInput id="phone" type="text" />
+         <label for="phone">Mobile</label>
       </div>
-      <CustomBtn type="button" :class="{ 'blur': isVisible }" @click="$router.push('gender')">Continue</CustomBtn>
-      <div class="w-full h-full absolute hover:cursor-pointer" :class="{ 'hidden': !isVisible, 'block': isVisible }"
-         @click="isVisible = !isVisible"></div>
-      <div class="date-picker w-full text-center absolute bottom-[-100%] opacity-0 duration-300"
-         :class="{ 'bottom-[20%] opacity-100': isVisible }">
-         <q-date v-model="date" color="pink-4" text-color="black" class="w-full mb-3" />
-         <CustomBtn type="submit" class="max-w-[200px]" @click="isVisible = !isVisible">Select</CustomBtn>
+      <div class="date">
+         <CustomInput id="date" type="text" @click="isVisible = !isVisible" class="hover:cursor-pointer" :value="date" />
+         <label for="date">Date of birth</label>
       </div>
+      <div class="address">
+         <CustomInput id="address" type="text" />
+         <label for="address">Address</label>
+      </div>
+   </div>
+   <div class="w-full h-full absolute top-0 hover:cursor-pointer bg-black opacity-75"
+      :class="{ 'hidden': !isVisible, 'block': isVisible }" @click="isVisible = !isVisible"></div>
+   <div class="date-picker w-full text-center absolute duration-300" :class="{ 'visible': isVisible }">
+      <q-date v-model="date" color="pink-4" text-color="black" class="w-full mb-3" />
+      <CustomBtn type="submit" class="max-w-[200px]" @click="isVisible = !isVisible">Select</CustomBtn>
    </div>
 </template>
 
@@ -109,9 +93,16 @@ const isVisible = ref(false);
          background: url("../assets/calendar-active.svg") no-repeat;
       }
    }
+}
 
-   .blur {
-      filter: blur(5px);
+.date-picker {
+   top: 110%;
+   opacity: 0;
+
+   &.visible {
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 1;
    }
 }
 </style>

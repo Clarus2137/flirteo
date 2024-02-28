@@ -7,8 +7,8 @@
 <template>
    <h1 class="lexend-bold leading-normal text-center capitalize">My profile</h1>
    <div class="profile__user user text-center">
-      <div class="user__photo">
-         <div class="inline-block mx-auto rounded-[50%] w-[100px] aspect-square"></div>
+      <div class="user__photo photo">
+         <div class="photo__img inline-block mx-auto rounded-[50%] w-[100px] aspect-square"></div>
       </div>
       <div class="user__name lexend-bold text-lg">
          <p><span class="user__firstname">FiratName</span> <span class="user__lastname">LastName</span></p>
@@ -18,7 +18,7 @@
       </div>
    </div>
    <q-list class="profile__items grow">
-      <q-item clickable v-ripple exact to="/info/details">
+      <q-item clickable v-ripple exact to="/profile/details">
          <q-item-section avatar>
             <q-icon>
                <DetailsIcon />
@@ -102,11 +102,3 @@
       Logout
    </CustomBtn>
 </template>
-
-
-
-<style scoped lang="scss">
-.user__photo>* {
-   box-shadow: inset 0 0 7px 1px $primary;
-}
-</style>

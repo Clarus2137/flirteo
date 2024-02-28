@@ -8,9 +8,9 @@
    <div class="reg_privacy">
       <p class="text-center lexend-light text-sm">I accept all the</p>
       <p class="text-center lexend-light text-sm">
-         <span><a class="text-gradient-primary" href="#">Terms & Conditions</a></span>
+         <span><router-link class="text-gradient-primary" to="/terms">Terms & Conditions</router-link></span>
          &
-         <span><a class="text-gradient-primary" href="#">Privacy Policy</a></span>
+         <span><router-link class="text-gradient-primary" to="/privacy">Privacy Policy</router-link></span>
       </p>
    </div>
 </template>

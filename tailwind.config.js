@@ -19,7 +19,8 @@ module.exports = {
             DEFAULT: '#f24e80',
          },
          'seconadry': '#989394',
-         'inactive': '#eae9ea'
+         'inactive': '#eae9ea',
+         'alarm': '#f00'
       }
    },
    plugins: [],

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import MyView from 'src/components/MyView.vue';
+import UserView from 'src/components/UserView.vue';
 </script>
 
 
 
 <template>
-   <MyView />
+   <UserView />
 </template>

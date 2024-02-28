@@ -5,8 +5,8 @@
 
 
 <template>
-   <q-layout>
-      <q-page-container>
+   <q-layout class="grid">
+      <q-page-container class="overflow-hidden relative">
          <BackBtn />
          <router-view />
       </q-page-container>

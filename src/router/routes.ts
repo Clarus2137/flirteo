@@ -24,7 +24,7 @@ const routes: RouteRecordRaw[] = [
       path: '/info',
       component: () => import('layouts/InfoLayout.vue'),
       children: [
-         { path: 'details', component: () => import('pages/DetailsPage.vue') },
+         { path: 'details', component: () => import('pages/AddDetailsPage.vue') },
          { path: 'gender', component: () => import('pages/GenderPage.vue') },
          { path: 'interests', component: () => import('pages/InterestsPage.vue') },
          { path: 'match', component: () => import('pages/SetMatchPage.vue') }
@@ -58,7 +58,10 @@ const routes: RouteRecordRaw[] = [
    {
       path: '/profile',
       component: () => import('layouts/BaseLayout.vue'),
-      children: [{ path: '', component: () => import('pages/ProfilePage.vue') }]
+      children: [
+         { path: '', component: () => import('pages/ProfilePage.vue') },
+         { path: 'details', component: () => import('pages/EditDetailsPage.vue') }
+      ]
    },
 
    {
