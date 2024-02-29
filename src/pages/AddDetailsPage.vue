@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ProfileDetails from 'src/components/ProfileDetails.vue';
+import AddDetails from 'src/components/AddDetails.vue';
 
 
 const title = {
@@ -16,8 +16,7 @@ const title = {
          <div class="details__title">
             <TitleRow :title="title" />
          </div>
-         <ProfileDetails />
-         <CustomBtn type="button" @click="$router.push('gender')">Continue</CustomBtn>
+         <AddDetails />
       </div>
    </div>
 </template>
