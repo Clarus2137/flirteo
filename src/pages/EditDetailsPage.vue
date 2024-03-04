@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ProfileDetails from 'src/components/ProfileDetails.vue';
+import EditDetails from 'src/components/EditDetails.vue';
 </script>
 
 
@@ -9,8 +9,7 @@ import ProfileDetails from 'src/components/ProfileDetails.vue';
    <div class="profile">
       <h1 class="mb-10 lexend-bold leading-normal text-center capitalize">Edit profile</h1>
       <div class="profile__details details grid gap-y-6">
-         <ProfileDetails />
-         <CustomBtn type="button" @click="$router.back()">Save</CustomBtn>
+         <EditDetails />
       </div>
    </div>
 </template>

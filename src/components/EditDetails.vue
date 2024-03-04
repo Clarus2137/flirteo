@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useUserStore } from 'src/stores/users';
 
 
@@ -13,23 +13,37 @@ const address = ref('');
 
 const userStore = useUserStore();
 
-const createUser = () => {
-   const newUser = {
+// Function to load user data
+const loadUserData = () => {
+   const userData = userStore.user; // Assuming currentUser is the property holding user data. Adjust according to your store structure.
+   if (userData) {
+      name.value = userData.name || '';
+      email.value = userData.email || '';
+      phone.value = userData.phone || '';
+      dateOfBirth.value = userData.dateOfBirth || '';
+      address.value = userData.address || '';
+   }
+}
+
+// Use onMounted lifecycle hook to load data when the component is mounted
+onMounted(() => {
+   loadUserData();
+});
+
+const saveUserData = () => {
+   userStore.updateUser({
       name: name.value,
       email: email.value,
       phone: phone.value,
       dateOfBirth: dateOfBirth.value,
-      address: address.value
-   }
-
-   userStore.addUser(newUser);
-
-   name.value = '';
-   email.value = '';
-   phone.value = '';
-   dateOfBirth.value = '';
-   address.value = '';
+      address: address.value,
+   });
+   // Navigate back or show a success message after saving
 }
+
+onBeforeUnmount(() => {
+   saveUserData();
+});
 </script>
 
 
@@ -67,8 +81,7 @@ const createUser = () => {
       <q-date v-model="dateOfBirth" color="pink-4" text-color="black" class="w-full mb-3" />
       <CustomBtn type="submit" class="max-w-[200px]" @click="isVisible = !isVisible">Select</CustomBtn>
    </div>
-   <router-link to="gender" @click="createUser"
-      class="gradient-primary w-full text-white p-4.5 rounded-[10px] text-center">Continue</router-link>
+   <CustomBtn type="button" @click="$router.back()">Save</CustomBtn>
 </template>
 
 
