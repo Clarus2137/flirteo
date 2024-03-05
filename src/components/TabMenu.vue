@@ -13,7 +13,7 @@ const tab = ref('home');
       <q-route-tab name="home" to="/home" exact>
          <HomeTab />
       </q-route-tab>
-      <q-route-tab name="search" to="/search" exact>
+      <q-route-tab name="search" to="/search-users" exact>
          <SearchTab />
       </q-route-tab>
       <q-route-tab name="favorites" to="/favorites" exact>

@@ -1,34 +1,34 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useUserStore } from 'src/stores/users';
+import { useUserStore } from 'src/stores/user';
 
 
 const isVisible = ref(false);
 
-const name = ref('');
+const firstName = ref('');
+const lastName = ref('');
 const email = ref('');
 const phone = ref('');
 const dateOfBirth = ref('');
-const address = ref('');
 
 const userStore = useUserStore();
 
 const createUser = () => {
    const newUser = {
-      name: name.value,
+      firstName: firstName.value,
+      lastName: lastName.value,
       email: email.value,
       phone: phone.value,
-      dateOfBirth: dateOfBirth.value,
-      address: address.value
+      dateOfBirth: dateOfBirth.value
    }
 
-   userStore.addUser(newUser);
+   userStore.createUser(newUser);
 
-   name.value = '';
+   firstName.value = '';
+   lastName.value = '';
    email.value = '';
    phone.value = '';
    dateOfBirth.value = '';
-   address.value = '';
 }
 </script>
 
@@ -39,9 +39,13 @@ const createUser = () => {
       <div class="photo__img inline-block rounded-[50%] w-[100px] aspect-square"></div>
    </div>
    <div class="details__personal-data flex flex-col gap-y-3">
-      <div class="name">
-         <CustomInput id="name" type="text" v-model="name" />
-         <label for="name">Name</label>
+      <div class="firstName">
+         <CustomInput id="firstName" type="text" v-model="firstName" />
+         <label for="firstName">First Name</label>
+      </div>
+      <div class="lastName">
+         <CustomInput id="lastName" type="text" v-model="lastName" />
+         <label for="lastName">Last Name</label>
       </div>
       <div class="email">
          <CustomInput id="email" type="text" v-model="email" />
@@ -55,10 +59,6 @@ const createUser = () => {
          <CustomInput id="date" type="text" @click="isVisible = !isVisible" class="hover:cursor-pointer"
             v-model="dateOfBirth" />
          <label for="date">Date of birth</label>
-      </div>
-      <div class="address">
-         <CustomInput id="address" type="text" v-model="address" />
-         <label for="address">Address</label>
       </div>
    </div>
    <div class="w-full h-full absolute top-0 left-0 hover:cursor-pointer bg-black opacity-75"
@@ -134,4 +134,4 @@ const createUser = () => {
       opacity: 1;
    }
 }
-</style>
+</style>src/stores/user

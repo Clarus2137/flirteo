@@ -38,7 +38,7 @@ const routes: RouteRecordRaw[] = [
    },
 
    {
-      path: '/search',
+      path: '/search-users',
       component: () => import('layouts/BaseLayout.vue'),
       children: [{ path: '', component: () => import('pages/SearchPage.vue') }]
    },

@@ -4,11 +4,11 @@ import { defineStore } from 'pinia';
 
 interface User {
    id?: number,
-   name: string,
+   firstName: string,
+   lastName: string,
    email: string,
    phone: string,
-   dateOfBirth: string,
-   address: string
+   dateOfBirth: string
 }
 
 export const useUserStore = defineStore('user', {
@@ -20,7 +20,7 @@ export const useUserStore = defineStore('user', {
          // Generate a random ID between 1 and 1,000,000
          return Math.floor(Math.random() * 1_000_000) + 1;
       },
-      addUser(user: User) {
+      createUser(user: User) {
          // Assign a unique ID to the new user
          const newUser = { ...user, id: this.generateId() };
          console.log(newUser);

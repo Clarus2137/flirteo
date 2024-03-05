@@ -5,5 +5,9 @@
 
 
 <template>
-   <div class="search"></div>
+   <div class="user">
+      <div class="search__location">
+
+      </div>
+   </div>
 </template>

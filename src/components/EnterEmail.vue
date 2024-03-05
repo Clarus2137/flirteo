@@ -3,8 +3,8 @@ import { ref } from 'vue';
 
 
 const title = {
-   title: 'Enter your E-mail',
-   subtitle: 'Please enter your e-mail to continue'
+   title: 'Create your account',
+   subtitle: 'Please enter your e-mail & password to continue'
 }
 
 const validEmail = new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
@@ -33,12 +33,13 @@ const checkEmail = (e: Event) => {
       <div class="email__title">
          <TitleRow :title="title" />
       </div>
-      <form class="email__form mt-5" id="reg-email" @submit="checkEmail($event)">
+      <form class="email__form mt-5" id="reg-account" @submit="checkEmail($event)">
          <CustomInput type="text" placeholder="example@domain.com" v-model="enteredEmail" required />
          <p class="text-center text-xs text-alarm font-bold duration-300"
             :class="{ 'opacity-100': isVisible, 'opacity-0': !isVisible }">
             Invalid E-mail
          </p>
+         <CustomInput type="password" placeholder="Some password" />
          <CustomBtn type="submit" class="mt-5" @click="$router.push('/info/details')">Continue</CustomBtn>
       </form>
    </div>
