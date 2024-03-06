@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useUserStore } from 'src/stores/user';
 
 
@@ -13,23 +13,37 @@ const dateOfBirth = ref('');
 
 const userStore = useUserStore();
 
-const createUser = () => {
-   const newUser = {
+// Function to load user data
+const loadUserData = () => {
+   const userData = userStore.user; // Assuming currentUser is the property holding user data. Adjust according to your store structure.
+   if (userData) {
+      firstName.value = userData.firstName || '';
+      lastName.value = userData.lastName || '';
+      email.value = userData.email || '';
+      phone.value = userData.phone || '';
+      dateOfBirth.value = userData.dateOfBirth || '';
+   }
+}
+
+// Use onMounted lifecycle hook to load data when the component is mounted
+onMounted(() => {
+   loadUserData();
+});
+
+const saveUserData = () => {
+   userStore.updateUser({
       firstName: firstName.value,
       lastName: lastName.value,
       email: email.value,
       phone: phone.value,
       dateOfBirth: dateOfBirth.value
-   }
-
-   userStore.createUser(newUser);
-
-   firstName.value = '';
-   lastName.value = '';
-   email.value = '';
-   phone.value = '';
-   dateOfBirth.value = '';
+   });
+   // Navigate back or show a success message after saving
 }
+
+onBeforeUnmount(() => {
+   saveUserData();
+});
 </script>
 
 
@@ -67,8 +81,7 @@ const createUser = () => {
       <q-date v-model="dateOfBirth" color="pink-4" text-color="black" class="w-full mb-3" />
       <CustomBtn type="submit" class="max-w-[200px]" @click="isVisible = !isVisible">Select</CustomBtn>
    </div>
-   <router-link to="gender" @click="createUser"
-      class="gradient-primary w-full text-white p-4.5 rounded-[10px] text-center">Continue</router-link>
+   <CustomBtn type="button" @click="$router.back()">Save</CustomBtn>
 </template>
 
 
@@ -78,17 +91,21 @@ const createUser = () => {
    position: relative;
 
    label {
+      padding: 0 3px;
       font-size: 0.75rem;
       line-height: 1;
       position: absolute;
-      top: 5px;
+      top: 3px;
       left: 20px;
+      transition: 0.3s;
    }
 
    input:active,
    input:focus {
       &+label {
+         background: #fff;
          color: #f24e80;
+         top: -6px;
       }
    }
 }

@@ -5,15 +5,15 @@
 
 
 <template>
-   <svg width="20px" height="20px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-         <linearGradient id="gradient_primary" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#ff84a7;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#e03368;stop-opacity:1" />
-         </linearGradient>
-      </defs>
-      <path fill-rule="evenodd" clip-rule="evenodd"
-         d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z"
-         fill="#989394" />
-   </svg>
+    <svg width="20px" height="20px" viewBox="-1 0 19 19" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="gradient_primary" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#ff84a7;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#e03368;stop-opacity:1" />
+            </linearGradient>
+        </defs>
+        <path
+            d="m12.673 10.779.798 4.02c.221 1.11-.407 1.566-1.395 1.013L8.5 13.81l-3.576 2.002c-.988.553-1.616.097-1.395-1.013l.397-2.001.401-2.02-1.51-1.397-1.498-1.385c-.832-.769-.592-1.507.532-1.64l2.026-.24 2.044-.242 1.717-3.722c.474-1.028 1.25-1.028 1.724 0l1.717 3.722 2.044.242 2.026.24c1.124.133 1.364.871.533 1.64L14.184 9.38z"
+            fill="#989394" />
+    </svg>
 </template>

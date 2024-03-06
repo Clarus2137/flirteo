@@ -15,6 +15,7 @@ import SettingsIcon from 'src/components/UI/SettingsIcon.vue'
 import TermsIcon from 'src/components/UI/TermsIcon.vue'
 import PrivacyIcon from 'src/components/UI/PrivacyIcon.vue'
 import AboutIcon from 'src/components/UI/AboutIcon.vue'
+import SvgGradient from 'src/components/UI/SvgGradient.vue'
 
 const components = [
    { name: 'HomeBtn', component: HomeBtn },
@@ -32,7 +33,8 @@ const components = [
    { name: 'SettingsIcon', component: SettingsIcon },
    { name: 'TermsIcon', component: TermsIcon },
    { name: 'PrivacyIcon', component: PrivacyIcon },
-   { name: 'AboutIcon', component: AboutIcon }
+   { name: 'AboutIcon', component: AboutIcon },
+   { name: 'SvgGradient', component: SvgGradient }
 ];
 
 export default boot(({ app }) => {

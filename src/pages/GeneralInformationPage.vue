@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import AddDetails from 'src/components/AddDetails.vue';
+import GeneralInformation from 'src/components/GeneralInformation.vue';
 
 
 const title = {
-   title: 'Add profile details',
-   subtitle: 'Please add your profile detrails here'
+   title: 'Your account',
+   subtitle: 'Please fill the fields below'
 }
 </script>
 
@@ -16,7 +16,7 @@ const title = {
          <div class="details__title">
             <TitleRow :title="title" />
          </div>
-         <AddDetails />
+         <GeneralInformation />
       </div>
    </div>
 </template>

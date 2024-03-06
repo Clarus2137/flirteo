@@ -40,7 +40,7 @@ const checkEmail = (e: Event) => {
             Invalid E-mail
          </p>
          <CustomInput type="password" placeholder="Some password" />
-         <CustomBtn type="submit" class="mt-5" @click="$router.push('/info/details')">Continue</CustomBtn>
+         <CustomBtn type="submit" class="mt-5" @click="$router.push('/info/general')">Continue</CustomBtn>
       </form>
    </div>
 </template>
