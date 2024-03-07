@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
+import { useUserStore } from 'src/stores/user';
 
 
 const title = {
@@ -23,6 +24,9 @@ const activateMatch = () => {
 onMounted(() => {
    activateMatch();
 });
+
+const userStore = useUserStore();
+console.log(userStore.user);
 </script>
 
 

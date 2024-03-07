@@ -3,7 +3,7 @@ import GeneralInformation from 'src/components/GeneralInformation.vue';
 
 
 const title = {
-   title: 'Your account',
+   title: 'Your information',
    subtitle: 'Please fill the fields below'
 }
 </script>

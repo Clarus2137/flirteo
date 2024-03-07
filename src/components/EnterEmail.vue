@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useUserStore } from 'src/stores/user';
 
 
 const title = {
@@ -23,6 +24,18 @@ const checkEmail = (e: Event) => {
       isVisible.value ? isVisible.value = !isVisible.value : '';
    }
 }
+
+const userStore = useUserStore();
+
+const createUser = () => {
+   const newUser = {
+      email: enteredEmail.value
+   }
+
+   userStore.createUser(newUser);
+
+   enteredEmail.value = '';
+}
 </script>
 
 
@@ -40,7 +53,7 @@ const checkEmail = (e: Event) => {
             Invalid E-mail
          </p>
          <CustomInput type="password" placeholder="Some password" />
-         <CustomBtn type="submit" class="mt-5" @click="$router.push('/info/general')">Continue</CustomBtn>
+         <CustomBtn type="submit" class="mt-5" @click="createUser(); $router.push('/info/general')">Continue</CustomBtn>
       </form>
    </div>
 </template>

@@ -5,30 +5,28 @@ import { useUserStore } from 'src/stores/user';
 
 const isVisible = ref(false);
 
-const firstName = ref('');
-const lastName = ref('');
-const email = ref('');
-const phone = ref('');
-const dateOfBirth = ref('');
+const userFirstName = ref('');
+const userLastName = ref('');
+const userCity = ref('');
+const userPhone = ref('');
+const userDateOfBirth = ref('');
 
 const userStore = useUserStore();
 
-const createUser = () => {
-   const newUser = {
-      firstName: firstName.value,
-      lastName: lastName.value,
-      email: email.value,
-      phone: phone.value,
-      dateOfBirth: dateOfBirth.value
-   }
+const addInfo = () => {
+   const firstName = userFirstName.value;
+   const lastName = userLastName.value;
+   const city = userCity.value;
+   const phone = userPhone.value;
+   const dateOfBirth = userDateOfBirth.value;
 
-   userStore.createUser(newUser);
+   userStore.updateUser({ firstName, lastName, city, phone, dateOfBirth });
 
-   firstName.value = '';
-   lastName.value = '';
-   email.value = '';
-   phone.value = '';
-   dateOfBirth.value = '';
+   userFirstName.value = '';
+   userLastName.value = '';
+   userCity.value = '';
+   userPhone.value = '';
+   userDateOfBirth.value = '';
 }
 </script>
 
@@ -40,34 +38,34 @@ const createUser = () => {
    </div>
    <div class="details__personal-data flex flex-col gap-y-3">
       <div class="firstName">
-         <CustomInput id="firstName" type="text" v-model="firstName" />
+         <CustomInput id="firstName" type="text" v-model="userFirstName" />
          <label for="firstName">First Name</label>
       </div>
       <div class="lastName">
-         <CustomInput id="lastName" type="text" v-model="lastName" />
+         <CustomInput id="lastName" type="text" v-model="userLastName" />
          <label for="lastName">Last Name</label>
       </div>
-      <div class="email">
-         <CustomInput id="email" type="text" v-model="email" />
-         <label for="email">Email</label>
+      <div class="city">
+         <CustomInput id="city" type="text" v-model="userCity" />
+         <label for="city">City</label>
       </div>
       <div class="phone">
-         <CustomInput id="phone" type="text" v-model="phone" />
+         <CustomInput id="phone" type="text" v-model="userPhone" />
          <label for="phone">Mobile</label>
       </div>
       <div class="date">
          <CustomInput id="date" type="text" @click="isVisible = !isVisible" class="hover:cursor-pointer"
-            v-model="dateOfBirth" />
+            v-model="userDateOfBirth" />
          <label for="date">Date of birth</label>
       </div>
    </div>
    <div class="w-full h-full absolute top-0 left-0 hover:cursor-pointer bg-black opacity-75"
       :class="{ 'hidden': !isVisible, 'block': isVisible }" @click="isVisible = !isVisible"></div>
    <div class="date-picker w-full text-center absolute duration-300" :class="{ 'visible': isVisible }">
-      <q-date v-model="dateOfBirth" color="pink-4" text-color="black" class="w-full mb-3" />
+      <q-date v-model="userDateOfBirth" color="pink-4" text-color="black" class="w-full mb-3" />
       <CustomBtn type="submit" class="max-w-[200px]" @click="isVisible = !isVisible">Select</CustomBtn>
    </div>
-   <router-link to="gender" @click="createUser"
+   <router-link to="gender" @click="addInfo"
       class="gradient-primary w-full text-white p-4.5 rounded-[10px] text-center">Continue</router-link>
 </template>
 

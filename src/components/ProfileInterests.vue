@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { interests as importedInterests } from './interests';
+import { useUserStore } from 'src/stores/user';
 
 const title = {
    title: 'Select your interests',
@@ -18,6 +19,18 @@ const interests = ref<Interests[]>(importedInterests)
 const toggleActive = (item: Interests) => {
    item.checked = !item.checked;
 }
+
+const userStore = useUserStore();
+
+// Inside your <script setup> tag
+const saveInterests = () => {
+   const activeInterests = interests.value
+      .filter(item => item.checked)
+      .map(item => ({ name: item.name, img: item.img }));
+   userStore.updateUser({ interests: activeInterests }); // Update the call here
+};
+
+// You can call saveInterests directly in your template when the user clicks "Continue"
 </script>
 
 
@@ -35,6 +48,6 @@ const toggleActive = (item: Interests) => {
             <span class="capitalize">{{ item.name }}</span>
          </div>
       </div>
-      <CustomBtn type="button" @click="$router.push('match')">Continue</CustomBtn>
+      <CustomBtn type="button" @click="saveInterests(); $router.push('match')">Continue</CustomBtn>
    </div>
 </template>

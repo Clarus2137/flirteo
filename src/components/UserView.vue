@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useUserStore } from 'src/stores/user';
 
 
 const originalText = 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium rem assumenda maxime incidunt optio delectus recusandae quisquam sunt nulla esse, suscipit id dicta! Quibusdam voluptatem natus sequi veniam iure provident velit quis, modi eaque voluptatum earum optio, ab asperiores sit. Enim in modi quae a voluptate dolorum voluptas cupiditate ut alias quaerat error maxime quas corrupti possimus aperiam provident harum, perferendis at veritatis, incidunt necessitatibus praesentium vero inventore earum? Id aspernatur dolore eligendi, magni minima, accusantium a rerum laborum labore dolorem voluptas? Atque ut dicta corporis dignissimos repellat ex perspiciatis dolorum quae necessitatibus quasi! Veritatis, voluptatem expedita. Deserunt, voluptates fugiat!';
@@ -26,6 +27,10 @@ function showFullText() {
    truncatedText.value = originalText;
    remainingText.value = '';
 }
+
+const userStore = useUserStore();
+
+const userInterests = userStore.user.interests;
 </script>
 
 
@@ -36,7 +41,8 @@ function showFullText() {
          <div src="" alt="" class="aspect-[1/1] gradient-primary rounded-b-3xl"></div>
       </div>
       <div class="home__user user my-8 lexend-bold text-lg">
-         <p><span class="user__firstname">FirstName</span> <span class="user__lastname">LastName</span></p>
+         <p><span class="user__firstname">{{ userStore.user.firstName }}</span> <span class="user__lastname">{{
+            userStore.user.lastName }}</span></p>
          <p class="user__occupation lexend-light text-secondary text-sm">Occupation</p>
       </div>
       <div class="home__about mb-8">
@@ -50,8 +56,15 @@ function showFullText() {
       </div>
       <div class="home__interests interests mb-8">
          <p class="lexend-bold mb-2">Interests</p>
-         <div class="interests__wrapper">
-            <div class="interests__item"></div>
+         <div class="interests__wrapper w-full flex justify-start gap-6">
+            <div
+               class="interests__item flex flex-no-wrap gap-x-1 items-center p-2 rounded-xl border border-solid border-inactive hover:cursor-pointer"
+               v-for="item in userInterests" :key="item.name">
+               <div class="inline-block" v-html="item.img"></div>
+               <span class="capitalize">
+                  {{ item.name }}
+               </span>
+            </div>
          </div>
       </div>
       <div class="home__gallery gallery">
