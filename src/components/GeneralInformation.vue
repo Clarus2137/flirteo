@@ -7,8 +7,8 @@ const isVisible = ref(false);
 
 const userFirstName = ref('');
 const userLastName = ref('');
+const userCountry = ref('');
 const userCity = ref('');
-const userPhone = ref('');
 const userDateOfBirth = ref('');
 
 const userStore = useUserStore();
@@ -16,16 +16,16 @@ const userStore = useUserStore();
 const addInfo = () => {
    const firstName = userFirstName.value;
    const lastName = userLastName.value;
+   const country = userCountry.value;
    const city = userCity.value;
-   const phone = userPhone.value;
    const dateOfBirth = userDateOfBirth.value;
 
-   userStore.updateUser({ firstName, lastName, city, phone, dateOfBirth });
+   userStore.updateUser({ firstName, lastName, city, country, dateOfBirth });
 
    userFirstName.value = '';
    userLastName.value = '';
    userCity.value = '';
-   userPhone.value = '';
+   userCountry.value = '';
    userDateOfBirth.value = '';
 }
 </script>
@@ -45,13 +45,13 @@ const addInfo = () => {
          <CustomInput id="lastName" type="text" v-model="userLastName" />
          <label for="lastName">Last Name</label>
       </div>
+      <div class="country">
+         <CustomInput id="country" type="text" v-model="userCountry" />
+         <label for="country">Country</label>
+      </div>
       <div class="city">
          <CustomInput id="city" type="text" v-model="userCity" />
          <label for="city">City</label>
-      </div>
-      <div class="phone">
-         <CustomInput id="phone" type="text" v-model="userPhone" />
-         <label for="phone">Mobile</label>
       </div>
       <div class="date">
          <CustomInput id="date" type="text" @click="isVisible = !isVisible" class="hover:cursor-pointer"
