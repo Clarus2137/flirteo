@@ -1,32 +1,31 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useUserStore } from 'src/stores/user';
+import { useUserStore } from 'src/stores/userStore';
 
 
 const isVisible = ref(false);
 
 const userFirstName = ref('');
 const userLastName = ref('');
-const userCountry = ref('');
-const userCity = ref('');
 const userDateOfBirth = ref('');
+const userLocation = ref('');
 
 const userStore = useUserStore();
 
-const addInfo = () => {
+const addData = () => {
    const firstName = userFirstName.value;
    const lastName = userLastName.value;
-   const country = userCountry.value;
-   const city = userCity.value;
    const dateOfBirth = userDateOfBirth.value;
+   const location = userLocation.value;
 
-   userStore.updateUser({ firstName, lastName, city, country, dateOfBirth });
+   userStore.addUserData({ firstName, lastName, dateOfBirth, location });
 
    userFirstName.value = '';
    userLastName.value = '';
-   userCity.value = '';
-   userCountry.value = '';
    userDateOfBirth.value = '';
+   userLocation.value = '';
+
+   console.log(userStore.user);
 }
 </script>
 
@@ -45,18 +44,14 @@ const addInfo = () => {
          <CustomInput id="lastName" type="text" v-model="userLastName" />
          <label for="lastName">Last Name</label>
       </div>
-      <div class="country">
-         <CustomInput id="country" type="text" v-model="userCountry" />
-         <label for="country">Country</label>
-      </div>
-      <div class="city">
-         <CustomInput id="city" type="text" v-model="userCity" />
-         <label for="city">City</label>
-      </div>
       <div class="date">
          <CustomInput id="date" type="text" @click="isVisible = !isVisible" class="hover:cursor-pointer"
             v-model="userDateOfBirth" />
          <label for="date">Date of birth</label>
+      </div>
+      <div class="location">
+         <CustomInput id="location" type="text" v-model="userLocation" />
+         <label for="location">Location</label>
       </div>
    </div>
    <div class="w-full h-full absolute top-0 left-0 hover:cursor-pointer bg-black opacity-75"
@@ -65,8 +60,8 @@ const addInfo = () => {
       <q-date v-model="userDateOfBirth" color="pink-4" text-color="black" class="w-full mb-3" />
       <CustomBtn type="submit" class="max-w-[200px]" @click="isVisible = !isVisible">Select</CustomBtn>
    </div>
-   <router-link to="gender" @click="addInfo"
-      class="gradient-primary w-full text-white p-4.5 rounded-[10px] text-center">Continue</router-link>
+   <router-link to="gender" class="gradient-primary w-full text-white p-4.5 rounded-[10px] text-center"
+      @click="addData">Continue</router-link>
 </template>
 
 
@@ -136,4 +131,4 @@ const addInfo = () => {
       opacity: 1;
    }
 }
-</style>src/stores/user
+</style>

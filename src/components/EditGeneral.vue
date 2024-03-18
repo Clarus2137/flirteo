@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-import { useUserStore } from 'src/stores/user';
+import { useUserStore } from 'src/stores/userStore';
 
 
 const isVisible = ref(false);
@@ -8,8 +8,8 @@ const isVisible = ref(false);
 const firstName = ref('');
 const lastName = ref('');
 const email = ref('');
-const phone = ref('');
 const dateOfBirth = ref('');
+const location = ref('');
 
 const userStore = useUserStore();
 
@@ -20,8 +20,8 @@ const loadUserData = () => {
       firstName.value = userData.firstName || '';
       lastName.value = userData.lastName || '';
       email.value = userData.email || '';
-      phone.value = userData.phone || '';
       dateOfBirth.value = userData.dateOfBirth || '';
+      location.value = userData.location || '';
    }
 }
 
@@ -31,12 +31,12 @@ onMounted(() => {
 });
 
 const saveUserData = () => {
-   userStore.updateUser({
+   userStore.addUserData({
       firstName: firstName.value,
       lastName: lastName.value,
       email: email.value,
-      phone: phone.value,
-      dateOfBirth: dateOfBirth.value
+      dateOfBirth: dateOfBirth.value,
+      location: location.value
    });
    // Navigate back or show a success message after saving
 }
@@ -65,14 +65,14 @@ onBeforeUnmount(() => {
          <CustomInput id="email" type="text" v-model="email" />
          <label for="email">Email</label>
       </div>
-      <div class="phone">
-         <CustomInput id="phone" type="text" v-model="phone" />
-         <label for="phone">Mobile</label>
-      </div>
       <div class="date">
          <CustomInput id="date" type="text" @click="isVisible = !isVisible" class="hover:cursor-pointer"
             v-model="dateOfBirth" />
          <label for="date">Date of birth</label>
+      </div>
+      <div class="location">
+         <CustomInput id="location" type="text" v-model="location" />
+         <label for="location">Location</label>
       </div>
    </div>
    <div class="w-full h-full absolute top-0 left-0 hover:cursor-pointer bg-black opacity-75"
@@ -151,4 +151,4 @@ onBeforeUnmount(() => {
       opacity: 1;
    }
 }
-</style>src/stores/user
+</style>

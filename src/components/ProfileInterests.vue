@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { interests as importedInterests } from './interests';
-import { useUserStore } from 'src/stores/user';
+import { useUserStore } from 'src/stores/userStore';
 
 const title = {
    title: 'Select your interests',
@@ -26,8 +26,8 @@ const userStore = useUserStore();
 const saveInterests = () => {
    const activeInterests = interests.value
       .filter(item => item.checked)
-      .map(item => ({ name: item.name, img: item.img }));
-   userStore.updateUser({ interests: activeInterests }); // Update the call here
+      .map(item => item.name);
+   userStore.addUserData({ interests: activeInterests }); // Update the call here
 };
 
 // You can call saveInterests directly in your template when the user clicks "Continue"

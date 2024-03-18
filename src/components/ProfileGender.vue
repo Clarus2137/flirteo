@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useUserStore } from 'src/stores/user';
+import { useUserStore } from 'src/stores/userStore';
 
 
 const title = {
@@ -13,8 +13,11 @@ const userStore = useUserStore();
 const activeGender = ref<string | null>(null);
 
 const setGender = (gender: string) => {
-   activeGender.value = gender;
-   userStore.updateUser({ gender });
+   if (activeGender.value !== gender) {
+      activeGender.value = gender;
+      userStore.addUserData({ gender });
+      console.log(userStore.user);
+   }
 }
 </script>
 
@@ -68,4 +71,4 @@ const setGender = (gender: string) => {
 <style scoped lang="scss">
 // .active>svg {
 //    fill: #f24e80;
-// }</style>
+// }</style>src/stores/userStore

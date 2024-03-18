@@ -14,5 +14,5 @@ const switchComponents = () => {
 
 <template>
    <RegPanel v-if="!isEnterEmailVisible" @goToEmailEntering="switchComponents" />
-   <EnterEmail v-else />
+   <EnterEmail v-else @toGeneralInfo="$router.push('info/general')" />
 </template>

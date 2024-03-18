@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { useUserStore } from 'src/stores/userStore';
 import { onMounted } from 'vue';
-import { useUserStore } from 'src/stores/user';
 
 
 const title = {
@@ -21,12 +21,23 @@ const activateMatch = () => {
    })
 }
 
+const sendUserData = async () => {
+   const userStore = useUserStore();
+   await userStore.registerUser(
+      userStore.user.email!,
+      userStore.user.plainPassword!,
+      userStore.user.firstName!,
+      userStore.user.lastName,
+      userStore.user.email,
+      userStore.user.email,
+      userStore.user.email,
+      userStore.user.email,
+   ); // Register the user
+}
+
 onMounted(() => {
    activateMatch();
 });
-
-const userStore = useUserStore();
-console.log(userStore.user);
 </script>
 
 
@@ -75,7 +86,7 @@ console.log(userStore.user);
             </div>
          </div>
       </div>
-      <CustomBtn type="button" @click="$router.push('/home')">Continue</CustomBtn>
+      <CustomBtn type="button" @click="sendUserData; $router.push('/home')">Continue</CustomBtn>
    </div>
 </template>
 

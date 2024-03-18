@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useUserStore } from 'src/stores/user';
+import { useUserStore } from 'src/stores/userStore';
 
 
 const originalText = 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium rem assumenda maxime incidunt optio delectus recusandae quisquam sunt nulla esse, suscipit id dicta! Quibusdam voluptatem natus sequi veniam iure provident velit quis, modi eaque voluptatum earum optio, ab asperiores sit. Enim in modi quae a voluptate dolorum voluptas cupiditate ut alias quaerat error maxime quas corrupti possimus aperiam provident harum, perferendis at veritatis, incidunt necessitatibus praesentium vero inventore earum? Id aspernatur dolore eligendi, magni minima, accusantium a rerum laborum labore dolorem voluptas? Atque ut dicta corporis dignissimos repellat ex perspiciatis dolorum quae necessitatibus quasi! Veritatis, voluptatem expedita. Deserunt, voluptates fugiat!';
@@ -31,6 +31,7 @@ function showFullText() {
 const userStore = useUserStore();
 
 const userInterests = userStore.user.interests;
+console.log(userStore.user);
 </script>
 
 
@@ -59,10 +60,9 @@ const userInterests = userStore.user.interests;
          <div class="interests__wrapper w-full flex justify-start gap-6">
             <div
                class="interests__item flex flex-no-wrap gap-x-1 items-center p-2 rounded-xl border border-solid border-inactive hover:cursor-pointer"
-               v-for="item in userInterests" :key="item.name">
-               <div class="inline-block" v-html="item.img"></div>
+               v-for="item in userInterests" :key="item">
                <span class="capitalize">
-                  {{ item.name }}
+                  {{ item }}
                </span>
             </div>
          </div>
