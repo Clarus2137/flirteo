@@ -1,5 +1,6 @@
 // stores/users.ts
 import { defineStore } from 'pinia';
+import axios from 'axios';
 
 // interface Interests {
 //     name: string,
@@ -8,7 +9,7 @@ import { defineStore } from 'pinia';
 
 interface User {
     email: string,
-    plainPassword: string,
+    password: string,
     firstName: string,
     lastName: string,
     dateOfBirth: string,
@@ -23,52 +24,57 @@ export const useUserStore = defineStore('user', {
     }),
 
     actions: {
-        createStoreUser(newUser: Partial<User>) {
+        async registerUser(email: string, password: string) {
+            // Assuming 'api' is previously defined and holds your API base URL
+            const apiUrl = process.env.API_SERVER;
+            const endPoint = `${apiUrl}/api/users`;
+            try {
+                // Using axios for the HTTP POST request
+                const response = await axios.post(endPoint, {
+                    email: email,
+                    plainPassword: password,
+                });
+
+                // With Axios, checking response.ok is not needed, axios will throw an error if the status is not 2xx
+                console.log('Registration successful', response.data); // Logging the response data
+            } catch (error) {
+                if (axios.isAxiosError(error)) {
+                    // Handling Axios errors specifically
+                    console.error('Registration failed', error.response?.data);
+                } else {
+                    // Handling unexpected errors
+                    console.error('An unexpected error occurred', error);
+                }
+            }
+        },
+
+        async authoriseUser(email: string, password: string) {
+            const apiUrl = process.env.API_SERVER;
+            const endPoint = `${apiUrl}/auth`;
+            try {
+                const response = await axios.post(endPoint, {
+                    email: email,
+                    password: password,
+                });
+
+                console.log('Registration successful', response.data);
+            } catch (error) {
+                if (axios.isAxiosError(error)) {
+                    // Handling Axios errors specifically
+                    console.error('Registration failed', error.response?.data);
+                } else {
+                    // Handling unexpected errors
+                    console.error('An unexpected error occurred', error);
+                }
+            }
+        },
+
+        createUser(newUser: Partial<User>) {
             this.user = newUser;
         },
 
         addUserData(newUserData: Partial<User>) {
             this.user = { ...this.user, ...newUserData }
-        },
-
-        async registerUser(
-            email: string,
-            password: string,
-            firstName: string,
-            lastName: string,
-            dateOfBirth: string,
-            location: string,
-            gender: string,
-            interests: []
-        ) {
-            const apiUrl = process.env.API_SERVER;
-            const endPoint = `${apiUrl}/api/users`;
-            try {
-                const response = await fetch(endPoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        "email": email,
-                        "plainPassword": password,
-                        "firstName": firstName,
-                        "lastName": lastName,
-                        "dateOfBirth": dateOfBirth,
-                        "location": location,
-                        "gender": gender,
-                        "interests": interests,
-                    }),
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to register user');
-                }
-
-                console.log('Registration successful');
-            } catch (error) {
-                console.error('Registration failed', error);
-            }
         },
     },
 });

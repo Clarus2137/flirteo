@@ -1,18 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import RegPanel from 'src/components/RegPanel.vue';
-import EnterEmail from 'src/components/EnterEmail.vue';
-
-let isEnterEmailVisible = ref(false);
-
-const switchComponents = () => {
-   isEnterEmailVisible.value = !isEnterEmailVisible.value;
-}
+import RegistrationPanel from 'src/components/RegistrationPanel.vue';
 </script>
 
 
 
 <template>
-   <RegPanel v-if="!isEnterEmailVisible" @goToEmailEntering="switchComponents" />
-   <EnterEmail v-else @toGeneralInfo="$router.push('info/general')" />
+   <RegistrationPanel @goToVerification="$router.push('/registration/verification')" />
 </template>

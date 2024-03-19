@@ -23,16 +23,10 @@ const activateMatch = () => {
 
 const sendUserData = async () => {
    const userStore = useUserStore();
-   await userStore.registerUser(
-      userStore.user.email!,
-      userStore.user.plainPassword!,
-      userStore.user.firstName!,
-      userStore.user.lastName,
-      userStore.user.email,
-      userStore.user.email,
-      userStore.user.email,
-      userStore.user.email,
-   ); // Register the user
+   // await userStore.registerUser(
+   //    userStore.user.email!,
+   //    userStore.user.password!
+   // ); // Register the user
 }
 
 onMounted(() => {
@@ -86,7 +80,8 @@ onMounted(() => {
             </div>
          </div>
       </div>
-      <CustomBtn type="button" @click="sendUserData; $router.push('/home')">Continue</CustomBtn>
+      <!-- <CustomBtn type="button" @click="sendUserData; $router.push('/home')">Continue</CustomBtn> -->
+      <CustomBtn type="button" @click="sendUserData">Continue</CustomBtn>
    </div>
 </template>
 

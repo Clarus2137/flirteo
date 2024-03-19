@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useUserStore } from 'src/stores/userStore';
-import { useRouter } from 'vue-router';
 
 
 const title = {
@@ -16,8 +15,9 @@ const enteredPassword = ref('');
 const isVisibleEmail = ref(false);
 const isVisiblePassword = ref(false);
 
-const goToGeneralInfo = useRouter();
-const userStore = useUserStore(); // Use the store
+const userStore = useUserStore();
+
+const emit = defineEmits(['goToVerification']);
 
 const validateEmailAndPassword = (): boolean => {
     let isValid = true;
@@ -44,8 +44,6 @@ const validateEmailAndPassword = (): boolean => {
     return isValid;
 }
 
-const emit = defineEmits(['toGeneralInfo']);
-
 const handleSubmit = (e: Event) => {
     e.preventDefault(); // Prevent form from submitting by default
 
@@ -53,29 +51,12 @@ const handleSubmit = (e: Event) => {
         console.log('Form is invalid');
     } else {
         console.log('form submited');
-        const newUser = {
-            email: enteredEmail.value,
-            password: enteredPassword.value
-        }
-        userStore.createStoreUser(newUser);
+        userStore.registerUser(enteredEmail.value, enteredPassword.value);
+        emit('goToVerification');
         enteredEmail.value = '';
         enteredPassword.value = '';
-        // goToGeneralInfo.push('/info/general');
-        emit('toGeneralInfo');
     }
 }
-
-// const handleSubmit = async (e: Event) => {
-//     e.preventDefault(); // Prevent form from submitting by default
-
-//     if (!validateEmailAndPassword()) {
-//         console.log('Form is invalid');
-//     } else {
-//         console.log('form submited');
-//         await userStore.registerUser(enteredEmail.value, enteredPassword.value); // Register the user
-//         goToGeneralInfo.push('/info/general');
-//     }
-// }
 </script>
 
 

@@ -61,7 +61,7 @@ const slideNext = () => {
                      <div class="pag__btn"></div>
                   </div> -->
                <CustomBtn v-if="slide.id < 3" @click="slideNext">Next</CustomBtn>
-               <CustomBtn v-else @click="$router.push('/registration')">Get started</CustomBtn>
+               <CustomBtn v-else @click="$router.push('/authorization')">Get started</CustomBtn>
             </div>
          </div>
       </q-carousel-slide>

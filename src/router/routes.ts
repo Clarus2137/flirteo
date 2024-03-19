@@ -15,9 +15,24 @@ const routes: RouteRecordRaw[] = [
    // },
 
    {
+      path: '/authorization',
+      component: () => import('layouts/AuthLayout.vue'),
+      children: [{ path: '', component: () => import('pages/AuthPage.vue') }],
+   },
+
+   {
       path: '/registration',
-      component: () => import('layouts/RegLayout.vue'),
-      children: [{ path: '', component: () => import('pages/RegPage.vue') }],
+      component: () => import('layouts/AuthLayout.vue'),
+      children: [
+         { path: '', component: () => import('pages/RegPage.vue') },
+         { path: 'verification', component: () => import('pages/VerificationPage.vue') }
+      ],
+   },
+
+   {
+      path: '/login',
+      component: () => import('layouts/AuthLayout.vue'),
+      children: [{ path: '', component: () => import('pages/LogInPage.vue') }],
    },
 
    {
