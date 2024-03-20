@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useUserStore } from 'src/stores/userStore';
+import { useRouter } from 'vue-router';
 
 
 const title = {
@@ -16,6 +17,8 @@ const isVisibleEmail = ref(false);
 const isVisiblePassword = ref(false);
 
 const userStore = useUserStore();
+
+const router = useRouter();
 
 const validateEmailAndPassword = (): boolean => {
     let isValid = true;
@@ -42,14 +45,19 @@ const validateEmailAndPassword = (): boolean => {
     return isValid;
 }
 
-const handleSubmit = (e: Event) => {
+const handleSubmit = async (e: Event) => {
     e.preventDefault(); // Prevent form from submitting by default
 
     if (!validateEmailAndPassword()) {
         console.log('Form is invalid');
     } else {
         console.log('form submited');
-        userStore.authoriseUser(enteredEmail.value, enteredPassword.value);
+        const isSuccess = await userStore.authoriseUser(enteredEmail.value, enteredPassword.value);
+        if (isSuccess) {
+            router.push({ name: 'general' });
+        } else {
+            console.log('Authorization failed');
+        }
         enteredEmail.value = '';
         enteredPassword.value = '';
     }

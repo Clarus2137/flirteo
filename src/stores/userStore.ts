@@ -15,7 +15,9 @@ interface User {
     dateOfBirth: string,
     location: string,
     gender: string,
-    interests: string[]
+    interests: string[],
+    roles: string[],
+    token: string
 }
 
 export const useUserStore = defineStore('user', {
@@ -24,12 +26,20 @@ export const useUserStore = defineStore('user', {
     }),
 
     actions: {
+        createUser(newUser: Partial<User>) {
+            // this.user = newUser;
+        },
+
+        addUserData(newUserData: Partial<User>) {
+            let localData = JSON.parse(localStorage.userData);
+            localData = { ...localData, ...newUserData };
+            localStorage.setItem('userData', JSON.stringify(localData));
+        },
+
         async registerUser(email: string, password: string) {
-            // Assuming 'api' is previously defined and holds your API base URL
             const apiUrl = process.env.API_SERVER;
             const endPoint = `${apiUrl}/api/users`;
             try {
-                // Using axios for the HTTP POST request
                 const response = await axios.post(endPoint, {
                     email: email,
                     plainPassword: password,
@@ -48,7 +58,7 @@ export const useUserStore = defineStore('user', {
             }
         },
 
-        async authoriseUser(email: string, password: string) {
+        async authoriseUser(email: string, password: string): Promise<boolean> {
             const apiUrl = process.env.API_SERVER;
             const endPoint = `${apiUrl}/auth`;
             try {
@@ -58,6 +68,14 @@ export const useUserStore = defineStore('user', {
                 });
 
                 console.log('Registration successful', response.data);
+
+                const userData: Partial<User> = {
+                    token: response.data.token,
+                    email: response.data.user.email
+                }
+
+                localStorage.setItem('userData', JSON.stringify(userData));
+                return true;
             } catch (error) {
                 if (axios.isAxiosError(error)) {
                     // Handling Axios errors specifically
@@ -66,15 +84,8 @@ export const useUserStore = defineStore('user', {
                     // Handling unexpected errors
                     console.error('An unexpected error occurred', error);
                 }
+                return false;
             }
-        },
-
-        createUser(newUser: Partial<User>) {
-            this.user = newUser;
-        },
-
-        addUserData(newUserData: Partial<User>) {
-            this.user = { ...this.user, ...newUserData }
-        },
+        }
     },
 });

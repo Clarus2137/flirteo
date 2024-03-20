@@ -8,6 +8,8 @@ const title = {
    subtitle: 'What are you hoping to find here on sprout'
 }
 
+const userStore = useUserStore();
+
 const activateMatch = () => {
    const matches = document.querySelectorAll('.match__item');
    matches.forEach(match => {
@@ -21,15 +23,16 @@ const activateMatch = () => {
    })
 }
 
-const sendUserData = async () => {
-   const userStore = useUserStore();
-   // await userStore.registerUser(
-   //    userStore.user.email!,
-   //    userStore.user.password!
-   // ); // Register the user
-}
+// const sendUserData = async () => {
+//    const userStore = useUserStore();
+//    await userStore.registerUser(
+//       userStore.user.email!,
+//       userStore.user.password!
+//    ); // Register the user
+// }
 
 onMounted(() => {
+   console.log(userStore.user);
    activateMatch();
 });
 </script>
@@ -81,7 +84,7 @@ onMounted(() => {
          </div>
       </div>
       <!-- <CustomBtn type="button" @click="sendUserData; $router.push('/home')">Continue</CustomBtn> -->
-      <CustomBtn type="button" @click="sendUserData">Continue</CustomBtn>
+      <CustomBtn type="button">Continue</CustomBtn>
    </div>
 </template>
 

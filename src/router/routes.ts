@@ -39,7 +39,7 @@ const routes: RouteRecordRaw[] = [
       path: '/info',
       component: () => import('layouts/InfoLayout.vue'),
       children: [
-         { path: 'general', component: () => import('pages/GeneralInformationPage.vue') },
+         { name: 'general', path: 'general', component: () => import('pages/GeneralInformationPage.vue') },
          { path: 'gender', component: () => import('pages/GenderPage.vue') },
          { path: 'interests', component: () => import('pages/InterestsPage.vue') },
          { path: 'match', component: () => import('pages/SetMatchPage.vue') }

@@ -24,9 +24,9 @@ const addData = () => {
    userLastName.value = '';
    userDateOfBirth.value = '';
    userLocation.value = '';
-
-   console.log(userStore.user);
 }
+
+console.log(userStore.user);
 </script>
 
 

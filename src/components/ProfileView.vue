@@ -1,5 +1,7 @@
 <script setup lang="ts">
-
+const logOut = () => {
+   localStorage.removeItem('userToken');
+}
 </script>
 
 
@@ -84,7 +86,7 @@
          </q-item-section>
       </q-item>
    </q-list>
-   <CustomBtn class="flex justify-center items-center gap-x-2">
+   <CustomBtn class="flex justify-center items-center gap-x-2" @click="logOut">
       <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
          <defs>
             <linearGradient id="gradient_primary" x1="0%" y1="0%" x2="100%" y2="100%">

@@ -69,6 +69,7 @@ const setGender = (gender: string) => {
 
 
 <style scoped lang="scss">
-// .active>svg {
-//    fill: #f24e80;
-// }</style>src/stores/userStore
+.active>svg {
+   fill: #f24e80;
+}
+</style>
