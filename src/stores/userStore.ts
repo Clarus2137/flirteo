@@ -26,8 +26,27 @@ export const useUserStore = defineStore('user', {
     }),
 
     actions: {
-        createUser(newUser: Partial<User>) {
-            // this.user = newUser;
+        async updateUser(updatedUser: Partial<User>) {
+            const token = updatedUser.token;
+            delete updatedUser.token;
+            const apiUrl = process.env.API_SERVER;
+            const endPoint = `${apiUrl}/api/users/me`;
+            try {
+                const response = await axios.patch(endPoint, updatedUser, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                console.log('User updating successful', response.data);
+            } catch (error) {
+                if (axios.isAxiosError(error)) {
+                    // Handling Axios errors specifically
+                    console.error('User updating failed', error.response?.data);
+                } else {
+                    // Handling unexpected errors
+                    console.error('An unexpected error occurred', error);
+                }
+            }
         },
 
         addUserData(newUserData: Partial<User>) {
