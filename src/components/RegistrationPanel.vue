@@ -51,7 +51,11 @@ const handleSubmit = (e: Event) => {
         console.log('Form is invalid');
     } else {
         console.log('form submited');
-        userStore.registerUser(enteredEmail.value, enteredPassword.value);
+        const newUser = {
+            email: enteredEmail.value,
+            plainPassword: enteredPassword.value
+        }
+        userStore.registerUser(newUser);
         emit('goToVerification');
         enteredEmail.value = '';
         enteredPassword.value = '';

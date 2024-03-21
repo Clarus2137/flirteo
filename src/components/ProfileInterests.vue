@@ -8,29 +8,33 @@ const title = {
    subtitle: 'Select a few of your interests to match with users who have similar things in common'
 }
 
-interface Interests {
-   name: string,
-   img: string,
-   checked: boolean
-}
+const interests = ref<BaseInterests[]>(importedInterests)
 
-const interests = ref<Interests[]>(importedInterests)
-
-const toggleActive = (item: Interests) => {
+const toggleActive = (item: BaseInterests) => {
    item.checked = !item.checked;
 }
+
+const emit = defineEmits(['goToHome']);
 
 const userStore = useUserStore();
 
 // Inside your <script setup> tag
-const saveInterests = () => {
+const saveInterests = async () => {
    const activeInterests = interests.value
       .filter(item => item.checked)
-      .map(item => item.name);
-   userStore.addUserData({ interests: activeInterests }); // Update the call here
+      .map(({ checked, ...newItem }) => newItem);
+   const isAdded = userStore.addUserData({ interests: activeInterests });
+   if (isAdded) {
+      const updatedUserData = JSON.parse(localStorage.userData);
+      const isSuccess = await userStore.updateUser(updatedUserData);
+      if (isSuccess) {
+         emit('goToHome');
+      }
+   }
 };
 
 // You can call saveInterests directly in your template when the user clicks "Continue"
+console.log(userStore.user);
 </script>
 
 
@@ -48,6 +52,6 @@ const saveInterests = () => {
             <span class="capitalize">{{ item.name }}</span>
          </div>
       </div>
-      <CustomBtn type="button" @click="saveInterests(); $router.push('match')">Continue</CustomBtn>
+      <CustomBtn type="button" @click="saveInterests">Continue</CustomBtn>
    </div>
 </template>

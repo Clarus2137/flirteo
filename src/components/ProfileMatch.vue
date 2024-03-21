@@ -37,7 +37,6 @@ const updateUserData = () => {
 }
 
 onMounted(() => {
-    console.log(userStore.user);
     activateMatch();
 });
 </script>

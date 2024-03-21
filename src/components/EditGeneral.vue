@@ -44,6 +44,12 @@ const saveUserData = () => {
 onBeforeUnmount(() => {
    saveUserData();
 });
+
+const deleteAccount = () => {
+   console.log('nothing');
+}
+
+console.log(userStore.user);
 </script>
 
 
@@ -60,10 +66,6 @@ onBeforeUnmount(() => {
       <div class="lastName">
          <CustomInput id="lastName" type="text" v-model="lastName" />
          <label for="lastName">Last Name</label>
-      </div>
-      <div class="email">
-         <CustomInput id="email" type="text" v-model="email" />
-         <label for="email">Email</label>
       </div>
       <div class="date">
          <CustomInput id="date" type="text" @click="isVisible = !isVisible" class="hover:cursor-pointer"
@@ -82,6 +84,7 @@ onBeforeUnmount(() => {
       <CustomBtn type="submit" class="max-w-[200px]" @click="isVisible = !isVisible">Select</CustomBtn>
    </div>
    <CustomBtn type="button" @click="$router.back()">Save</CustomBtn>
+   <CustomBtn @click="deleteAccount">Delete my account</CustomBtn>
 </template>
 
 

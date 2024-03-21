@@ -16,7 +16,7 @@ const title = {
          <div class="details__title">
             <TitleRow :title="title" />
          </div>
-         <GeneralInformation />
+         <GeneralInformation @goToGender="$router.push('gender')" />
       </div>
    </div>
 </template>

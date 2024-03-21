@@ -6,6 +6,6 @@ import ProfileInterests from 'src/components/ProfileInterests.vue';
 
 <template>
    <div class="profile">
-      <ProfileInterests />
+      <ProfileInterests @goToHome="$router.push('/home')" />
    </div>
 </template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const logOut = () => {
-  localStorage.removeItem('userData');
+  localStorage.clear();
 }
 </script>
 

@@ -12,11 +12,19 @@ const userStore = useUserStore();
 
 const activeGender = ref<string | null>(null);
 
-const setGender = (gender: string) => {
+const emit = defineEmits(['goToInterests']);
+
+const chooseGender = (gender: string) => {
    if (activeGender.value !== gender) {
       activeGender.value = gender;
-      userStore.addUserData({ gender });
-      console.log(userStore.user);
+   }
+}
+
+const setGender = () => {
+   const gender = activeGender.value ? activeGender.value : '';
+   const isSuccess = userStore.addUserData({ gender });
+   if (isSuccess) {
+      emit('goToInterests');
    }
 }
 </script>
@@ -31,7 +39,7 @@ const setGender = (gender: string) => {
       <div class="gender__items">
          <div
             class="gender__item gender__male p-8 rounded-2xl border border-solid border-inactive text-center hover:cursor-pointer"
-            :class="{ 'border-primary active': activeGender === 'male' }" @click="setGender('male')">
+            :class="{ 'border-primary active': activeGender === 'male' }" @click="chooseGender('male')">
             <svg width="62" height="61" viewBox="0 0 62 61" xmlns="http://www.w3.org/2000/svg">
                <defs>
                   <linearGradient id="maleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -47,7 +55,7 @@ const setGender = (gender: string) => {
          </div>
          <div
             class="gender__item gender__female mt-8 p-8 rounded-2xl border border-solid border-inactive text-center hover:cursor-pointer"
-            :class="{ 'border-primary active': activeGender === 'female' }" @click="setGender('female')">
+            :class="{ 'border-primary active': activeGender === 'female' }" @click="chooseGender('female')">
             <svg width="50" height="66" viewBox="0 0 50 66" xmlns="http://www.w3.org/2000/svg" class="mx-auto">
                <defs>
                   <linearGradient id="femaleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -62,7 +70,7 @@ const setGender = (gender: string) => {
             <p class="mt-4 text-xl" :class="{ 'text-primary': activeGender === 'female' }">Female</p>
          </div>
       </div>
-      <CustomBtn type="button" @click="$router.push('interests')">Continue</CustomBtn>
+      <CustomBtn type="button" @click="setGender">Continue</CustomBtn>
    </div>
 </template>
 

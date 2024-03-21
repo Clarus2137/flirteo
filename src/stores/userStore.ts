@@ -15,10 +15,16 @@ interface User {
     dateOfBirth: string,
     location: string,
     gender: string,
-    interests: string[],
+    interests: UserInterests[],
     roles: string[],
     token: string
 }
+
+const apiUrl = process.env.API_SERVER;
+const regUser = `${apiUrl}/api/users`;
+const authUser = `${apiUrl}/auth`;
+const updateUser = `${apiUrl}/api/users/me`;
+// const deleteUser = `${apiUrl}/api/users/me`;
 
 export const useUserStore = defineStore('user', {
     state: () => ({
@@ -26,43 +32,9 @@ export const useUserStore = defineStore('user', {
     }),
 
     actions: {
-        async updateUser(updatedUser: Partial<User>) {
-            const token = updatedUser.token;
-            delete updatedUser.token;
-            const apiUrl = process.env.API_SERVER;
-            const endPoint = `${apiUrl}/api/users/me`;
+        async registerUser(newUser: Partial<User>) {
             try {
-                const response = await axios.patch(endPoint, updatedUser, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                console.log('User updating successful', response.data);
-            } catch (error) {
-                if (axios.isAxiosError(error)) {
-                    // Handling Axios errors specifically
-                    console.error('User updating failed', error.response?.data);
-                } else {
-                    // Handling unexpected errors
-                    console.error('An unexpected error occurred', error);
-                }
-            }
-        },
-
-        addUserData(newUserData: Partial<User>) {
-            let localData = JSON.parse(localStorage.userData);
-            localData = { ...localData, ...newUserData };
-            localStorage.setItem('userData', JSON.stringify(localData));
-        },
-
-        async registerUser(email: string, password: string) {
-            const apiUrl = process.env.API_SERVER;
-            const endPoint = `${apiUrl}/api/users`;
-            try {
-                const response = await axios.post(endPoint, {
-                    email: email,
-                    plainPassword: password,
-                });
+                const response = await axios.post(regUser, newUser);
 
                 // With Axios, checking response.ok is not needed, axios will throw an error if the status is not 2xx
                 console.log('Registration successful', response.data); // Logging the response data
@@ -77,32 +49,64 @@ export const useUserStore = defineStore('user', {
             }
         },
 
-        async authoriseUser(email: string, password: string): Promise<boolean> {
-            const apiUrl = process.env.API_SERVER;
-            const endPoint = `${apiUrl}/auth`;
+        async authoriseUser(userAccount: Partial<User>): Promise<boolean> {
             try {
-                const response = await axios.post(endPoint, {
-                    email: email,
-                    password: password,
-                });
+                const response = await axios.post(authUser, userAccount);
 
-                console.log('Registration successful', response.data);
+                console.log('Authorization successful', response.data);
 
-                const userData: Partial<User> = {
-                    token: response.data.token,
-                    email: response.data.user.email
-                }
-
-                localStorage.setItem('userData', JSON.stringify(userData));
+                localStorage.setItem('userToken', JSON.stringify(response.data.token));
+                localStorage.setItem('userData', JSON.stringify(response.data.user));
                 return true;
             } catch (error) {
                 if (axios.isAxiosError(error)) {
                     // Handling Axios errors specifically
-                    console.error('Registration failed', error.response?.data);
+                    console.error('Authorization failed', error.response?.data);
                 } else {
                     // Handling unexpected errors
                     console.error('An unexpected error occurred', error);
                 }
+                return false;
+            }
+        },
+
+        async updateUser(updatedUser: Partial<User>) {
+            try {
+                const userToken = JSON.parse(localStorage.userToken);
+                const response = await axios.patch(updateUser, updatedUser, {
+                    headers: {
+                        'Authorization': `Bearer ${userToken}`
+                    }
+                });
+                console.log('User updating successful', response.data);
+                return true;
+            } catch (error) {
+                if (axios.isAxiosError(error)) {
+                    // Handling Axios errors specifically
+                    console.error('User updating failed', error.response?.data);
+                    return false;
+                } else {
+                    // Handling unexpected errors
+                    console.error('An unexpected error occurred', error);
+                    return false;
+                }
+            }
+        },
+
+        addUserData(newUserData: Partial<User>) {
+            let localData;
+
+            try {
+                const stringLocalData = localStorage.getItem('userData');
+                if (stringLocalData === null) {
+                    throw new Error('User\'s data doesn\'t exest');
+                }
+                localData = JSON.parse(stringLocalData);
+                localData = { ...localData, ...newUserData };
+                localStorage.setItem('userData', JSON.stringify(localData));
+                return true;
+            } catch (error) {
+                console.error('Error reading or parsing user data:', error);
                 return false;
             }
         }

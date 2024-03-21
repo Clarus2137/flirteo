@@ -12,13 +12,18 @@ const userLocation = ref('');
 
 const userStore = useUserStore();
 
+const emit = defineEmits(['goToGender']);
+
 const addData = () => {
    const firstName = userFirstName.value;
    const lastName = userLastName.value;
    const dateOfBirth = userDateOfBirth.value;
    const location = userLocation.value;
 
-   userStore.addUserData({ firstName, lastName, dateOfBirth, location });
+   const isSuccess = userStore.addUserData({ firstName, lastName, dateOfBirth, location });
+   if (isSuccess) {
+      emit('goToGender');
+   }
 
    userFirstName.value = '';
    userLastName.value = '';
@@ -60,8 +65,7 @@ console.log(userStore.user);
       <q-date v-model="userDateOfBirth" color="pink-4" text-color="black" class="w-full mb-3" />
       <CustomBtn type="submit" class="max-w-[200px]" @click="isVisible = !isVisible">Select</CustomBtn>
    </div>
-   <router-link to="gender" class="gradient-primary w-full text-white p-4.5 rounded-[10px] text-center"
-      @click="addData">Continue</router-link>
+   <CustomBtn type="button" @click="addData">Continue</CustomBtn>
 </template>
 
 

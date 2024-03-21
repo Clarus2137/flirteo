@@ -52,7 +52,11 @@ const handleSubmit = async (e: Event) => {
         console.log('Form is invalid');
     } else {
         console.log('form submited');
-        const isSuccess = await userStore.authoriseUser(enteredEmail.value, enteredPassword.value);
+        const userAccount = {
+            email: enteredEmail.value,
+            password: enteredPassword.value
+        }
+        const isSuccess = await userStore.authoriseUser(userAccount);
         if (isSuccess) {
             router.push({ name: 'general' });
         } else {
