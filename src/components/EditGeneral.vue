@@ -15,143 +15,144 @@ const userStore = useUserStore();
 
 // Function to load user data
 const loadUserData = () => {
-   const userData = userStore.user; // Assuming currentUser is the property holding user data. Adjust according to your store structure.
-   if (userData) {
-      firstName.value = userData.firstName || '';
-      lastName.value = userData.lastName || '';
-      email.value = userData.email || '';
-      dateOfBirth.value = userData.dateOfBirth || '';
-      location.value = userData.location || '';
-   }
+    const userData = userStore.user; // Assuming currentUser is the property holding user data. Adjust according to your store structure.
+    if (userData) {
+        firstName.value = userData.firstName || '';
+        lastName.value = userData.lastName || '';
+        email.value = userData.email || '';
+        dateOfBirth.value = userData.dateOfBirth || '';
+        location.value = userData.location || '';
+    }
 }
 
 // Use onMounted lifecycle hook to load data when the component is mounted
 onMounted(() => {
-   loadUserData();
+    loadUserData();
 });
 
 const saveUserData = () => {
-   userStore.addUserData({
-      firstName: firstName.value,
-      lastName: lastName.value,
-      email: email.value,
-      dateOfBirth: dateOfBirth.value,
-      location: location.value
-   });
-   // Navigate back or show a success message after saving
+    userStore.addUserData({
+        firstName: firstName.value,
+        lastName: lastName.value,
+        email: email.value,
+        dateOfBirth: dateOfBirth.value,
+        location: location.value
+    });
+    // Navigate back or show a success message after saving
 }
 
 onBeforeUnmount(() => {
-   saveUserData();
+    saveUserData();
 });
 
-const deleteAccount = () => {
-   console.log('nothing');
+const deleteAccount = async () => {
+    const isSuccess = await userStore.removeUser();
+    if (isSuccess) {
+        console.log('User is gone');
+    }
 }
-
-console.log(userStore.user);
 </script>
 
 
 
 <template>
-   <div class="details__photo photo text-center">
-      <div class="photo__img inline-block rounded-[50%] w-[100px] aspect-square"></div>
-   </div>
-   <div class="details__personal-data flex flex-col gap-y-3">
-      <div class="firstName">
-         <CustomInput id="firstName" type="text" v-model="firstName" />
-         <label for="firstName">First Name</label>
-      </div>
-      <div class="lastName">
-         <CustomInput id="lastName" type="text" v-model="lastName" />
-         <label for="lastName">Last Name</label>
-      </div>
-      <div class="date">
-         <CustomInput id="date" type="text" @click="isVisible = !isVisible" class="hover:cursor-pointer"
-            v-model="dateOfBirth" />
-         <label for="date">Date of birth</label>
-      </div>
-      <div class="location">
-         <CustomInput id="location" type="text" v-model="location" />
-         <label for="location">Location</label>
-      </div>
-   </div>
-   <div class="w-full h-full absolute top-0 left-0 hover:cursor-pointer bg-black opacity-75"
-      :class="{ 'hidden': !isVisible, 'block': isVisible }" @click="isVisible = !isVisible"></div>
-   <div class="date-picker w-full text-center absolute duration-300" :class="{ 'visible': isVisible }">
-      <q-date v-model="dateOfBirth" color="pink-4" text-color="black" class="w-full mb-3" />
-      <CustomBtn type="submit" class="max-w-[200px]" @click="isVisible = !isVisible">Select</CustomBtn>
-   </div>
-   <CustomBtn type="button" @click="$router.back()">Save</CustomBtn>
-   <CustomBtn @click="deleteAccount">Delete my account</CustomBtn>
+    <div class="details__photo photo text-center">
+        <div class="photo__img inline-block rounded-[50%] w-[100px] aspect-square"></div>
+    </div>
+    <div class="details__personal-data flex flex-col gap-y-3">
+        <div class="firstName">
+            <CustomInput id="firstName" type="text" v-model="firstName" />
+            <label for="firstName">First Name</label>
+        </div>
+        <div class="lastName">
+            <CustomInput id="lastName" type="text" v-model="lastName" />
+            <label for="lastName">Last Name</label>
+        </div>
+        <div class="date">
+            <CustomInput id="date" type="text" @click="isVisible = !isVisible" class="hover:cursor-pointer"
+                v-model="dateOfBirth" />
+            <label for="date">Date of birth</label>
+        </div>
+        <div class="location">
+            <CustomInput id="location" type="text" v-model="location" />
+            <label for="location">Location</label>
+        </div>
+    </div>
+    <div class="w-full h-full absolute top-0 left-0 hover:cursor-pointer bg-black opacity-75"
+        :class="{ 'hidden': !isVisible, 'block': isVisible }" @click="isVisible = !isVisible"></div>
+    <div class="date-picker w-full text-center absolute duration-300" :class="{ 'visible': isVisible }">
+        <q-date v-model="dateOfBirth" color="pink-4" text-color="black" class="w-full mb-3" />
+        <CustomBtn type="submit" class="max-w-[200px]" @click="isVisible = !isVisible">Select</CustomBtn>
+    </div>
+    <CustomBtn type="button" @click="$router.back()">Save</CustomBtn>
+    <CustomBtn @click="deleteAccount">Delete my account</CustomBtn>
 </template>
 
 
 
 <style scoped lang="scss">
 .details__personal-data>* {
-   position: relative;
+    position: relative;
 
-   label {
-      padding: 0 3px;
-      font-size: 0.75rem;
-      line-height: 1;
-      position: absolute;
-      top: 3px;
-      left: 20px;
-      transition: 0.3s;
-   }
+    label {
+        padding: 0 3px;
+        font-size: 0.75rem;
+        line-height: 1;
+        position: absolute;
+        top: 3px;
+        left: 20px;
+        transition: 0.3s;
+    }
 
-   input:active,
-   input:focus {
-      &+label {
-         background: #fff;
-         color: #f24e80;
-         top: -6px;
-      }
-   }
+    input:active,
+    input:focus {
+        &+label {
+            background: #fff;
+            color: #f24e80;
+            top: -6px;
+        }
+    }
 }
 
 [type="date"] {
-   background: transparent;
-   position: relative;
+    background: transparent;
+    position: relative;
 
-   &::-webkit-calendar-picker-indicator {
-      opacity: 0;
-   }
+    &::-webkit-calendar-picker-indicator {
+        opacity: 0;
+    }
 
-   &::after {
-      content: "";
-      display: block;
-      width: 20px;
-      height: 20px;
-      background: url("../assets/calendar.svg") no-repeat;
-      background-size: contain;
-      position: absolute;
-      top: 50%;
-      right: 18px;
-      transform: translateY(-50%);
-      z-index: -1;
-   }
+    &::after {
+        content: "";
+        display: block;
+        width: 20px;
+        height: 20px;
+        background: url("../assets/calendar.svg") no-repeat;
+        background-size: contain;
+        position: absolute;
+        top: 50%;
+        right: 18px;
+        transform: translateY(-50%);
+        z-index: -1;
+    }
 
-   &:focus,
-   &:active {
-      &::after {
-         background: url("../assets/calendar-active.svg") no-repeat;
-      }
-   }
+    &:focus,
+    &:active {
+        &::after {
+            background: url("../assets/calendar-active.svg") no-repeat;
+        }
+    }
 }
 
 .date-picker {
-   top: 110%;
-   left: 0;
-   opacity: 0;
+    top: 110%;
+    left: 0;
+    opacity: 0;
 
-   &.visible {
-      top: 50%;
-      transform: translateY(-50%);
-      opacity: 1;
-   }
+    &.visible {
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 1;
+    }
 }
 </style>

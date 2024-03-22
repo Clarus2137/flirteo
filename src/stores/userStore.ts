@@ -2,29 +2,12 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
-// interface Interests {
-//     name: string,
-//     img: string | HTMLElement;
-// }
-
-interface User {
-    email: string,
-    password: string,
-    firstName: string,
-    lastName: string,
-    dateOfBirth: string,
-    location: string,
-    gender: string,
-    interests: UserInterests[],
-    roles: string[],
-    token: string
-}
 
 const apiUrl = process.env.API_SERVER;
 const regUser = `${apiUrl}/api/users`;
 const authUser = `${apiUrl}/auth`;
 const updateUser = `${apiUrl}/api/users/me`;
-// const deleteUser = `${apiUrl}/api/users/me`;
+const deleteUser = `${apiUrl}/api/users/me`;
 
 export const useUserStore = defineStore('user', {
     state: () => ({
@@ -70,6 +53,28 @@ export const useUserStore = defineStore('user', {
             }
         },
 
+        addUserData(newUserData: Partial<User>) {
+            let localData;
+
+            try {
+                const stringLocalData = localStorage.getItem('userData');
+                if (stringLocalData === null) {
+                    throw new Error('User\'s data doesn\'t exist');
+                }
+                localData = JSON.parse(stringLocalData);
+                console.log('Добавляемые данные:', newUserData);
+                console.log(newUserData.firstName);
+                localData = { ...localData, ...newUserData };
+                console.log('Обновлённые данные:', localData);
+                localStorage.setItem('userData', JSON.stringify(localData));
+                console.log('Данные в localStorage:', JSON.parse(localStorage.userData));
+                return true;
+            } catch (error) {
+                console.error('Error reading or parsing user data:', error);
+                return false;
+            }
+        },
+
         async updateUser(updatedUser: Partial<User>) {
             try {
                 const userToken = JSON.parse(localStorage.userToken);
@@ -83,32 +88,42 @@ export const useUserStore = defineStore('user', {
             } catch (error) {
                 if (axios.isAxiosError(error)) {
                     // Handling Axios errors specifically
-                    console.error('User updating failed', error.response?.data);
-                    return false;
+                    console.error('User updating failed', error);
                 } else {
                     // Handling unexpected errors
                     console.error('An unexpected error occurred', error);
-                    return false;
                 }
+
+                return false;
             }
         },
 
-        addUserData(newUserData: Partial<User>) {
-            let localData;
-
+        async removeUser() {
             try {
-                const stringLocalData = localStorage.getItem('userData');
-                if (stringLocalData === null) {
-                    throw new Error('User\'s data doesn\'t exest');
-                }
-                localData = JSON.parse(stringLocalData);
-                localData = { ...localData, ...newUserData };
-                localStorage.setItem('userData', JSON.stringify(localData));
+                const userToken = JSON.parse(localStorage.userToken);
+                const response = await axios.delete(deleteUser, {
+                    headers: {
+                        'Authorization': `Bearer ${userToken}`
+                    }
+                });
+                console.log('User removing successful', response.data);
+                localStorage.clear();
                 return true;
             } catch (error) {
-                console.error('Error reading or parsing user data:', error);
+                if (axios.isAxiosError(error)) {
+                    // Handling Axios errors specifically
+                    console.error('User removing failed', error);
+                } else {
+                    // Handling unexpected errors
+                    console.error('An unexpected error occurred', error);
+                }
+
                 return false;
             }
+        },
+
+        setStoreUserData(userData: Partial<User>) {
+            this.user = userData;
         }
     },
 });
