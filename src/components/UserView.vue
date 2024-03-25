@@ -39,6 +39,7 @@ if (localStorageData === null) {
 }
 
 const calculateAge = (birthDateString: string): number => {
+    // const convertedBirthDate = birthDateString.split(' ')[0];
     const today = new Date();
     const birthDate = new Date(birthDateString);
     let age = today.getFullYear() - birthDate.getFullYear();

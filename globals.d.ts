@@ -11,6 +11,7 @@ declare global {
         roles: string[],
         token: string
     }
+
     interface BaseInterests {
         name: string;
         img: string;
@@ -20,6 +21,12 @@ declare global {
     interface UserInterests {
         name: string,
         img: string
+    }
+
+    interface BirthDate {
+        date: string,
+        timezone_type: number,
+        timezone: string
     }
 }
 

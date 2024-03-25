@@ -18,8 +18,6 @@ const emit = defineEmits(['goToHome']);
 
 const userStore = useUserStore();
 
-console.log('Выбранное:', interests.value.filter(item => item.checked));
-// Inside your <script setup> tag
 const saveInterests = async () => {
     const activeInterests = interests.value
         .filter(item => item.checked)

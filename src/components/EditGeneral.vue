@@ -7,7 +7,6 @@ const isVisible = ref(false);
 
 const firstName = ref('');
 const lastName = ref('');
-const email = ref('');
 const dateOfBirth = ref('');
 const location = ref('');
 
@@ -16,10 +15,10 @@ const userStore = useUserStore();
 // Function to load user data
 const loadUserData = () => {
     const userData = userStore.user; // Assuming currentUser is the property holding user data. Adjust according to your store structure.
+    console.log(userData);
     if (userData) {
         firstName.value = userData.firstName || '';
         lastName.value = userData.lastName || '';
-        email.value = userData.email || '';
         dateOfBirth.value = userData.dateOfBirth || '';
         location.value = userData.location || '';
     }
@@ -30,20 +29,21 @@ onMounted(() => {
     loadUserData();
 });
 
-const saveUserData = () => {
-    userStore.addUserData({
-        firstName: firstName.value,
-        lastName: lastName.value,
-        email: email.value,
-        dateOfBirth: dateOfBirth.value,
-        location: location.value
-    });
+const updateUserData = async () => {
+    // userStore.addUserData({
+    //     firstName: firstName.value,
+    //     lastName: lastName.value,
+    //     dateOfBirth: dateOfBirth.value,
+    //     location: location.value
+    // });
     // Navigate back or show a success message after saving
+
+    // const isSuccess = await userStore.updateUser(newUserData);
 }
 
-onBeforeUnmount(() => {
-    saveUserData();
-});
+// onBeforeUnmount(() => {
+//     saveUserData();
+// });
 
 const deleteAccount = async () => {
     const isSuccess = await userStore.removeUser();

@@ -63,7 +63,6 @@ export const useUserStore = defineStore('user', {
                 }
                 localData = JSON.parse(stringLocalData);
                 console.log('Добавляемые данные:', newUserData);
-                console.log(newUserData.firstName);
                 localData = { ...localData, ...newUserData };
                 console.log('Обновлённые данные:', localData);
                 localStorage.setItem('userData', JSON.stringify(localData));
