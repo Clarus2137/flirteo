@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useUserStore } from 'src/stores/userStore';
-import { useRouter } from 'vue-router';
 
 
 const title = {
@@ -17,8 +16,7 @@ const isVisibleEmail = ref(false);
 const isVisiblePassword = ref(false);
 
 const userStore = useUserStore();
-
-const router = useRouter();
+const emit = defineEmits(['goToInterests', 'goToHome']);
 
 const validateEmailAndPassword = (): boolean => {
     let isValid = true;
@@ -58,7 +56,12 @@ const handleSubmit = async (e: Event) => {
         }
         const isSuccess = await userStore.authoriseUser(userAccount);
         if (isSuccess) {
-            router.push({ name: 'general' });
+            const userInterests = userStore.user.interests;
+            if (userInterests?.length) {
+                emit('goToHome');
+            } else {
+                emit('goToInterests');
+            }
         } else {
             console.log('Authorization failed');
         }

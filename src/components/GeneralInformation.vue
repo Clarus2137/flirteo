@@ -20,9 +20,15 @@ const addData = () => {
     const dateOfBirth = userDateOfBirth.value ? userDateOfBirth.value : new Date().toISOString().split('T')[0];
     const location = userLocation.value;
 
-    const isSuccess = userStore.addUserData({ firstName, lastName, dateOfBirth, location });
+    const addingData: Partial<User> = {
+        firstName,
+        lastName,
+        dateOfBirth,
+        location
+    }
+    console.log('Adding Data is: ', addingData);
+    const isSuccess = userStore.addUserData(addingData);
     if (isSuccess) {
-        console.log(dateOfBirth);
         emit('goToGender');
     }
 
@@ -31,8 +37,6 @@ const addData = () => {
     userDateOfBirth.value = '';
     userLocation.value = '';
 }
-
-console.log(userStore.user);
 </script>
 
 

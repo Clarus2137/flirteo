@@ -1,26 +1,49 @@
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useUserStore } from 'src/stores/userStore';
 
 
 const isVisible = ref(false);
 
-const firstName = ref('');
-const lastName = ref('');
-const dateOfBirth = ref('');
-const location = ref('');
+const userFirstName = ref('');
+const userLastName = ref('');
+const userDateOfBirth = ref('');
+const userLocation = ref('');
 
 const userStore = useUserStore();
 
 // Function to load user data
 const loadUserData = () => {
-    const userData = userStore.user; // Assuming currentUser is the property holding user data. Adjust according to your store structure.
-    console.log(userData);
-    if (userData) {
-        firstName.value = userData.firstName || '';
-        lastName.value = userData.lastName || '';
-        dateOfBirth.value = userData.dateOfBirth || '';
-        location.value = userData.location || '';
+    const stringLocalStorage = localStorage.getItem('userData');
+    if (stringLocalStorage === null) {
+        throw new Error('User\'s data doesn\'t exist');
+    } else {
+        const userData: Partial<User> = JSON.parse(stringLocalStorage); // Assuming currentUser is the property holding user data. Adjust according to your store structure.
+        userStore.user = userData;
+        userFirstName.value = userData.firstName || '';
+        userLastName.value = userData.lastName || '';
+        userDateOfBirth.value = userData.dateOfBirth || '';
+        userLocation.value = userData.location || '';
+        console.log(userStore.user);
+    }
+}
+
+const editUser = async () => {
+    const firstName = userFirstName.value;
+    const lastName = userLastName.value;
+    const dateOfBirth = userDateOfBirth.value ? userDateOfBirth.value : new Date().toISOString().split('T')[0];
+    const location = userLocation.value;
+
+    const editedData: Partial<User> = {
+        firstName,
+        lastName,
+        dateOfBirth,
+        location
+    }
+    console.log('Sending Data is: ', editedData);
+    const isSuccess = userStore.addUserData(editedData);
+    if (isSuccess) {
+        userStore.updateUser(userStore.user);
     }
 }
 
@@ -28,22 +51,6 @@ const loadUserData = () => {
 onMounted(() => {
     loadUserData();
 });
-
-const updateUserData = async () => {
-    // userStore.addUserData({
-    //     firstName: firstName.value,
-    //     lastName: lastName.value,
-    //     dateOfBirth: dateOfBirth.value,
-    //     location: location.value
-    // });
-    // Navigate back or show a success message after saving
-
-    // const isSuccess = await userStore.updateUser(newUserData);
-}
-
-// onBeforeUnmount(() => {
-//     saveUserData();
-// });
 
 const deleteAccount = async () => {
     const isSuccess = await userStore.removeUser();
@@ -61,30 +68,30 @@ const deleteAccount = async () => {
     </div>
     <div class="details__personal-data flex flex-col gap-y-3">
         <div class="firstName">
-            <CustomInput id="firstName" type="text" v-model="firstName" />
+            <CustomInput id="firstName" type="text" v-model="userFirstName" />
             <label for="firstName">First Name</label>
         </div>
         <div class="lastName">
-            <CustomInput id="lastName" type="text" v-model="lastName" />
+            <CustomInput id="lastName" type="text" v-model="userLastName" />
             <label for="lastName">Last Name</label>
         </div>
         <div class="date">
             <CustomInput id="date" type="text" @click="isVisible = !isVisible" class="hover:cursor-pointer"
-                v-model="dateOfBirth" />
+                v-model="userDateOfBirth" />
             <label for="date">Date of birth</label>
         </div>
         <div class="location">
-            <CustomInput id="location" type="text" v-model="location" />
+            <CustomInput id="location" type="text" v-model="userLocation" />
             <label for="location">Location</label>
         </div>
     </div>
     <div class="w-full h-full absolute top-0 left-0 hover:cursor-pointer bg-black opacity-75"
         :class="{ 'hidden': !isVisible, 'block': isVisible }" @click="isVisible = !isVisible"></div>
     <div class="date-picker w-full text-center absolute duration-300" :class="{ 'visible': isVisible }">
-        <q-date v-model="dateOfBirth" color="pink-4" text-color="black" class="w-full mb-3" />
+        <q-date v-model="userDateOfBirth" mask="YYYY-MM-DD" color="pink-4" text-color="black" class="w-full mb-3" />
         <CustomBtn type="submit" class="max-w-[200px]" @click="isVisible = !isVisible">Select</CustomBtn>
     </div>
-    <CustomBtn type="button" @click="$router.back()">Save</CustomBtn>
+    <CustomBtn type="button" @click="editUser">Save</CustomBtn>
     <CustomBtn @click="deleteAccount">Delete my account</CustomBtn>
 </template>
 

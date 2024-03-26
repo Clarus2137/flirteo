@@ -40,6 +40,7 @@ export const useUserStore = defineStore('user', {
 
                 localStorage.setItem('userToken', JSON.stringify(response.data.token));
                 localStorage.setItem('userData', JSON.stringify(response.data.user));
+                this.user = response.data.user;
                 return true;
             } catch (error) {
                 if (axios.isAxiosError(error)) {
@@ -55,18 +56,18 @@ export const useUserStore = defineStore('user', {
 
         addUserData(newUserData: Partial<User>) {
             let localData;
-
+            console.log('Recieved Data is: ', newUserData);
             try {
                 const stringLocalData = localStorage.getItem('userData');
                 if (stringLocalData === null) {
                     throw new Error('User\'s data doesn\'t exist');
                 }
                 localData = JSON.parse(stringLocalData);
-                console.log('Добавляемые данные:', newUserData);
+                console.log('Local Data is: ', localData);
                 localData = { ...localData, ...newUserData };
-                console.log('Обновлённые данные:', localData);
+                console.log('Updated Local Data is: ', localData);
+                this.user = { ...this.user, ...newUserData };
                 localStorage.setItem('userData', JSON.stringify(localData));
-                console.log('Данные в localStorage:', JSON.parse(localStorage.userData));
                 return true;
             } catch (error) {
                 console.error('Error reading or parsing user data:', error);
@@ -75,6 +76,7 @@ export const useUserStore = defineStore('user', {
         },
 
         async updateUser(updatedUser: Partial<User>) {
+            console.log('Sending Data is: ', updatedUser);
             try {
                 const userToken = JSON.parse(localStorage.userToken);
                 const response = await axios.patch(updateUser, updatedUser, {

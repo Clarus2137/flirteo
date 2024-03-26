@@ -1,6 +1,9 @@
 <script setup lang="ts">
+const emit = defineEmits(['goToAuthorization']);
+
 const logOut = () => {
   localStorage.clear();
+  emit('goToAuthorization');
 }
 </script>
 
