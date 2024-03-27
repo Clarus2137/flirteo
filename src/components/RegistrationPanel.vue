@@ -44,7 +44,7 @@ const validateEmailAndPassword = (): boolean => {
     return isValid;
 }
 
-const handleSubmit = (e: Event) => {
+const handleSubmit = async (e: Event) => {
     e.preventDefault(); // Prevent form from submitting by default
 
     if (!validateEmailAndPassword()) {
@@ -55,10 +55,12 @@ const handleSubmit = (e: Event) => {
             email: enteredEmail.value,
             plainPassword: enteredPassword.value
         }
-        userStore.registerUser(newUser);
-        emit('goToVerification');
-        enteredEmail.value = '';
-        enteredPassword.value = '';
+        const isSuccess = await userStore.registerUser(newUser);
+        if (isSuccess) {
+            emit('goToVerification');
+            enteredEmail.value = '';
+            enteredPassword.value = '';
+        }
     }
 }
 </script>

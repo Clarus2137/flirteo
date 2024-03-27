@@ -5,5 +5,5 @@ import LogIn from 'src/components/LogIn.vue';
 
 
 <template>
-    <LogIn @goToHome="$router.push('/home')" @goToInterests="$router.push('/info/interests')" />
+  <LogIn @goToAdd="$router.push('/add/common')" />
 </template>

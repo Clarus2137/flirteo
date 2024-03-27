@@ -3,6 +3,8 @@ import { ref } from 'vue';
 import { useUserStore } from 'src/stores/userStore';
 
 
+const emit = defineEmits(['goToAdd']);
+
 const title = {
     title: 'Log in to your account',
     subtitle: 'Please enter your e-mail & password to continue'
@@ -15,8 +17,10 @@ const enteredPassword = ref('');
 const isVisibleEmail = ref(false);
 const isVisiblePassword = ref(false);
 
+const isError = ref(false);
+const isAuth = ref(false);
+
 const userStore = useUserStore();
-const emit = defineEmits(['goToInterests', 'goToHome']);
 
 const validateEmailAndPassword = (): boolean => {
     let isValid = true;
@@ -56,17 +60,18 @@ const handleSubmit = async (e: Event) => {
         }
         const isSuccess = await userStore.authoriseUser(userAccount);
         if (isSuccess) {
-            const userInterests = userStore.user.interests;
-            if (userInterests?.length) {
-                emit('goToHome');
-            } else {
-                emit('goToInterests');
+            if (isError.value) {
+                isError.value = !isError.value;
             }
+            isAuth.value = !isError.value;
+            setTimeout(() => {
+                emit('goToAdd');
+            }, 300);
+            enteredEmail.value = '';
+            enteredPassword.value = '';
         } else {
-            console.log('Authorization failed');
+            isError.value = true;
         }
-        enteredEmail.value = '';
-        enteredPassword.value = '';
     }
 }
 </script>
@@ -92,5 +97,20 @@ const handleSubmit = async (e: Event) => {
             </p>
             <CustomBtn type="submit" class="mt-5">Continue</CustomBtn>
         </form>
+        <div class="mt-10 text-sm text-center" v-if="isError">
+            <p class="text-red font-medium">The User doesn't exist or invalid password.</p>
+            <router-link class="inline-block my-3 text-base text-primary font-medium underline" to="/registration">Do
+                you really
+                have an
+                account?</router-link>
+            <p>If you are, check the password and try again or <span
+                    class="reset-link text-primary font-medium underline">just
+                    reset your
+                    password</span>
+            </p>
+        </div>
+        <div class="mt-10 text-green font-medium text-center" v-if="isAuth">
+            <p>Authorization successful</p>
+        </div>
     </div>
 </template>

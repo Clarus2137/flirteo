@@ -1,5 +1,14 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import { useUserStore } from 'src/stores/userStore';
+
+
 const emit = defineEmits(['goToAuthorization']);
+
+const userStore = useUserStore();
+
+const userFirstName = ref('');
+const userLastName = ref('');
 
 const logOut = () => {
   localStorage.clear();

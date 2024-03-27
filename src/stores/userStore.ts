@@ -21,35 +21,35 @@ export const useUserStore = defineStore('user', {
 
                 // With Axios, checking response.ok is not needed, axios will throw an error if the status is not 2xx
                 console.log('Registration successful', response.data); // Logging the response data
+                return true;
             } catch (error) {
-                if (axios.isAxiosError(error)) {
-                    // Handling Axios errors specifically
-                    console.error('Registration failed', error.response?.data);
-                } else {
-                    // Handling unexpected errors
-                    console.error('An unexpected error occurred', error);
-                }
+                // if (axios.isAxiosError(error)) {
+                //   // Handling Axios errors specifically
+                //   console.error('Registration failed', error.response?.data);
+                // } else {
+                //   // Handling unexpected errors
+                //   console.error('An unexpected error occurred', error);
+                // }
+                return false;
             }
         },
 
         async authoriseUser(userAccount: Partial<User>): Promise<boolean> {
             try {
                 const response = await axios.post(authUser, userAccount);
-
-                console.log('Authorization successful', response.data);
-
+                // console.log('Authorization successful', response.data);
                 localStorage.setItem('userToken', JSON.stringify(response.data.token));
                 localStorage.setItem('userData', JSON.stringify(response.data.user));
                 this.user = response.data.user;
                 return true;
             } catch (error) {
-                if (axios.isAxiosError(error)) {
-                    // Handling Axios errors specifically
-                    console.error('Authorization failed', error.response?.data);
-                } else {
-                    // Handling unexpected errors
-                    console.error('An unexpected error occurred', error);
-                }
+                // if (axios.isAxiosError(error)) {
+                //   // Handling Axios errors specifically
+                //   console.error('Authorization failed', error.response?.data);
+                // } else {
+                //   // Handling unexpected errors
+                //   console.error('An unexpected error occurred', error);
+                // }
                 return false;
             }
         },
