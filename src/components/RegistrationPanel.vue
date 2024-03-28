@@ -57,6 +57,7 @@ const handleSubmit = async (e: Event) => {
         }
         const isSuccess = await userStore.registerUser(newUser);
         if (isSuccess) {
+            localStorage.setItem('isRegistered', 'true');
             emit('goToVerification');
             enteredEmail.value = '';
             enteredPassword.value = '';

@@ -38,8 +38,13 @@ export const useUserStore = defineStore('user', {
             try {
                 const response = await axios.post(authUser, userAccount);
                 // console.log('Authorization successful', response.data);
-                localStorage.setItem('userToken', JSON.stringify(response.data.token));
-                localStorage.setItem('userData', JSON.stringify(response.data.user));
+                // localStorage.setItem('userToken', JSON.stringify(response.data.token));
+                // localStorage.setItem('userData', JSON.stringify(response.data.user));
+                const localUser = {
+                    userToken: response.data.token,
+                    userData: response.data.user
+                }
+                localStorage.setItem('currentUser', JSON.stringify(localUser));
                 this.user = response.data.user;
                 return true;
             } catch (error) {
@@ -55,19 +60,24 @@ export const useUserStore = defineStore('user', {
         },
 
         addUserData(newUserData: Partial<User>) {
-            let localData;
-            console.log('Recieved Data is: ', newUserData);
+            let editedData;
             try {
-                const stringLocalData = localStorage.getItem('userData');
-                if (stringLocalData === null) {
+                const strLocalData = localStorage.getItem('currentUser');
+                if (strLocalData === null) {
                     throw new Error('User\'s data doesn\'t exist');
+                } else {
+                    const localData = JSON.parse(strLocalData).userData;
+                    console.log('localStorage: ', localData);
+                    editedData = { ...localData, ...newUserData }; // Goes to the localStorage
+                    this.user = { ...this.user, ...newUserData }; // Saving into the userStore
+                    console.log('userStore: ', this.user);
+                    // Building the object containing the edited user's data
+                    const editedUser = {
+                        userToken: JSON.parse(strLocalData).userToken,
+                        userData: editedData
+                    }
+                    localStorage.setItem('currentUser', JSON.stringify(editedUser)); // Saving into the localStorage
                 }
-                localData = JSON.parse(stringLocalData);
-                console.log('Local Data is: ', localData);
-                localData = { ...localData, ...newUserData };
-                console.log('Updated Local Data is: ', localData);
-                this.user = { ...this.user, ...newUserData };
-                localStorage.setItem('userData', JSON.stringify(localData));
                 return true;
             } catch (error) {
                 console.error('Error reading or parsing user data:', error);
@@ -78,7 +88,7 @@ export const useUserStore = defineStore('user', {
         async updateUser(updatedUser: Partial<User>) {
             console.log('Sending Data is: ', updatedUser);
             try {
-                const userToken = JSON.parse(localStorage.userToken);
+                const userToken = JSON.parse(localStorage.currentUser).userToken;
                 const response = await axios.patch(updateUser, updatedUser, {
                     headers: {
                         'Authorization': `Bearer ${userToken}`

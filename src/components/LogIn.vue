@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { useUserStore } from 'src/stores/userStore';
 
 
-const emit = defineEmits(['goToAdd']);
+const emit = defineEmits(['goToComplete']);
 
 const title = {
     title: 'Log in to your account',
@@ -65,7 +65,7 @@ const handleSubmit = async (e: Event) => {
             }
             isAuth.value = !isError.value;
             setTimeout(() => {
-                emit('goToAdd');
+                emit('goToComplete');
             }, 300);
             enteredEmail.value = '';
             enteredPassword.value = '';

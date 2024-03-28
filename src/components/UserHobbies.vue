@@ -25,17 +25,18 @@ const saveInterests = async () => {
         .map(({ checked, ...newItem }) => newItem);
     const isAdded = userStore.addUserData({ interests: activeInterests });
     if (isAdded) {
-        const updatedUserData: Partial<User> = JSON.parse(localStorage.userData);
-        console.log(updatedUserData);
-        const isSuccess = await userStore.updateUser(updatedUserData);
-        if (isSuccess) {
-            emit('goToHome');
+        const strLocalData = localStorage.getItem('currentUser');
+        if (strLocalData === null) {
+            throw new Error('User\'s data doesn\'t exist in localStorage');
+        } else {
+            const updatedUserData: Partial<User> = JSON.parse(localStorage.currentUser).userData;
+            const isSuccess = await userStore.updateUser(updatedUserData);
+            if (isSuccess) {
+                emit('goToHome');
+            }
         }
     }
 };
-
-// You can call saveInterests directly in your template when the user clicks "Continue"
-console.log(userStore.user);
 </script>
 
 
@@ -53,6 +54,6 @@ console.log(userStore.user);
                 <span class="capitalize">{{ item.name }}</span>
             </div>
         </div>
-        <CustomBtn type="button" @click="saveInterests">Continue</CustomBtn>
+        <CustomBtn type="button" @click="saveInterests">Save</CustomBtn>
     </div>
 </template>

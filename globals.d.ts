@@ -6,6 +6,7 @@ declare global {
         lastName: string,
         dateOfBirth: string,
         location: string,
+        education: string,
         gender: string,
         interests: UserInterests[],
         roles: string[],

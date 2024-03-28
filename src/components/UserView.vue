@@ -29,12 +29,12 @@ function showFullText() {
 }
 
 const userStore = useUserStore();
-const localStorageData = localStorage.getItem('userData');
 
-if (localStorageData === null) {
+const strLocalData = localStorage.getItem('currentUser');
+if (strLocalData === null) {
     throw new Error('Item \'userData\' doesn\'t exist in localStorage');
 } else {
-    const userData: Partial<User> = JSON.parse(localStorage.userData);
+    const userData: Partial<User> = JSON.parse(localStorage.currentUser).userData;
     userStore.setStoreUserData(userData);
 }
 

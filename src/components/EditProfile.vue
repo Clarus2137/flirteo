@@ -14,11 +14,11 @@ const userStore = useUserStore();
 
 // Function to load user data
 const loadUserData = () => {
-    const stringLocalStorage = localStorage.getItem('userData');
-    if (stringLocalStorage === null) {
+    const strLocalStorage = localStorage.getItem('userData');
+    if (strLocalStorage === null) {
         throw new Error('User\'s data doesn\'t exist');
     } else {
-        const userData: Partial<User> = JSON.parse(stringLocalStorage); // Assuming currentUser is the property holding user data. Adjust according to your store structure.
+        const userData: Partial<User> = JSON.parse(strLocalStorage); // Assuming currentUser is the property holding user data. Adjust according to your store structure.
         userStore.user = userData;
         userFirstName.value = userData.firstName || '';
         userLastName.value = userData.lastName || '';

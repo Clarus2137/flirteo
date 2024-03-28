@@ -5,5 +5,5 @@ import LogIn from 'src/components/LogIn.vue';
 
 
 <template>
-  <LogIn @goToAdd="$router.push('/add/common')" />
+    <LogIn @goToComplete="$router.push('/complete')" />
 </template>

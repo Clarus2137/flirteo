@@ -11,6 +11,7 @@ const userFirstName = ref('');
 const userLastName = ref('');
 const userDateOfBirth = ref('');
 const userLocation = ref('');
+const userEducation = ref('');
 
 const userStore = useUserStore();
 
@@ -21,12 +22,14 @@ const addData = (e: Event) => {
     // const dateOfBirth = userDateOfBirth.value ? userDateOfBirth.value : new Date().toISOString().split('T')[0];
     const dateOfBirth = userDateOfBirth.value;
     const location = userLocation.value;
+    const education = userEducation.value;
 
     const addingData: Partial<User> = {
         firstName,
         lastName,
         dateOfBirth,
-        location
+        location,
+        education
     }
     console.log('Adding Data is: ', addingData);
     const isSuccess = userStore.addUserData(addingData);
@@ -38,6 +41,8 @@ const addData = (e: Event) => {
     userLastName.value = '';
     userDateOfBirth.value = '';
     userLocation.value = '';
+    userEducation.value = '';
+
 }
 </script>
 
@@ -64,6 +69,10 @@ const addData = (e: Event) => {
         <div class="location">
             <CustomInput id="location" type="text" v-model="userLocation" required />
             <label for="location">Location</label>
+        </div>
+        <div class="education">
+            <CustomInput id="education" type="text" v-model="userEducation" required />
+            <label for="education">Education</label>
         </div>
         <CustomBtn type="submit">Continue</CustomBtn>
     </form>

@@ -1,10 +1,10 @@
 {
-   "extends": "@quasar/app-vite/tsconfig-preset",
-   "compilerOptions": {
-      "baseUrl": "."
-   },
-   "include": [
-      "./src/**/*",
-      "globals.d.ts"
-   ]
+    "extends": "@quasar/app-vite/tsconfig-preset",
+    "compilerOptions": {
+        "baseUrl": "."
+    },
+    "include": [
+        "./src/**/*",
+        "globals.d.ts"
+    ]
 }
