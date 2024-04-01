@@ -37,7 +37,7 @@ export const useUserStore = defineStore('user', {
         async authoriseUser(userAccount: Partial<User>): Promise<boolean> {
             try {
                 const response = await axios.post(authUser, userAccount);
-                // console.log('Authorization successful', response.data);
+                console.log('Authorization successful', response.data);
                 // localStorage.setItem('userToken', JSON.stringify(response.data.token));
                 // localStorage.setItem('userData', JSON.stringify(response.data.user));
                 const localUser = {
@@ -111,7 +111,7 @@ export const useUserStore = defineStore('user', {
 
         async removeUser() {
             try {
-                const userToken = JSON.parse(localStorage.userToken);
+                const userToken = JSON.parse(localStorage.currentUser).userToken;
                 const response = await axios.delete(deleteUser, {
                     headers: {
                         'Authorization': `Bearer ${userToken}`

@@ -6,8 +6,18 @@ const routes: RouteRecordRaw[] = [
         component: () => import('layouts/StartLayout.vue'),
         children: [{ path: '', component: () => import('pages/StartPage.vue') }],
         beforeEnter: (to, from, next) => {
-            if (localStorage.getItem('isRegistered')) {
-                next({ name: 'auth' });
+            if (localStorage.getItem('isAuthorised') !== null) {
+                const isUserLogged = localStorage.getItem('currentUser');
+                if (isUserLogged !== null) {
+                    const isProfileCompleted = JSON.parse(localStorage.currentUser).userData.firstName;
+                    if (isProfileCompleted !== null) {
+                        next({ name: 'home' });
+                    } else {
+                        next({ name: 'complete' });
+                    }
+                } else {
+                    next({ name: 'auth' });
+                }
             } else {
                 next();
             }
@@ -39,39 +49,27 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/login',
         component: () => import('layouts/AuthLayout.vue'),
-        children: [{ path: '', component: () => import('pages/LogInPage.vue') }],
+        children: [{ path: '', name: 'login', component: () => import('pages/LogInPage.vue') }],
     },
 
     {
         path: '/complete',
         component: () => import('layouts/InfoLayout.vue'),
         children: [
-            { path: '', component: () => import('pages/CompleteProfilePage.vue') }
+            { path: '', name: 'complete', component: () => import('pages/CompleteProfilePage.vue') }
         ],
     },
 
     {
         path: '/home',
         component: () => import('layouts/BaseLayout.vue'),
-        children: [{ path: '', component: () => import('pages/HomePage.vue') }]
+        children: [{ path: '', name: 'home', component: () => import('pages/HomePage.vue') }]
     },
 
     {
-        path: '/search-users',
+        path: '/chat',
         component: () => import('layouts/BaseLayout.vue'),
-        children: [{ path: '', component: () => import('pages/SearchPage.vue') }]
-    },
-
-    {
-        path: '/favorites',
-        component: () => import('layouts/BaseLayout.vue'),
-        children: [{ path: '', component: () => import('pages/FavoritesPage.vue') }]
-    },
-
-    {
-        path: '/chats',
-        component: () => import('layouts/BaseLayout.vue'),
-        children: [{ path: '', component: () => import('pages/ChatsPage.vue') }]
+        children: [{ path: '', component: () => import('pages/ChatPage.vue') }]
     },
 
     {

@@ -3,28 +3,31 @@ import { ref, onMounted } from 'vue';
 import { useUserStore } from 'src/stores/userStore';
 
 
+const emit = defineEmits(['goToAuthorization']);
+
 const isVisible = ref(false);
 
 const userFirstName = ref('');
 const userLastName = ref('');
 const userDateOfBirth = ref('');
 const userLocation = ref('');
+const userEducation = ref('');
 
 const userStore = useUserStore();
 
 // Function to load user data
 const loadUserData = () => {
-    const strLocalStorage = localStorage.getItem('userData');
+    const strLocalStorage = localStorage.getItem('currentUser');
     if (strLocalStorage === null) {
         throw new Error('User\'s data doesn\'t exist');
     } else {
-        const userData: Partial<User> = JSON.parse(strLocalStorage); // Assuming currentUser is the property holding user data. Adjust according to your store structure.
+        const userData: Partial<User> = JSON.parse(strLocalStorage).userData; // Assuming currentUser is the property holding user data. Adjust according to your store structure.
         userStore.user = userData;
         userFirstName.value = userData.firstName || '';
         userLastName.value = userData.lastName || '';
         userDateOfBirth.value = userData.dateOfBirth || '';
         userLocation.value = userData.location || '';
-        console.log(userStore.user);
+        userEducation.value = userData.education || '';
     }
 }
 
@@ -33,12 +36,14 @@ const editUser = async () => {
     const lastName = userLastName.value;
     const dateOfBirth = userDateOfBirth.value ? userDateOfBirth.value : new Date().toISOString().split('T')[0];
     const location = userLocation.value;
+    const education = userEducation.value;
 
     const editedData: Partial<User> = {
         firstName,
         lastName,
         dateOfBirth,
-        location
+        location,
+        education
     }
     console.log('Sending Data is: ', editedData);
     const isSuccess = userStore.addUserData(editedData);
@@ -55,7 +60,7 @@ onMounted(() => {
 const deleteAccount = async () => {
     const isSuccess = await userStore.removeUser();
     if (isSuccess) {
-        console.log('User is gone');
+        emit('goToAuthorization');
     }
 }
 </script>
@@ -83,6 +88,10 @@ const deleteAccount = async () => {
         <div class="location">
             <CustomInput id="location" type="text" v-model="userLocation" />
             <label for="location">Location</label>
+        </div>
+        <div class="education">
+            <CustomInput id="education" type="text" v-model="userEducation" />
+            <label for="education">Education</label>
         </div>
     </div>
     <div class="w-full h-full absolute top-0 left-0 hover:cursor-pointer bg-black opacity-75"

@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { useUserStore } from 'src/stores/userStore';
 
 
-const emit = defineEmits(['goToComplete']);
+const emit = defineEmits(['goToComplete', 'goToHome']);
 
 const title = {
     title: 'Log in to your account',
@@ -60,12 +60,20 @@ const handleSubmit = async (e: Event) => {
         }
         const isSuccess = await userStore.authoriseUser(userAccount);
         if (isSuccess) {
+            if (localStorage.getItem('isAuthorised') === null) {
+                localStorage.setItem('isAuthorised', 'true');
+            }
             if (isError.value) {
                 isError.value = !isError.value;
             }
             isAuth.value = !isError.value;
             setTimeout(() => {
-                emit('goToComplete');
+                const isProfileCompleted = JSON.parse(localStorage.currentUser).userData.firstName
+                if (isProfileCompleted !== null) {
+                    emit('goToHome');
+                } else {
+                    emit('goToComplete');
+                }
             }, 300);
             enteredEmail.value = '';
             enteredPassword.value = '';

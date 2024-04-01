@@ -13,11 +13,11 @@ const logOut = () => {
 }
 
 const loadUserData = () => {
-    const strLocalStorage = localStorage.getItem('userData');
+    const strLocalStorage = localStorage.getItem('currentUser');
     if (strLocalStorage === null) {
         throw new Error('User\'s data doesn\'t exist');
     } else {
-        userStore.user = JSON.parse(localStorage.userData);
+        userStore.user = JSON.parse(strLocalStorage).userData;
     }
 }
 

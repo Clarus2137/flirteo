@@ -5,11 +5,11 @@ import EditProfile from 'src/components/EditProfile.vue';
 
 
 <template>
-  <BackBtn />
-  <div class="profile">
-    <h1 class="mb-10 lexend-bold leading-normal text-center capitalize">Edit profile</h1>
-    <div class="profile__details details grid gap-y-6">
-      <EditProfile />
+    <BackBtn />
+    <div class="profile">
+        <h1 class="mb-5 lexend-bold leading-normal text-center capitalize">Edit profile</h1>
+        <div class="profile__details details grid gap-y-6">
+            <EditProfile @goToAuthorization="$router.push('/authorization')" />
+        </div>
     </div>
-  </div>
 </template>
