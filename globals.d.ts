@@ -29,6 +29,11 @@ declare global {
         timezone_type: number,
         timezone: string
     }
+
+    interface PageTitle {
+        title: string,
+        subtitle: string
+    }
 }
 
 export { };

@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useUserStore } from 'src/stores/userStore';
 
 
-const title = {
+const emit = defineEmits(['goToInterests', 'sendTitle']);
+
+const title: PageTitle = {
     title: 'Gender',
     subtitle: 'Please select your gender'
 }
@@ -11,8 +13,6 @@ const title = {
 const userStore = useUserStore();
 
 const activeGender = ref<string | null>(null);
-
-const emit = defineEmits(['goToInterests']);
 
 const chooseGender = (gender: string) => {
     if (activeGender.value !== gender) {
@@ -27,15 +27,26 @@ const setGender = () => {
         emit('goToInterests');
     }
 }
+
+const loadUserData = (strLocalStorage: string) => {
+    const userData: Partial<User> = JSON.parse(strLocalStorage).userData; // Assuming currentUser is the property holding user data. Adjust according to your store structure.
+    userStore.user = userData;
+    activeGender.value = userData.gender || '';
+}
+
+onMounted(() => {
+    const strLocalStorage = localStorage.getItem('currentUser');
+    if (strLocalStorage !== null) {
+        loadUserData(strLocalStorage);
+    }
+    emit('sendTitle', title);
+})
 </script>
 
 
 
 <template>
-    <div class="profile__gender gender flex flex-col items-center gap-y-10">
-        <div class="gender__title w-full">
-            <TitleRow :title="title" />
-        </div>
+    <div class="details__gender gender flex flex-col items-center gap-y-10">
         <div class="gender__items w-full flex justify-around gap-8">
             <div class="gender__item gender__male p-8 rounded-2xl border border-solid border-inactive text-center hover:cursor-pointer"
                 :class="{ 'border-primary active': activeGender === 'male' }" @click="chooseGender('male')">

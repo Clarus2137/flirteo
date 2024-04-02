@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useUserStore } from 'src/stores/userStore';
 
 
-const emit = defineEmits(['goToGender']);
+const emit = defineEmits(['goToGender', 'sendTitle']);
+
+const title: PageTitle = {
+    title: 'Your information',
+    subtitle: 'Please fill the fields below'
+}
 
 const isVisible = ref(false);
 
@@ -44,6 +49,24 @@ const addData = (e: Event) => {
     userEducation.value = '';
 
 }
+
+const loadUserData = (strLocalStorage: string) => {
+    const userData: Partial<User> = JSON.parse(strLocalStorage).userData; // Assuming currentUser is the property holding user data. Adjust according to your store structure.
+    userStore.user = userData;
+    userFirstName.value = userData.firstName || '';
+    userLastName.value = userData.lastName || '';
+    userDateOfBirth.value = userData.dateOfBirth || '';
+    userLocation.value = userData.location || '';
+    userEducation.value = userData.education || '';
+}
+
+onMounted(() => {
+    const strLocalStorage = localStorage.getItem('currentUser');
+    if (strLocalStorage !== null) {
+        loadUserData(strLocalStorage);
+    }
+    emit('sendTitle', title);
+});
 </script>
 
 

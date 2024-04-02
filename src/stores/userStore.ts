@@ -6,8 +6,7 @@ import axios from 'axios';
 const apiUrl = process.env.API_SERVER;
 const regUser = `${apiUrl}/api/users`;
 const authUser = `${apiUrl}/auth`;
-const updateUser = `${apiUrl}/api/users/me`;
-const deleteUser = `${apiUrl}/api/users/me`;
+const apiUser = `${apiUrl}/api/users/me`;
 
 export const useUserStore = defineStore('user', {
     state: () => ({
@@ -67,10 +66,8 @@ export const useUserStore = defineStore('user', {
                     throw new Error('User\'s data doesn\'t exist');
                 } else {
                     const localData = JSON.parse(strLocalData).userData;
-                    console.log('localStorage: ', localData);
                     editedData = { ...localData, ...newUserData }; // Goes to the localStorage
                     this.user = { ...this.user, ...newUserData }; // Saving into the userStore
-                    console.log('userStore: ', this.user);
                     // Building the object containing the edited user's data
                     const editedUser = {
                         userToken: JSON.parse(strLocalData).userToken,
@@ -89,7 +86,7 @@ export const useUserStore = defineStore('user', {
             console.log('Sending Data is: ', updatedUser);
             try {
                 const userToken = JSON.parse(localStorage.currentUser).userToken;
-                const response = await axios.patch(updateUser, updatedUser, {
+                const response = await axios.patch(apiUser, updatedUser, {
                     headers: {
                         'Authorization': `Bearer ${userToken}`
                     }
@@ -112,7 +109,7 @@ export const useUserStore = defineStore('user', {
         async removeUser() {
             try {
                 const userToken = JSON.parse(localStorage.currentUser).userToken;
-                const response = await axios.delete(deleteUser, {
+                const response = await axios.delete(apiUser, {
                     headers: {
                         'Authorization': `Bearer ${userToken}`
                     }
@@ -133,8 +130,32 @@ export const useUserStore = defineStore('user', {
             }
         },
 
-        setStoreUserData(userData: Partial<User>) {
+        getStoreUserData(userData: Partial<User>) {
             this.user = userData;
+        },
+
+        async isUserExists() {
+            try {
+                const userToken = JSON.parse(localStorage.currentUser).userToken;
+                const response = await axios.get(apiUser, {
+                    headers: {
+                        'Authorization': `Bearer ${userToken}`
+                    }
+                });
+                console.log('User exists', response.data);
+                return true;
+            } catch (error) {
+                if (axios.isAxiosError(error)) {
+                    // Handling Axios errors specifically
+                    console.error('User removing failed', error);
+                } else {
+                    // Handling unexpected errors
+                    console.error('An unexpected error occurred', error);
+                }
+
+                console.log('The User doesn\'t exist');
+                return false;
+            }
         }
     },
 });
