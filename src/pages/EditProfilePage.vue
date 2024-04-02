@@ -23,7 +23,6 @@ const nextStep = (currentStep: number) => {
 
 
 <template>
-    <BackBtn />
     <div class="profile">
         <div class="profile__details details grid gap-y-6">
             <div class="details__title">

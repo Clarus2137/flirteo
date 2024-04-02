@@ -74,7 +74,7 @@ const routes: RouteRecordRaw[] = [
 
     {
         path: '/profile',
-        component: () => import('layouts/BaseLayout.vue'),
+        component: () => import('layouts/InfoLayout.vue'),
         children: [
             { path: '', component: () => import('pages/ProfilePage.vue') },
             { path: 'edit', component: () => import('pages/EditProfilePage.vue') }
