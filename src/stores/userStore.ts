@@ -7,10 +7,14 @@ const apiUrl = process.env.API_SERVER;
 const regUser = `${apiUrl}/api/users`;
 const authUser = `${apiUrl}/auth`;
 const apiUser = `${apiUrl}/api/users/me`;
+const prompts = `${apiUrl}/api/prompts`;
+const resp_types = `${apiUrl}/api/response_types`;
+// const places = `${apiUrl}/api/places`;
 
 export const useUserStore = defineStore('user', {
     state: () => ({
-        user: {} as Partial<User>
+        user: {} as Partial<User>,
+        prompts: [] as Prompts[]
     }),
 
     actions: {
@@ -147,7 +151,7 @@ export const useUserStore = defineStore('user', {
             } catch (error) {
                 if (axios.isAxiosError(error)) {
                     // Handling Axios errors specifically
-                    console.error('User removing failed', error);
+                    console.error('Axios failed to get Users\'s data', error);
                 } else {
                     // Handling unexpected errors
                     console.error('An unexpected error occurred', error);
@@ -156,6 +160,78 @@ export const useUserStore = defineStore('user', {
                 console.log('The User doesn\'t exist');
                 return false;
             }
-        }
+        },
+
+        async getPrompts() {
+            try {
+                const userToken = JSON.parse(localStorage.currentUser).userToken;
+                const response = await axios.get(prompts, {
+                    headers: {
+                        'Authorization': `Bearer ${userToken}`,
+                        'Accept-Language': 'pl'
+                    }
+                });
+                console.log('The prompts are: ', response.data);
+                this.prompts = response.data;
+                return true;
+            } catch (error) {
+                if (axios.isAxiosError(error)) {
+                    // Handling Axios errors specifically
+                    console.error('Axios failed to get prompts', error);
+                } else {
+                    // Handling unexpected errors
+                    console.error('An unexpected error occurred', error);
+                }
+                return false;
+            }
+        },
+
+        async getResponseTypes() {
+            try {
+                const userToken = JSON.parse(localStorage.currentUser).userToken;
+                const response = await axios.get(resp_types, {
+                    headers: {
+                        'Authorization': `Bearer ${userToken}`,
+                        'Accept-Language': 'pl'
+                    }
+                });
+                console.log('The response types are: ', response.data);
+
+                return true;
+            } catch (error) {
+                if (axios.isAxiosError(error)) {
+                    // Handling Axios errors specifically
+                    console.error('Axios failed to get response types', error);
+                } else {
+                    // Handling unexpected errors
+                    console.error('An unexpected error occurred', error);
+                }
+                return false;
+            }
+        },
+
+        // async getPlaces() {
+        //     try {
+        //         const userToken = JSON.parse(localStorage.currentUser).userToken;
+        //         const response = await axios.get(places, {
+        //             headers: {
+        //                 'Authorization': `Bearer ${userToken}`,
+        //                 'Accept-Language': 'pl'
+        //             }
+        //         });
+        //         console.log('The places are: ', response.data);
+
+        //         return true;
+        //     } catch (error) {
+        //         if (axios.isAxiosError(error)) {
+        //             // Handling Axios errors specifically
+        //             console.error('Axios failed to get places', error);
+        //         } else {
+        //             // Handling unexpected errors
+        //             console.error('An unexpected error occurred', error);
+        //         }
+        //         return false;
+        //     }
+        // }
     },
 });

@@ -28,8 +28,6 @@ const calculateAge = (birthDateString: string): number => {
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const userAge = calculateAge(userStore.user.dateOfBirth!);
-
-userStore.isUserExists();
 </script>
 
 

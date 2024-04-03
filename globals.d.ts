@@ -34,6 +34,11 @@ declare global {
         title: string,
         subtitle: string
     }
+
+    interface Prompts {
+        id: number,
+        name: string
+    }
 }
 
 export { };

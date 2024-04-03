@@ -32,11 +32,17 @@ onMounted(() => {
     <h1 class="lexend-bold leading-normal text-center capitalize">My profile</h1>
     <div class="profile__user user text-center">
         <div class="user__photo photo">
-            <div class="photo__img inline-block mx-auto rounded-[50%] w-[100px] aspect-square"></div>
+            <div class="photo__img inline-block p-1 mx-auto rounded-[50%] w-[100px] aspect-square">
+                <img src="./../assets/user-male.png" class="max-h-full mx-auto" alt="User Male"
+                    v-if="userStore.user.gender === 'male'">
+                <img src="./../assets/user-female.png" class="max-h-full mx-auto" alt="User Female"
+                    v-else-if="userStore.user.gender === 'female'">
+                <img src="./../assets/user-neutral.png" class="max-h-full mx-auto" alt="User Neutral" v-else>
+            </div>
         </div>
         <div class="user__name lexend-bold text-lg">
             <p><span class="user__firstname">{{ userStore.user.firstName }}</span> <span class="user__lastname">{{
-                userStore.user.lastName }}</span>
+                        userStore.user.lastName }}</span>
             </p>
         </div>
         <div class="user__email lexend-light text-secondary text-sm">
