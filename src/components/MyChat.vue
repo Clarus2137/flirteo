@@ -32,7 +32,7 @@ onMounted(async () => {
         </div>
         <div class="chat__prompts" v-else>
             <div class="prompt" v-for="prompt in prompts" :key="prompt.id">
-                <CustomBtn type="button">{{ prompt.name }}</CustomBtn>
+                <CustomBtn type="button">{{ prompt.id }} {{ prompt.name }}</CustomBtn>
             </div>
         </div>
     </div>
