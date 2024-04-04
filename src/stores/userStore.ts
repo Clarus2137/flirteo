@@ -15,7 +15,7 @@ export const useUserStore = defineStore('user', {
         user: {} as Partial<User>,
         prompts: [] as Prompts[],
         respTypes: [] as ResponseAI[],
-        session: {} as Session
+        session: {} as Partial<Session>
     }),
 
     actions: {
@@ -42,8 +42,6 @@ export const useUserStore = defineStore('user', {
             try {
                 const response = await axios.post(authUser, userAccount);
                 console.log('Authorization successful', response.data);
-                // localStorage.setItem('userToken', JSON.stringify(response.data.token));
-                // localStorage.setItem('userData', JSON.stringify(response.data.user));
                 const localUser = {
                     userToken: response.data.token,
                     userData: response.data.user
@@ -82,7 +80,6 @@ export const useUserStore = defineStore('user', {
                 }
                 return true;
             } catch (error) {
-                console.error('Error reading or parsing user data:', error);
                 return false;
             }
         },
@@ -99,14 +96,11 @@ export const useUserStore = defineStore('user', {
                 console.log('User updating successful', response.data);
                 return true;
             } catch (error) {
-                if (axios.isAxiosError(error)) {
-                    // Handling Axios errors specifically
-                    console.error('User updating failed', error);
-                } else {
-                    // Handling unexpected errors
-                    console.error('An unexpected error occurred', error);
-                }
-
+                // if (axios.isAxiosError(error)) {
+                //     console.error('User updating failed', error);
+                // } else {
+                //     console.error('An unexpected error occurred', error);
+                // }
                 return false;
             }
         },
@@ -123,14 +117,11 @@ export const useUserStore = defineStore('user', {
                 localStorage.clear();
                 return true;
             } catch (error) {
-                if (axios.isAxiosError(error)) {
-                    // Handling Axios errors specifically
-                    console.error('User removing failed', error);
-                } else {
-                    // Handling unexpected errors
-                    console.error('An unexpected error occurred', error);
-                }
-
+                // if (axios.isAxiosError(error)) {
+                //     console.error('User removing failed', error);
+                // } else {
+                //     console.error('An unexpected error occurred', error);
+                // }
                 return false;
             }
         },
@@ -150,14 +141,11 @@ export const useUserStore = defineStore('user', {
                 console.log('User exists', response.data);
                 return true;
             } catch (error) {
-                if (axios.isAxiosError(error)) {
-                    // Handling Axios errors specifically
-                    console.error('Axios failed to get Users\'s data', error);
-                } else {
-                    // Handling unexpected errors
-                    console.error('An unexpected error occurred', error);
-                }
-
+                // if (axios.isAxiosError(error)) {
+                //     console.error('Axios failed to get Users\'s data', error);
+                // } else {
+                //     console.error('An unexpected error occurred', error);
+                // }
                 console.log('The User doesn\'t exist');
                 return false;
             }
@@ -176,13 +164,11 @@ export const useUserStore = defineStore('user', {
                 this.prompts = response.data;
                 return true;
             } catch (error) {
-                if (axios.isAxiosError(error)) {
-                    // Handling Axios errors specifically
-                    console.error('Axios failed to get prompts', error);
-                } else {
-                    // Handling unexpected errors
-                    console.error('An unexpected error occurred', error);
-                }
+                // if (axios.isAxiosError(error)) {
+                //     console.error('Axios failed to get prompts', error);
+                // } else {
+                //     console.error('An unexpected error occurred', error);
+                // }
                 return false;
             }
         },
@@ -200,39 +186,23 @@ export const useUserStore = defineStore('user', {
                 this.respTypes = response.data
                 return true;
             } catch (error) {
-                if (axios.isAxiosError(error)) {
-                    // Handling Axios errors specifically
-                    console.error('Axios failed to get response types', error);
-                } else {
-                    // Handling unexpected errors
-                    console.error('An unexpected error occurred', error);
-                }
+                // if (axios.isAxiosError(error)) {
+                //     console.error('Axios failed to get response types', error);
+                // } else {
+                //     console.error('An unexpected error occurred', error);
+                // }
                 return false;
             }
         },
 
-        // async getPlaces() {
-        //     try {
-        //         const userToken = JSON.parse(localStorage.currentUser).userToken;
-        //         const response = await axios.get(places, {
-        //             headers: {
-        //                 'Authorization': `Bearer ${userToken}`,
-        //                 'Accept-Language': 'pl'
-        //             }
-        //         });
-        //         console.log('The places are: ', response.data);
-
-        //         return true;
-        //     } catch (error) {
-        //         if (axios.isAxiosError(error)) {
-        //             // Handling Axios errors specifically
-        //             console.error('Axios failed to get places', error);
-        //         } else {
-        //             // Handling unexpected errors
-        //             console.error('An unexpected error occurred', error);
-        //         }
-        //         return false;
-        //     }
-        // }
+        setToSession(options: Partial<Session>) {
+            try {
+                this.session = options;
+                console.log(this.session);
+                return true;
+            } catch (error) {
+                return false;
+            }
+        }
     },
 });

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useUserStore } from 'src/stores/userStore';
+import CustomBtn from './UI/CustomBtn.vue';
 
 
 const userStore = useUserStore();
@@ -30,6 +31,15 @@ const setPlace = (place: string) => {
 
 const setStyle = (style: string) => {
     selectedStyle.value = style;
+}
+
+const buildSession = () => {
+    const options = {
+        prompt: selectedPrompt.value,
+        place: selectedPlace.value,
+        responseType: selectedStyle.value
+    }
+    userStore.setToSession(options);
 }
 
 onMounted(async () => {
@@ -73,6 +83,7 @@ onMounted(async () => {
                     <CustomBtn @click="setStyle(style.name)">{{ style.name }}</CustomBtn>
                 </div>
             </div>
+            <CustomBtn @click="buildSession" v-if="selectedStyle !== ''">Finish</CustomBtn>
         </div>
     </div>
 </template>
