@@ -8,13 +8,14 @@ const regUser = `${apiUrl}/api/users`;
 const authUser = `${apiUrl}/auth`;
 const apiUser = `${apiUrl}/api/users/me`;
 const prompts = `${apiUrl}/api/prompts`;
-const resp_types = `${apiUrl}/api/response_types`;
-// const places = `${apiUrl}/api/places`;
+const respTypes = `${apiUrl}/api/response_types`;
 
 export const useUserStore = defineStore('user', {
     state: () => ({
         user: {} as Partial<User>,
-        prompts: [] as Prompts[]
+        prompts: [] as Prompts[],
+        respTypes: [] as ResponseAI[],
+        session: {} as Session
     }),
 
     actions: {
@@ -171,7 +172,7 @@ export const useUserStore = defineStore('user', {
                         'Accept-Language': 'pl'
                     }
                 });
-                console.log('The prompts are: ', response.data);
+                // console.log('The prompts are: ', response.data);
                 this.prompts = response.data;
                 return true;
             } catch (error) {
@@ -189,14 +190,14 @@ export const useUserStore = defineStore('user', {
         async getResponseTypes() {
             try {
                 const userToken = JSON.parse(localStorage.currentUser).userToken;
-                const response = await axios.get(resp_types, {
+                const response = await axios.get(respTypes, {
                     headers: {
                         'Authorization': `Bearer ${userToken}`,
                         'Accept-Language': 'pl'
                     }
                 });
-                console.log('The response types are: ', response.data);
-
+                // console.log('The response types are: ', response.data);
+                this.respTypes = response.data
                 return true;
             } catch (error) {
                 if (axios.isAxiosError(error)) {

@@ -7,17 +7,42 @@ const userStore = useUserStore();
 
 const isVisible = ref(false);
 
+const prompts = ref<Prompts[]>([]);
+const respTypes = ref<ResponseAI[]>([]);
+const places = ref<Places[]>([]);
+
+const selectedPrompt = ref('');
+const selectedPlace = ref('');
+const selectedStyle = ref('');
+
 const startChat = () => {
     isVisible.value = !isVisible.value;
 }
 
-const prompts = ref<Prompts[]>([]);
+const setPrompt = (promptPlaces: Places[], prompt: string) => {
+    places.value = promptPlaces;
+    selectedPrompt.value = prompt;
+}
+
+const setPlace = (place: string) => {
+    selectedPlace.value = place;
+}
+
+const setStyle = (style: string) => {
+    selectedStyle.value = style;
+}
 
 onMounted(async () => {
     const isPrompts = await userStore.getPrompts();
     if (isPrompts) {
         prompts.value = userStore.prompts;
-        console.log(prompts);
+        // console.log(prompts);
+    }
+
+    const isTypes = await userStore.getResponseTypes();
+    if (isTypes) {
+        respTypes.value = userStore.respTypes;
+        console.log(respTypes);
     }
 });
 </script>
@@ -30,9 +55,23 @@ onMounted(async () => {
             <p>Would you like to start a new conversation with your assistent?</p>
             <CustomBtn type="button" @click="startChat">Start</CustomBtn>
         </div>
-        <div class="chat__prompts" v-else>
-            <div class="prompt" v-for="prompt in prompts" :key="prompt.id">
-                <CustomBtn type="button">{{ prompt.id }} {{ prompt.name }}</CustomBtn>
+        <div class="chat__options options" v-else>
+            <div class="options__prompts prompts" v-if="selectedPrompt === ''">
+                <div class="prompts__item prompt" v-for="prompt in prompts" :key="prompt.id">
+                    <CustomBtn type="button" @click="setPrompt(prompt.places, prompt.name)">{{ prompt.id }} {{
+            prompt.name }}
+                    </CustomBtn>
+                </div>
+            </div>
+            <div class="options__places places" v-if="selectedPlace === ''">
+                <div class="places__item place" v-for="place in places" :key="place.id">
+                    <CustomBtn @click="setPlace(place.name)">{{ place.name }}</CustomBtn>
+                </div>
+            </div>
+            <div class="options__styles styles" v-if="selectedPlace !== ''">
+                <div class="styles__item style" v-for="style in respTypes" :key="style.id">
+                    <CustomBtn @click="setStyle(style.name)">{{ style.name }}</CustomBtn>
+                </div>
             </div>
         </div>
     </div>

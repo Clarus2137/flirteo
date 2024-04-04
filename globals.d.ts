@@ -35,8 +35,38 @@ declare global {
         subtitle: string
     }
 
+    interface Session {
+        user: string,
+        prompt: string,
+        responseType: string,
+        messages: Messages[],
+        place: string,
+        gender: string
+
+    }
+
+    interface Messages {
+        content: string,
+        attachment: string,
+        response: string
+    }
+
     interface Prompts {
         id: number,
+        name: string,
+        places: Places[]
+    }
+
+    interface Places {
+        id: number,
+        icon: string,
+        active: boolean,
+        name: string
+    }
+
+    interface ResponseAI {
+        id: number,
+        icon: string,
         name: string
     }
 }
