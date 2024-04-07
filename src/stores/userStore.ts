@@ -1,4 +1,3 @@
-// stores/users.ts
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
@@ -7,8 +6,7 @@ const apiUrl = process.env.API_SERVER;
 const regUser = `${apiUrl}/api/users`;
 const authUser = `${apiUrl}/auth`;
 const apiUser = `${apiUrl}/api/users/me`;
-const prompts = `${apiUrl}/api/prompts`;
-const respTypes = `${apiUrl}/api/response_types`;
+
 
 export const useUserStore = defineStore('user', {
     state: () => ({
@@ -147,60 +145,6 @@ export const useUserStore = defineStore('user', {
                 //     console.error('An unexpected error occurred', error);
                 // }
                 console.log('The User doesn\'t exist');
-                return false;
-            }
-        },
-
-        async getPrompts() {
-            try {
-                const userToken = JSON.parse(localStorage.currentUser).userToken;
-                const response = await axios.get(prompts, {
-                    headers: {
-                        'Authorization': `Bearer ${userToken}`,
-                        'Accept-Language': 'pl'
-                    }
-                });
-                // console.log('The prompts are: ', response.data);
-                this.prompts = response.data;
-                return true;
-            } catch (error) {
-                // if (axios.isAxiosError(error)) {
-                //     console.error('Axios failed to get prompts', error);
-                // } else {
-                //     console.error('An unexpected error occurred', error);
-                // }
-                return false;
-            }
-        },
-
-        async getResponseTypes() {
-            try {
-                const userToken = JSON.parse(localStorage.currentUser).userToken;
-                const response = await axios.get(respTypes, {
-                    headers: {
-                        'Authorization': `Bearer ${userToken}`,
-                        'Accept-Language': 'pl'
-                    }
-                });
-                // console.log('The response types are: ', response.data);
-                this.respTypes = response.data
-                return true;
-            } catch (error) {
-                // if (axios.isAxiosError(error)) {
-                //     console.error('Axios failed to get response types', error);
-                // } else {
-                //     console.error('An unexpected error occurred', error);
-                // }
-                return false;
-            }
-        },
-
-        setToSession(options: Partial<Session>) {
-            try {
-                this.session = options;
-                console.log(this.session);
-                return true;
-            } catch (error) {
                 return false;
             }
         }

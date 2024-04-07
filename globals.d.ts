@@ -36,19 +36,18 @@ declare global {
     }
 
     interface Session {
+        id: string
         user: string,
         prompt: string,
         responseType: string,
         messages: Messages[],
         place: string,
         gender: string
-
     }
 
     interface Messages {
         content: string,
-        attachment: string,
-        response: string
+        attachment: string
     }
 
     interface Prompts {

@@ -1,26 +1,40 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useUserStore } from 'src/stores/userStore';
-import CustomBtn from './UI/CustomBtn.vue';
+import { ref, Ref, onMounted } from 'vue';
+import { useChatStore } from 'src/stores/chatStore';
 
 
-const userStore = useUserStore();
+const chatStore = useChatStore();
 
-const isVisible = ref(false);
+const apiUrl = process.env.API_SERVER;
+const promptsSource = `${apiUrl}/api/prompts/`;
+const respTypesSource = `${apiUrl}/api/response_types/`;
+const userID = JSON.parse(localStorage.currentUser).userData.id;
+const userSource = `${apiUrl}/api/users/${userID}`;
+
+const isOptions = ref(true);
+const isFirst = ref(true);
+
+const step = ref(1);
+const stepsDone: Ref<{ [key: number]: boolean }> = ref({});
+
+const nextStep = (currentStep: number) => {
+    stepsDone.value[currentStep] = true;
+    step.value = currentStep + 1;
+
+}
 
 const prompts = ref<Prompts[]>([]);
 const respTypes = ref<ResponseAI[]>([]);
 const places = ref<Places[]>([]);
 
-const selectedPrompt = ref('');
+const selectedPrompt = ref(0);
+const selectedStyle = ref(0);
 const selectedPlace = ref('');
-const selectedStyle = ref('');
+const selectedGender = ref('');
 
-const startChat = () => {
-    isVisible.value = !isVisible.value;
-}
+const userMessage = ref('');
 
-const setPrompt = (promptPlaces: Places[], prompt: string) => {
+const setPrompt = (promptPlaces: Places[], prompt: number) => {
     places.value = promptPlaces;
     selectedPrompt.value = prompt;
 }
@@ -29,30 +43,47 @@ const setPlace = (place: string) => {
     selectedPlace.value = place;
 }
 
-const setStyle = (style: string) => {
+const setStyle = (style: number) => {
     selectedStyle.value = style;
 }
 
-const buildSession = () => {
+const buildOptions = () => {
     const options = {
-        prompt: selectedPrompt.value,
+        user: userSource,
+        prompt: `${promptsSource}${selectedPrompt.value}`,
+        responseType: `${respTypesSource}${selectedStyle.value}`,
         place: selectedPlace.value,
-        responseType: selectedStyle.value
+        gender: selectedGender.value
     }
-    userStore.setToSession(options);
+    isOptions.value = !isOptions.value;
+    chatStore.getSessionOptions(options);
+}
+
+const handleSubmit = (e: Event) => {
+    e.preventDefault();
+    const message: Messages = {
+        content: userMessage.value,
+        attachment: ''
+    }
+    if (!isFirst.value) {
+        chatStore.sendMessage(message);
+    } else {
+        chatStore.createSession(message);
+        isFirst.value = !isFirst.value;
+    }
 }
 
 onMounted(async () => {
-    const isPrompts = await userStore.getPrompts();
+    const isPrompts = await chatStore.getPrompts();
     if (isPrompts) {
-        prompts.value = userStore.prompts;
+        prompts.value = chatStore.prompts;
         // console.log(prompts);
     }
 
-    const isTypes = await userStore.getResponseTypes();
+    const isTypes = await chatStore.getResponseTypes();
     if (isTypes) {
-        respTypes.value = userStore.respTypes;
-        console.log(respTypes);
+        respTypes.value = chatStore.respTypes;
+        console.log(respTypes.value);
     }
 });
 </script>
@@ -61,29 +92,79 @@ onMounted(async () => {
 
 <template>
     <div class="chat">
-        <div class="chat__start flex" v-if="!isVisible">
-            <p>Would you like to start a new conversation with your assistent?</p>
-            <CustomBtn type="button" @click="startChat">Start</CustomBtn>
-        </div>
-        <div class="chat__options options" v-else>
-            <div class="options__prompts prompts" v-if="selectedPrompt === ''">
-                <div class="prompts__item prompt" v-for="prompt in prompts" :key="prompt.id">
-                    <CustomBtn type="button" @click="setPrompt(prompt.places, prompt.name)">{{ prompt.id }} {{
-            prompt.name }}
-                    </CustomBtn>
-                </div>
-            </div>
-            <div class="options__places places" v-if="selectedPlace === ''">
-                <div class="places__item place" v-for="place in places" :key="place.id">
-                    <CustomBtn @click="setPlace(place.name)">{{ place.name }}</CustomBtn>
-                </div>
-            </div>
-            <div class="options__styles styles" v-if="selectedPlace !== ''">
-                <div class="styles__item style" v-for="style in respTypes" :key="style.id">
-                    <CustomBtn @click="setStyle(style.name)">{{ style.name }}</CustomBtn>
-                </div>
-            </div>
-            <CustomBtn @click="buildSession" v-if="selectedStyle !== ''">Finish</CustomBtn>
+        <h1 class="mb-8 lexend-bold text-2xl text-center">Please give the assistent some information</h1>
+        <q-stepper v-model="step" vertical color="primary" animated v-if="isOptions">
+            <q-step :name="1" title="Gender" icon="settings" :done="step > 1">
+                <p class="body-text lexend-light text-secondary">Please choose the gender of the person you'd like to
+                    chat with</p>
+                <CustomBtn @click="selectedGender = 'male'; nextStep(1)">Male</CustomBtn>
+                <CustomBtn @click="selectedGender = 'female'; nextStep(1)">Female</CustomBtn>
+            </q-step>
+
+            <q-step :name="2" title="Mode" icon="settings" :done="step > 2">
+                <p class="body-text lexend-light text-secondary">Choose conversation mode</p>
+                <CustomBtn v-for="prompt in prompts" :key="prompt.id"
+                    @click="setPrompt(prompt.places, prompt.id); nextStep(2)">{{
+                        prompt.name }}</CustomBtn>
+                <q-stepper-navigation>
+                    <q-btn flat @click="step = 1" color="primary" label="Back" class="q-ml-sm" />
+                </q-stepper-navigation>
+            </q-step>
+
+            <q-step :name="3" title="Place" icon="settings" :done="step > 3">
+                <p class="body-text lexend-light text-secondary">Where would you like to go together?</p>
+                <CustomBtn v-for="place in places" :key="place.id" @click="setPlace(place.name); nextStep(3)">{{
+                    place.name }}
+                </CustomBtn>
+                <q-stepper-navigation>
+                    <q-btn flat @click="step = 2" color="primary" label="Back" class="q-ml-sm" />
+                </q-stepper-navigation>
+            </q-step>
+
+            <q-step :name="4" title="Style" icon="settings" :done="step > 4">
+                <p class="body-text lexend-light text-secondary">What kind of conversation do you need?</p>
+                <CustomBtn v-for="style in respTypes" :key="style.id" @click="setStyle(style.id); nextStep(4)">{{
+                    style.name }}
+                </CustomBtn>
+                <q-stepper-navigation>
+                    <q-btn flat @click="step = 3" color="primary" label="Back" class="q-ml-sm" />
+                </q-stepper-navigation>
+            </q-step>
+
+            <q-step :name="5" title="Finish" icon="settings">
+                <q-stepper-navigation>
+                    <q-btn color="primary" label="Finish" @click="buildOptions" />
+                    <q-btn flat @click="step = 4" color="primary" label="Back" class="q-ml-sm" />
+                </q-stepper-navigation>
+            </q-step>
+        </q-stepper>
+        <div class="chat__body" v-if="!isOptions">
+            <form @submit="handleSubmit">
+                <CustomInput type="text" v-model="userMessage" />
+                <CustomBtn type="submit" v-if="isFirst">Start conversation</CustomBtn>
+                <CustomBtn type="submit" v-else>Send</CustomBtn>
+            </form>
         </div>
     </div>
 </template>
+
+
+
+<style lang="scss">
+.chat {
+    .q-stepper--vertical .q-stepper__tab {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .q-stepper__step-inner {
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: 15px;
+    }
+
+    .q-stepper__step-content {
+        padding-left: 36px;
+    }
+}
+</style>

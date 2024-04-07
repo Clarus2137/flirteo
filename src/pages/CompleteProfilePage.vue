@@ -10,7 +10,7 @@ const getTitle = (recievedTitle: PageTitle) => {
     pageTitle.value = recievedTitle;
 }
 
-const step = ref<number>(1);
+const step = ref(1);
 const stepsDone: Ref<{ [key: number]: boolean }> = ref({});
 
 const nextStep = (currentStep: number) => {
