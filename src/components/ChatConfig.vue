@@ -5,6 +5,8 @@ import { useChatStore } from 'src/stores/chatStore';
 
 const chatStore = useChatStore();
 
+const emit = defineEmits(['goToChat']);
+
 const apiUrl = process.env.API_SERVER;
 const promptsSource = `${apiUrl}/api/prompts/`;
 const respTypesSource = `${apiUrl}/api/response_types/`;
@@ -12,7 +14,6 @@ const userID = JSON.parse(localStorage.currentUser).userData.id;
 const userSource = `${apiUrl}/api/users/${userID}`;
 
 const isOptions = ref(true);
-const isFirst = ref(true);
 
 const step = ref(1);
 const stepsDone: Ref<{ [key: number]: boolean }> = ref({});
@@ -31,8 +32,6 @@ const selectedPrompt = ref(0);
 const selectedStyle = ref(0);
 const selectedPlace = ref('');
 const selectedGender = ref('');
-
-const userMessage = ref('');
 
 const setPrompt = (promptPlaces: Places[], prompt: number) => {
     places.value = promptPlaces;
@@ -55,22 +54,8 @@ const buildOptions = () => {
         place: selectedPlace.value,
         gender: selectedGender.value
     }
-    isOptions.value = !isOptions.value;
     chatStore.getSessionOptions(options);
-}
-
-const handleSubmit = (e: Event) => {
-    e.preventDefault();
-    const message: Messages = {
-        content: userMessage.value,
-        attachment: ''
-    }
-    if (!isFirst.value) {
-        chatStore.sendMessage(message);
-    } else {
-        chatStore.createSession(message);
-        isFirst.value = !isFirst.value;
-    }
+    emit('goToChat');
 }
 
 onMounted(async () => {
@@ -105,7 +90,7 @@ onMounted(async () => {
                 <p class="body-text lexend-light text-secondary">Choose conversation mode</p>
                 <CustomBtn v-for="prompt in prompts" :key="prompt.id"
                     @click="setPrompt(prompt.places, prompt.id); nextStep(2)">{{
-                        prompt.name }}</CustomBtn>
+            prompt.name }}</CustomBtn>
                 <q-stepper-navigation>
                     <q-btn flat @click="step = 1" color="primary" label="Back" class="q-ml-sm" />
                 </q-stepper-navigation>
@@ -114,7 +99,7 @@ onMounted(async () => {
             <q-step :name="3" title="Place" icon="settings" :done="step > 3">
                 <p class="body-text lexend-light text-secondary">Where would you like to go together?</p>
                 <CustomBtn v-for="place in places" :key="place.id" @click="setPlace(place.name); nextStep(3)">{{
-                    place.name }}
+            place.name }}
                 </CustomBtn>
                 <q-stepper-navigation>
                     <q-btn flat @click="step = 2" color="primary" label="Back" class="q-ml-sm" />
@@ -124,27 +109,20 @@ onMounted(async () => {
             <q-step :name="4" title="Style" icon="settings" :done="step > 4">
                 <p class="body-text lexend-light text-secondary">What kind of conversation do you need?</p>
                 <CustomBtn v-for="style in respTypes" :key="style.id" @click="setStyle(style.id); nextStep(4)">{{
-                    style.name }}
+            style.name }}
                 </CustomBtn>
                 <q-stepper-navigation>
                     <q-btn flat @click="step = 3" color="primary" label="Back" class="q-ml-sm" />
                 </q-stepper-navigation>
             </q-step>
 
-            <q-step :name="5" title="Finish" icon="settings">
-                <q-stepper-navigation>
+            <q-step :name="5" title="Finish" icon="settings" class="last">
+                <q-stepper-navigation class="w-full flex justify-center">
                     <q-btn color="primary" label="Finish" @click="buildOptions" />
                     <q-btn flat @click="step = 4" color="primary" label="Back" class="q-ml-sm" />
                 </q-stepper-navigation>
             </q-step>
         </q-stepper>
-        <div class="chat__body" v-if="!isOptions">
-            <form @submit="handleSubmit">
-                <CustomInput type="text" v-model="userMessage" />
-                <CustomBtn type="submit" v-if="isFirst">Start conversation</CustomBtn>
-                <CustomBtn type="submit" v-else>Send</CustomBtn>
-            </form>
-        </div>
     </div>
 </template>
 
@@ -155,6 +133,12 @@ onMounted(async () => {
     .q-stepper--vertical .q-stepper__tab {
         padding-left: 0;
         padding-right: 0;
+    }
+
+    .q-stepper__step.last {
+        .q-stepper__step-content {
+            padding: 0;
+        }
     }
 
     .q-stepper__step-inner {

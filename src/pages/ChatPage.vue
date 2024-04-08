@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import MyChat from 'src/components/MyChat.vue';
+import { ref } from 'vue';
+import ChatConfig from 'src/components/ChatConfig.vue';
+import ChatBody from 'src/components/ChatBody.vue';
 
-
+const isVisible = ref(true);
 </script>
 
 
 
 <template>
-    <MyChat />
+    <ChatConfig @goToChat="isVisible = !isVisible" v-if="isVisible" />
+    <ChatBody v-else />
 </template>

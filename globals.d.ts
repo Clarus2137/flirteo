@@ -50,6 +50,12 @@ declare global {
         attachment: string
     }
 
+    interface SessionMessages {
+        id: number,
+        content: string,
+        response: string
+    }
+
     interface Prompts {
         id: number,
         name: string,

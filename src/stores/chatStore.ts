@@ -3,24 +3,25 @@ import axios from 'axios';
 
 
 const apiUrl = process.env.API_SERVER;
-const session = `${apiUrl}/api/sessions`;
-const messages = `${apiUrl}/api/messages`;
-const prompts = `${apiUrl}/api/prompts`;
-const respTypes = `${apiUrl}/api/response_types`;
+const apiSession = `${apiUrl}/api/sessions`;
+const apiMessages = `${apiUrl}/api/messages`;
+const apiPrompts = `${apiUrl}/api/prompts`;
+const apiRespTypes = `${apiUrl}/api/response_types`;
 
 
 export const useChatStore = defineStore('chat', {
     state: () => ({
         prompts: [] as Prompts[],
         respTypes: [] as ResponseAI[],
-        session: {} as Partial<Session>
+        session: {} as Partial<Session>,
+        messages: [] as SessionMessages[]
     }),
 
     actions: {
         async getPrompts() {
             try {
                 const userToken = JSON.parse(localStorage.currentUser).userToken;
-                const response = await axios.get(prompts, {
+                const response = await axios.get(apiPrompts, {
                     headers: {
                         'Authorization': `Bearer ${userToken}`,
                         'Accept-Language': 'en'
@@ -42,7 +43,7 @@ export const useChatStore = defineStore('chat', {
         async getResponseTypes() {
             try {
                 const userToken = JSON.parse(localStorage.currentUser).userToken;
-                const response = await axios.get(respTypes, {
+                const response = await axios.get(apiRespTypes, {
                     headers: {
                         'Authorization': `Bearer ${userToken}`,
                         'Accept-Language': 'pl'
@@ -78,7 +79,7 @@ export const useChatStore = defineStore('chat', {
             console.log(this.session);
             const userToken = JSON.parse(localStorage.currentUser).userToken;
             try {
-                const response = await axios.post(session, this.session, {
+                const response = await axios.post(apiSession, this.session, {
                     headers: {
                         'Authorization': `Bearer ${userToken}`,
                         'Accept-Language': 'en'
@@ -86,19 +87,29 @@ export const useChatStore = defineStore('chat', {
                 });
                 this.session.id = response.data.id;
                 console.log(response.data);
+                const answer = {
+                    id: response.data.messages[0].id,
+                    content: response.data.messages[0].content,
+                    response: response.data.messages[0].response
+                }
+                console.log(answer);
+                this.messages.push(answer);
+                console.log(this.messages);
+                return true;
             } catch (error) {
                 console.log(error);
+                return false;
             }
         },
 
         async sendMessage(message: Messages) {
             const newMessage = {
-                session: `${session}/${this.session.id}`,
+                session: `${apiSession}/${this.session.id}`,
                 content: message.content
             }
             try {
                 const userToken = JSON.parse(localStorage.currentUser).userToken;
-                const response = await axios.post(messages, newMessage, {
+                const response = await axios.post(apiMessages, newMessage, {
                     headers: {
                         'Authorization': `Bearer ${userToken}`,
                         'Accept-Language': 'en'
