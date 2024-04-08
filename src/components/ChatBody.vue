@@ -4,6 +4,8 @@ import { useChatStore } from 'src/stores/chatStore'
 
 const chatStore = useChatStore();
 
+const messages = ref<SessionMessages[]>([]);
+
 const isFirst = ref(true);
 
 const userMessage = ref('');
@@ -17,15 +19,18 @@ const handleSubmit = async (e: Event) => {
     if (!isFirst.value) {
         const isSent = await chatStore.sendMessage(message);
         if (isSent) {
-
+            messages.value = chatStore.messages;
         }
     } else {
         const isCreated = await chatStore.createSession(message);
         if (isCreated) {
             isFirst.value = !isFirst.value;
+            messages.value = chatStore.messages;
         }
     }
 }
+
+console.log(chatStore.messages);
 </script>
 
 
@@ -33,8 +38,10 @@ const handleSubmit = async (e: Event) => {
 <template>
     <div class="chat__body grid">
         <div class="chat__messages">
-            <q-chat-message name="me" :text="['Hey', 'hey, how are you?']" sent />
-            <q-chat-message name="Jane" :text="['doing fine, how r you?']" />
+            <div class="message" v-for="item in messages" :key="item.id">
+                <q-chat-message name="me" :text="[item.content]" sent />
+                <q-chat-message name="Jane" :text="[item.response]" />
+            </div>
         </div>
         <form @submit="handleSubmit" class="self-end flex no-wrap gap-x-3">
             <CustomInput type="text" v-model="userMessage" class="chat__input" />

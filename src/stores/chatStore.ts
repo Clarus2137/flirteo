@@ -76,7 +76,6 @@ export const useChatStore = defineStore('chat', {
                 ...this.session,
                 messages: [message]
             }
-            console.log(this.session);
             const userToken = JSON.parse(localStorage.currentUser).userToken;
             try {
                 const response = await axios.post(apiSession, this.session, {
@@ -86,13 +85,11 @@ export const useChatStore = defineStore('chat', {
                     }
                 });
                 this.session.id = response.data.id;
-                console.log(response.data);
                 const answer = {
                     id: response.data.messages[0].id,
                     content: response.data.messages[0].content,
                     response: response.data.messages[0].response
                 }
-                console.log(answer);
                 this.messages.push(answer);
                 console.log(this.messages);
                 return true;
@@ -115,7 +112,13 @@ export const useChatStore = defineStore('chat', {
                         'Accept-Language': 'en'
                     }
                 });
-                console.log(response.data);
+                const answer = {
+                    id: response.data.id,
+                    content: response.data.content,
+                    response: response.data.response
+                }
+                this.messages.push(answer);
+                console.log(this.messages);
                 return true;
             } catch (error) {
                 console.log(error);
