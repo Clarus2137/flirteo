@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import { ref, Ref } from 'vue';
+import { ref, Ref, onMounted } from 'vue';
+import { useUserStore } from 'src/stores/userStore';
 import CommonInfo from 'src/components/CommonInfo.vue';
 import UserGender from 'src/components/UserGender.vue';
 import UserHobbies from 'src/components/UserHobbies.vue';
+
+
+const userStore = useUserStore();
 
 const pageTitle = ref<PageTitle>({ title: '', subtitle: '' });
 
@@ -18,6 +22,10 @@ const nextStep = (currentStep: number) => {
     step.value = currentStep + 1;
 
 }
+
+onMounted(() => {
+    userStore.getHobbies();
+});
 </script>
 
 

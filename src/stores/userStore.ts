@@ -6,14 +6,13 @@ const apiUrl = process.env.API_SERVER;
 const regUser = `${apiUrl}/api/users`;
 const authUser = `${apiUrl}/auth`;
 const apiUser = `${apiUrl}/api/users/me`;
+const apiHobbies = `${apiUrl}/api/interests`;
 
 
 export const useUserStore = defineStore('user', {
     state: () => ({
         user: {} as Partial<User>,
-        prompts: [] as Prompts[],
-        respTypes: [] as ResponseAI[],
-        session: {} as Partial<Session>
+        hobbies: [] as BaseInterests[]
     }),
 
     actions: {
@@ -56,6 +55,39 @@ export const useUserStore = defineStore('user', {
                 //   console.error('An unexpected error occurred', error);
                 // }
                 return false;
+            }
+        },
+
+        async getHobbies() {
+            const strLocalData = localStorage.getItem('currentUser');
+            if (strLocalData !== null) {
+                const userToken = JSON.parse(strLocalData).userToken;
+                try {
+                    const response = await axios.get(apiHobbies, {
+                        headers: {
+                            'Authorization': `Bearer ${userToken}`,
+                            'Accept-Language': 'en'
+                        }
+                    });
+                    const defaultHobbies = response.data;
+                    defaultHobbies.forEach((item: { name: string; }) => {
+                        const hobby = {
+                            name: item.name,
+                            checked: false
+                        }
+                        this.hobbies.push(hobby);
+                    });
+                } catch (error) {
+                    if (axios.isAxiosError(error)) {
+                        // Handling Axios errors specifically
+                        console.error('Authorization failed', error.response?.data);
+                    } else {
+                        // Handling unexpected errors
+                        console.error('An unexpected error occurred', error);
+                    }
+                }
+            } else {
+                console.log('User\'s data doesn\'t exist');
             }
         },
 

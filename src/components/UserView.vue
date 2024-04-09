@@ -47,15 +47,12 @@ const userAge = calculateAge(userStore.user.dateOfBirth!);
             <p class="user__education lexend-bold mt-8">Education:</p>
             <p class="user__education lexend text-secondary text-sm">{{ userStore.user.education }}</p>
         </div>
-        <div class="home__interests interests mb-8" v-if="userStore.user.interests!.length > 0">
+        <div class="home__ihobbies hobbies mb-8" v-if="userStore.user.interests!.length > 0">
             <p class="lexend-bold mb-2">Interests</p>
-            <div class="interests__wrapper w-full flex justify-start gap-6">
-                <div class="interests__item flex flex-no-wrap gap-x-1 items-center p-2 rounded-xl border border-solid border-inactive hover:cursor-pointer"
-                    v-for="item in userStore.user.interests" :key="item.name">
-                    <div v-html="item.img"></div>
-                    <span class="capitalize">
-                        {{ item.name }}
-                    </span>
+            <div class="hobbies__wrapper w-full flex justify-start gap-2.5">
+                <div class="hobbies__item hobby p-3 rounded-[10px] hobby-shadow"
+                    v-for="(item, index) in userStore.user.interests" :key="index">
+                    {{ item }}
                 </div>
             </div>
         </div>

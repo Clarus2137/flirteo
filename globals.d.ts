@@ -8,20 +8,18 @@ declare global {
         location: string,
         education: string,
         gender: string,
-        interests: UserInterests[],
+        interests: string[],
         roles: string[],
         token: string
     }
 
     interface BaseInterests {
         name: string;
-        img: string;
         checked: boolean;
     }
 
-    interface UserInterests {
-        name: string,
-        img: string
+    interface Hobbies {
+        name: string
     }
 
     interface BirthDate {

@@ -4,33 +4,53 @@ import { useChatStore } from 'src/stores/chatStore'
 
 const chatStore = useChatStore();
 
-const messages = ref<SessionMessages[]>([]);
+const messages = ref<Partial<SessionMessages>[]>([]);
 
 const isFirst = ref(true);
 
 const userMessage = ref('');
 
-const handleSubmit = async (e: Event) => {
-    e.preventDefault();
-    const message: Messages = {
-        content: userMessage.value,
-        attachment: ''
-    }
-    if (!isFirst.value) {
+const handleSubmit = async (message: Messages, isFirstMessage: boolean) => {
+    if (!isFirstMessage) {
         const isSent = await chatStore.sendMessage(message);
         if (isSent) {
-            messages.value = chatStore.messages;
+            const answer = {
+                id: chatStore.messages[chatStore.messages.length - 1].id,
+                response: chatStore.messages[chatStore.messages.length - 1].response
+            }
+            messages.value[messages.value.length - 1] = { ...messages.value[messages.value.length - 1], ...answer };
         }
     } else {
         const isCreated = await chatStore.createSession(message);
         if (isCreated) {
-            isFirst.value = !isFirst.value;
-            messages.value = chatStore.messages;
+            const answer = {
+                id: chatStore.messages[chatStore.messages.length - 1].id,
+                response: chatStore.messages[chatStore.messages.length - 1].response
+            }
+            messages.value[messages.value.length - 1] = { ...messages.value[messages.value.length - 1], ...answer };
         }
     }
 }
 
-console.log(chatStore.messages);
+const sendMessage = (e: Event) => {
+    e.preventDefault();
+    const sessionMessage = {
+        content: userMessage.value
+    }
+    messages.value.push(sessionMessage);
+    chatStore.messages.push(sessionMessage)
+    const message = {
+        content: userMessage.value,
+        attachment: ''
+    }
+    userMessage.value = '';
+    if (!isFirst.value) {
+        handleSubmit(message, isFirst.value);
+    } else {
+        handleSubmit(message, isFirst.value);
+        isFirst.value = !isFirst.value;
+    }
+}
 </script>
 
 
@@ -38,14 +58,14 @@ console.log(chatStore.messages);
 <template>
     <div class="chat__body grid">
         <div class="chat__messages">
-            <div class="message" v-for="item in messages" :key="item.id">
+            <div class="answer" v-for="item in messages" :key="item.id">
                 <q-chat-message name="me" :text="[item.content]" sent />
-                <q-chat-message name="Jane" :text="[item.response]" />
+                <q-chat-message name="Assistent" :text="[item.response]" bg-color="primary" text-color="white" />
             </div>
         </div>
-        <form @submit="handleSubmit" class="self-end flex no-wrap gap-x-3">
+        <form @submit="sendMessage" class="self-end flex no-wrap gap-x-3">
             <CustomInput type="text" v-model="userMessage" class="chat__input" />
-            <button type="submit" class="send w-auto" v-if="isFirst">
+            <button type="submit" class="send w-auto">
                 <svg width="54px" height="54px" viewBox="2 2 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="gradient_primary" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -62,14 +82,13 @@ console.log(chatStore.messages);
                 </svg>
 
             </button>
-            <CustomBtn type="submit" v-else>Send</CustomBtn>
         </form>
     </div>
 </template>
 
 
 
-<style scoped lang="scss">
+<style lang="scss">
 .chat__body {
     .chat__input {
         background: #eae9ea;
@@ -93,5 +112,13 @@ console.log(chatStore.messages);
             fill: url(#gradient_primary-hover);
         }
     }
+
+    // .q-message-text--received {
+    //     background: $bg_gradient;
+
+    //     &::before {
+    //         background: inherit;
+    //     }
+    // }
 }
 </style>

@@ -14,7 +14,7 @@ export const useChatStore = defineStore('chat', {
         prompts: [] as Prompts[],
         respTypes: [] as ResponseAI[],
         session: {} as Partial<Session>,
-        messages: [] as SessionMessages[]
+        messages: [] as Partial<SessionMessages>[]
     }),
 
     actions: {
@@ -87,11 +87,9 @@ export const useChatStore = defineStore('chat', {
                 this.session.id = response.data.id;
                 const answer = {
                     id: response.data.messages[0].id,
-                    content: response.data.messages[0].content,
                     response: response.data.messages[0].response
                 }
-                this.messages.push(answer);
-                console.log(this.messages);
+                this.messages[this.messages.length - 1] = { ...this.messages[this.messages.length - 1], ...answer };
                 return true;
             } catch (error) {
                 console.log(error);
@@ -114,11 +112,9 @@ export const useChatStore = defineStore('chat', {
                 });
                 const answer = {
                     id: response.data.id,
-                    content: response.data.content,
                     response: response.data.response
                 }
-                this.messages.push(answer);
-                console.log(this.messages);
+                this.messages[this.messages.length - 1] = { ...this.messages[this.messages.length - 1], ...answer };
                 return true;
             } catch (error) {
                 console.log(error);
