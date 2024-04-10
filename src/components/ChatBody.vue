@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, onMounted } from 'vue';
 import { useChatStore } from 'src/stores/chatStore'
 
 const chatStore = useChatStore();
@@ -8,7 +8,7 @@ const messages = ref<Partial<SessionMessages>[]>([]);
 
 const isFirst = ref(true);
 
-// const isFlirt = ref(false);
+const isFlirt = ref(false);
 
 const userMessage = ref('');
 
@@ -60,11 +60,17 @@ const sendMessage = (e: Event) => {
 
 onBeforeMount(() => {
     if (chatStore.session.id) {
-        console.log(chatStore.session.prompt?.slice(-1));
         isFirst.value = !isFirst.value;
         if (chatStore.session.messages && chatStore.session.messages.length > 0) {
             messages.value = chatStore.session.messages;
         }
+    }
+});
+
+onMounted(() => {
+    if (chatStore.session.prompt?.slice(-1) === '1') {
+        isFlirt.value = !isFlirt.value;
+        sendMessage;
     }
 });
 </script>
