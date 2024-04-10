@@ -14,7 +14,8 @@ export const useChatStore = defineStore('chat', {
         prompts: [] as Prompts[],
         respTypes: [] as ResponseAI[],
         session: {} as Partial<Session>,
-        messages: [] as Partial<SessionMessages>[]
+        messages: [] as Partial<SessionMessages>[],
+        image: ''
     }),
 
     actions: {
@@ -62,9 +63,10 @@ export const useChatStore = defineStore('chat', {
             }
         },
 
-        getSessionOptions(options: Partial<Session>) {
+        getSessionOptions(options: Partial<Session>, image: string) {
             try {
                 this.session = { ...this.session, ...options };
+                this.image = image;
                 return true;
             } catch (error) {
                 return false;
@@ -74,8 +76,12 @@ export const useChatStore = defineStore('chat', {
         async createSession(message: Messages) {
             this.session = {
                 ...this.session,
-                messages: [message]
+                messages: [{
+                    ...message,
+                    attachment: this.image
+                }]
             }
+            console.log(this.session);
             const userToken = JSON.parse(localStorage.currentUser).userToken;
             try {
                 const response = await axios.post(apiSession, this.session, {
@@ -84,12 +90,13 @@ export const useChatStore = defineStore('chat', {
                         'Accept-Language': 'en'
                     }
                 });
-                this.session.id = response.data.id;
-                const answer = {
-                    id: response.data.messages[0].id,
-                    response: response.data.messages[0].response
-                }
-                this.messages[this.messages.length - 1] = { ...this.messages[this.messages.length - 1], ...answer };
+                this.session = response.data;
+                console.log(this.session);
+                // const answer = {
+                //     id: response.data.messages[0].id,
+                //     response: response.data.messages[0].response
+                // }
+                // this.messages[this.messages.length - 1] = { ...this.messages[this.messages.length - 1], ...answer };
                 return true;
             } catch (error) {
                 console.log(error);
@@ -110,11 +117,20 @@ export const useChatStore = defineStore('chat', {
                         'Accept-Language': 'en'
                     }
                 });
-                const answer = {
+                console.log(response.data);
+                this.session = { ...this.session, ...{ updatedAt: response.data.updatedAt } };
+                this.session.messages?.push({
                     id: response.data.id,
+                    content: response.data.content,
+                    attachment: '',
                     response: response.data.response
-                }
-                this.messages[this.messages.length - 1] = { ...this.messages[this.messages.length - 1], ...answer };
+                });
+                console.log(this.session);
+                // const answer = {
+                //     id: response.data.id,
+                //     response: response.data.response
+                // }
+                // this.messages[this.messages.length - 1] = { ...this.messages[this.messages.length - 1], ...answer };
                 return true;
             } catch (error) {
                 console.log(error);

@@ -144,6 +144,8 @@ export const useUserStore = defineStore('user', {
                     }
                 });
                 console.log('User removing successful', response.data);
+                this.user = {};
+                this.hobbies = [];
                 localStorage.clear();
                 return true;
             } catch (error) {

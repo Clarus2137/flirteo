@@ -38,7 +38,7 @@ declare global {
         user: string,
         prompt: string,
         responseType: string,
-        messages: Messages[],
+        messages: Partial<SessionMessages>[],
         place: string,
         gender: string
     }
@@ -51,6 +51,7 @@ declare global {
     interface SessionMessages {
         id: number,
         content: string,
+        attachment: string,
         response: string
     }
 

@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useUserStore } from 'src/stores/userStore';
 
 
 const userStore = useUserStore();
 
 const emit = defineEmits(['goToHome', 'sendTitle']);
+
+// const storeHobbies = ref<BaseInterests>;
 
 const hobbies = userStore.hobbies;
 
@@ -34,6 +36,7 @@ const updateUserData = async () => {
 
 onMounted(() => {
     emit('sendTitle', title);
+    console.log(userStore.hobbies)
 });
 </script>
 

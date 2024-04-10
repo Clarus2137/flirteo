@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onBeforeMount } from 'vue';
 import { useChatStore } from 'src/stores/chatStore'
 
 const chatStore = useChatStore();
@@ -8,26 +8,32 @@ const messages = ref<Partial<SessionMessages>[]>([]);
 
 const isFirst = ref(true);
 
+// const isFlirt = ref(false);
+
 const userMessage = ref('');
 
 const handleSubmit = async (message: Messages, isFirstMessage: boolean) => {
     if (!isFirstMessage) {
         const isSent = await chatStore.sendMessage(message);
         if (isSent) {
-            const answer = {
-                id: chatStore.messages[chatStore.messages.length - 1].id,
-                response: chatStore.messages[chatStore.messages.length - 1].response
+            if (chatStore.session.messages && chatStore.session.messages.length > 0) {
+                const answer = {
+                    id: chatStore.session.messages[chatStore.session.messages.length - 1].id,
+                    response: chatStore.session.messages[chatStore.session.messages.length - 1].response
+                }
+                messages.value[messages.value.length - 1] = { ...messages.value[messages.value.length - 1], ...answer };
             }
-            messages.value[messages.value.length - 1] = { ...messages.value[messages.value.length - 1], ...answer };
         }
     } else {
         const isCreated = await chatStore.createSession(message);
         if (isCreated) {
-            const answer = {
-                id: chatStore.messages[chatStore.messages.length - 1].id,
-                response: chatStore.messages[chatStore.messages.length - 1].response
+            if (chatStore.session.messages && chatStore.session.messages.length > 0) {
+                const answer = {
+                    id: chatStore.session.messages[chatStore.session.messages.length - 1].id,
+                    response: chatStore.session.messages[chatStore.session.messages.length - 1].response
+                }
+                messages.value[messages.value.length - 1] = { ...messages.value[messages.value.length - 1], ...answer };
             }
-            messages.value[messages.value.length - 1] = { ...messages.value[messages.value.length - 1], ...answer };
         }
     }
 }
@@ -51,19 +57,29 @@ const sendMessage = (e: Event) => {
         isFirst.value = !isFirst.value;
     }
 }
+
+onBeforeMount(() => {
+    if (chatStore.session.id) {
+        console.log(chatStore.session.prompt?.slice(-1));
+        isFirst.value = !isFirst.value;
+        if (chatStore.session.messages && chatStore.session.messages.length > 0) {
+            messages.value = chatStore.session.messages;
+        }
+    }
+});
 </script>
 
 
 
 <template>
     <div class="chat__body grid">
-        <div class="chat__messages">
-            <div class="answer" v-for="item in messages" :key="item.id">
+        <div class="chat__messages messages">
+            <div class="messages__item" v-for="item in messages" :key="item.id">
                 <q-chat-message name="me" :text="[item.content]" sent />
                 <q-chat-message name="Assistent" :text="[item.response]" bg-color="primary" text-color="white" />
             </div>
         </div>
-        <form @submit="sendMessage" class="self-end flex no-wrap gap-x-3">
+        <form @submit="sendMessage" class="chat__form self-end flex no-wrap gap-x-3">
             <CustomInput type="text" v-model="userMessage" class="chat__input" />
             <button type="submit" class="send w-auto">
                 <svg width="54px" height="54px" viewBox="2 2 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -90,6 +106,12 @@ const sendMessage = (e: Event) => {
 
 <style lang="scss">
 .chat__body {
+    .messages {
+        padding: 0 8px;
+        max-height: calc(100vh - 135px);
+        overflow-y: scroll;
+    }
+
     .chat__input {
         background: #eae9ea;
 
@@ -99,6 +121,16 @@ const sendMessage = (e: Event) => {
             border-width: 0;
             border-bottom-width: 1px;
         }
+    }
+
+    .chat__form {
+        padding: 10px 25px;
+        background: #fff;
+        box-shadow: 0 0 10px 3px rgba(0, 0, 0, .25);
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 36px;
     }
 
     .send {
@@ -112,13 +144,5 @@ const sendMessage = (e: Event) => {
             fill: url(#gradient_primary-hover);
         }
     }
-
-    // .q-message-text--received {
-    //     background: $bg_gradient;
-
-    //     &::before {
-    //         background: inherit;
-    //     }
-    // }
 }
 </style>
