@@ -81,7 +81,6 @@ export const useChatStore = defineStore('chat', {
                     attachment: this.image
                 }]
             }
-            console.log(this.session);
             const userToken = JSON.parse(localStorage.currentUser).userToken;
             try {
                 const response = await axios.post(apiSession, this.session, {
@@ -91,7 +90,6 @@ export const useChatStore = defineStore('chat', {
                     }
                 });
                 this.session = response.data;
-                console.log(this.session);
                 // const answer = {
                 //     id: response.data.messages[0].id,
                 //     response: response.data.messages[0].response
@@ -117,15 +115,14 @@ export const useChatStore = defineStore('chat', {
                         'Accept-Language': 'en'
                     }
                 });
-                console.log(response.data);
                 this.session = { ...this.session, ...{ updatedAt: response.data.updatedAt } };
+                console.log('Сессия перед добавлением ответа: ', this.session);
                 this.session.messages?.push({
                     id: response.data.id,
                     content: response.data.content,
                     attachment: '',
                     response: response.data.response
                 });
-                console.log(this.session);
                 // const answer = {
                 //     id: response.data.id,
                 //     response: response.data.response

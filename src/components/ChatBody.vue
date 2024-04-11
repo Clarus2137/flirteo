@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ref, onBeforeMount, onMounted } from 'vue';
+import { ref, onBeforeMount } from 'vue';
 import { useChatStore } from 'src/stores/chatStore'
 
 const chatStore = useChatStore();
 
-const messages = ref<Partial<SessionMessages>[]>([]);
+const pageMessages = ref<Partial<SessionMessages>[]>([]);
 
 const isFirst = ref(true);
 
@@ -21,7 +21,8 @@ const handleSubmit = async (message: Messages, isFirstMessage: boolean) => {
                     id: chatStore.session.messages[chatStore.session.messages.length - 1].id,
                     response: chatStore.session.messages[chatStore.session.messages.length - 1].response
                 }
-                messages.value[messages.value.length - 1] = { ...messages.value[messages.value.length - 1], ...answer };
+                pageMessages.value[pageMessages.value.length - 1] = { ...pageMessages.value[pageMessages.value.length - 1], ...answer };
+                console.log('Обновлённая сессия: ', chatStore.session);
             }
         }
     } else {
@@ -32,45 +33,46 @@ const handleSubmit = async (message: Messages, isFirstMessage: boolean) => {
                     id: chatStore.session.messages[chatStore.session.messages.length - 1].id,
                     response: chatStore.session.messages[chatStore.session.messages.length - 1].response
                 }
-                messages.value[messages.value.length - 1] = { ...messages.value[messages.value.length - 1], ...answer };
+                pageMessages.value[pageMessages.value.length - 1] = { ...pageMessages.value[pageMessages.value.length - 1], ...answer };
             }
+            isFirst.value = false;
+            console.log('Созданная сессия: ', chatStore.session);
         }
     }
 }
 
-const sendMessage = (e: Event) => {
-    e.preventDefault();
+const addMessage = () => {
     const sessionMessage = {
-        content: userMessage.value
+        content: userMessage.value,
     }
-    messages.value.push(sessionMessage);
-    chatStore.messages.push(sessionMessage)
+    pageMessages.value.push(sessionMessage);
     const message = {
         content: userMessage.value,
         attachment: ''
     }
     userMessage.value = '';
-    if (!isFirst.value) {
+    if (isFirst.value === true) {
         handleSubmit(message, isFirst.value);
+        isFirst.value = false;
     } else {
         handleSubmit(message, isFirst.value);
-        isFirst.value = !isFirst.value;
     }
 }
 
 onBeforeMount(() => {
-    if (chatStore.session.id) {
-        isFirst.value = !isFirst.value;
-        if (chatStore.session.messages && chatStore.session.messages.length > 0) {
-            messages.value = chatStore.session.messages;
-        }
-    }
-});
-
-onMounted(() => {
+    console.log('Существующая сессия: ', chatStore.session);
     if (chatStore.session.prompt?.slice(-1) === '1') {
-        isFlirt.value = !isFlirt.value;
-        sendMessage;
+        isFlirt.value = true;
+    }
+    if (!chatStore.session.id) {
+        if (isFirst.value === true) {
+            addMessage();
+        }
+    } else {
+        if (chatStore.session.messages && chatStore.session.messages.length > 0) {
+            pageMessages.value = chatStore.session.messages;
+        }
+        isFirst.value = false;
     }
 });
 </script>
@@ -79,13 +81,13 @@ onMounted(() => {
 
 <template>
     <div class="chat__body grid">
-        <div class="chat__messages messages">
-            <div class="messages__item" v-for="item in messages" :key="item.id">
+        <div class="chat__messages messages" :class="{ 'flirt': isFlirt }">
+            <div class="messages__item" v-for="item in pageMessages" :key="item.id">
                 <q-chat-message name="me" :text="[item.content]" sent />
                 <q-chat-message name="Assistent" :text="[item.response]" bg-color="primary" text-color="white" />
             </div>
         </div>
-        <form @submit="sendMessage" class="chat__form self-end flex no-wrap gap-x-3">
+        <form @submit.prevent="addMessage" class="chat__form self-end flex no-wrap gap-x-3">
             <CustomInput type="text" v-model="userMessage" class="chat__input" />
             <button type="submit" class="send w-auto">
                 <svg width="54px" height="54px" viewBox="2 2 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -116,6 +118,10 @@ onMounted(() => {
         padding: 0 8px;
         max-height: calc(100vh - 135px);
         overflow-y: scroll;
+
+        &.flirt>.messages__item:first-child .q-message-sent {
+            display: none;
+        }
     }
 
     .chat__input {

@@ -12,7 +12,6 @@ const isVisible = ref(true);
 onBeforeMount(() => {
     if (chatStore.session.id) {
         isVisible.value = !isVisible.value;
-        console.log(chatStore.session);
     }
 });
 </script>
