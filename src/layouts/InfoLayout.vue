@@ -5,10 +5,10 @@
 
 
 <template>
-   <q-layout class="grid">
-      <q-page-container class="overflow-hidden relative">
-         <BackBtn />
-         <router-view />
-      </q-page-container>
-   </q-layout>
+    <q-layout class="grid">
+        <q-page-container class="overflow-hidden relative">
+            <BackBtn class="mb-3" />
+            <router-view />
+        </q-page-container>
+    </q-layout>
 </template>

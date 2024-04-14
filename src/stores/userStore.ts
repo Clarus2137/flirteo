@@ -24,13 +24,13 @@ export const useUserStore = defineStore('user', {
                 console.log('Registration successful', response.data); // Logging the response data
                 return true;
             } catch (error) {
-                // if (axios.isAxiosError(error)) {
-                //   // Handling Axios errors specifically
-                //   console.error('Registration failed', error.response?.data);
-                // } else {
-                //   // Handling unexpected errors
-                //   console.error('An unexpected error occurred', error);
-                // }
+                if (axios.isAxiosError(error)) {
+                    // Handling Axios errors specifically
+                    console.error('Registration failed', error.response?.data);
+                } else {
+                    // Handling unexpected errors
+                    console.error('An unexpected error occurred', error);
+                }
                 return false;
             }
         },
@@ -47,13 +47,13 @@ export const useUserStore = defineStore('user', {
                 this.user = response.data.user;
                 return true;
             } catch (error) {
-                // if (axios.isAxiosError(error)) {
-                //   // Handling Axios errors specifically
-                //   console.error('Authorization failed', error.response?.data);
-                // } else {
-                //   // Handling unexpected errors
-                //   console.error('An unexpected error occurred', error);
-                // }
+                if (axios.isAxiosError(error)) {
+                    // Handling Axios errors specifically
+                    console.error('Authorization failed', error.response?.data);
+                } else {
+                    // Handling unexpected errors
+                    console.error('An unexpected error occurred', error);
+                }
                 return false;
             }
         },
@@ -173,12 +173,11 @@ export const useUserStore = defineStore('user', {
                 console.log('User exists', response.data);
                 return true;
             } catch (error) {
-                // if (axios.isAxiosError(error)) {
-                //     console.error('Axios failed to get Users\'s data', error);
-                // } else {
-                //     console.error('An unexpected error occurred', error);
-                // }
-                console.log('The User doesn\'t exist');
+                if (axios.isAxiosError(error)) {
+                    console.error('Axios failed to get Users\'s data', error);
+                } else {
+                    console.error('An unexpected error occurred', error);
+                }
                 return false;
             }
         }

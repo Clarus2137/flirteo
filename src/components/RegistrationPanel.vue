@@ -71,7 +71,7 @@ const handleSubmit = async (e: Event) => {
 
 
 <template>
-    <BackBtn />
+    <BackBtn class="mb-3" />
     <div class="email">
         <div class="email__title">
             <TitleRow :title="title" />

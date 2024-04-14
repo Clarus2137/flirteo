@@ -28,15 +28,14 @@ export const useChatStore = defineStore('chat', {
                         'Accept-Language': 'en'
                     }
                 });
-                // console.log('The prompts are: ', response.data);
                 this.prompts = response.data;
                 return true;
             } catch (error) {
-                // if (axios.isAxiosError(error)) {
-                //     console.error('Axios failed to get prompts', error);
-                // } else {
-                //     console.error('An unexpected error occurred', error);
-                // }
+                if (axios.isAxiosError(error)) {
+                    console.error('Axios failed to get prompts', error);
+                } else {
+                    console.error('An unexpected error occurred', error);
+                }
                 return false;
             }
         },
@@ -50,15 +49,14 @@ export const useChatStore = defineStore('chat', {
                         'Accept-Language': 'pl'
                     }
                 });
-                // console.log('The response types are: ', response.data);
                 this.respTypes = response.data
                 return true;
             } catch (error) {
-                // if (axios.isAxiosError(error)) {
-                //     console.error('Axios failed to get response types', error);
-                // } else {
-                //     console.error('An unexpected error occurred', error);
-                // }
+                if (axios.isAxiosError(error)) {
+                    console.error('Axios failed to get response types', error);
+                } else {
+                    console.error('An unexpected error occurred', error);
+                }
                 return false;
             }
         },
@@ -69,15 +67,20 @@ export const useChatStore = defineStore('chat', {
                 this.image = image;
                 return true;
             } catch (error) {
+                if (axios.isAxiosError(error)) {
+                    console.error('Axios failed to get options for the new session', error);
+                } else {
+                    console.error('An unexpected error occurred', error);
+                }
                 return false;
             }
         },
 
-        async createSession(message: Messages) {
+        async createSession(message: string) {
             this.session = {
                 ...this.session,
                 messages: [{
-                    ...message,
+                    content: message,
                     attachment: this.image
                 }]
             }
@@ -90,22 +93,21 @@ export const useChatStore = defineStore('chat', {
                     }
                 });
                 this.session = response.data;
-                // const answer = {
-                //     id: response.data.messages[0].id,
-                //     response: response.data.messages[0].response
-                // }
-                // this.messages[this.messages.length - 1] = { ...this.messages[this.messages.length - 1], ...answer };
                 return true;
             } catch (error) {
-                console.log(error);
+                if (axios.isAxiosError(error)) {
+                    console.error('Axios failed to create the new session', error);
+                } else {
+                    console.error('An unexpected error occurred', error);
+                }
                 return false;
             }
         },
 
-        async sendMessage(message: Messages) {
+        async sendMessage(message: string) {
             const newMessage = {
                 session: `${apiSession}/${this.session.id}`,
-                content: message.content
+                content: message
             }
             try {
                 const userToken = JSON.parse(localStorage.currentUser).userToken;
@@ -116,21 +118,21 @@ export const useChatStore = defineStore('chat', {
                     }
                 });
                 this.session = { ...this.session, ...{ updatedAt: response.data.updatedAt } };
-                console.log('Сессия перед добавлением ответа: ', this.session);
-                this.session.messages?.push({
-                    id: response.data.id,
-                    content: response.data.content,
-                    attachment: '',
-                    response: response.data.response
-                });
-                // const answer = {
-                //     id: response.data.id,
-                //     response: response.data.response
-                // }
-                // this.messages[this.messages.length - 1] = { ...this.messages[this.messages.length - 1], ...answer };
+                if (this.session.messages && this.session.messages.length > 0) {
+                    this.session.messages.push({
+                        id: response.data.id,
+                        content: response.data.content,
+                        attachment: '',
+                        response: response.data.response
+                    });
+                }
                 return true;
             } catch (error) {
-                console.log(error);
+                if (axios.isAxiosError(error)) {
+                    console.error('Axios failed to add the new message to the session', error);
+                } else {
+                    console.error('An unexpected error occurred', error);
+                }
                 return false;
             }
         }

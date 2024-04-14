@@ -1,78 +1,92 @@
 <script setup lang="ts">
-import { ref, onBeforeMount } from 'vue';
-import { useChatStore } from 'src/stores/chatStore'
+import { ref, onBeforeMount, onMounted } from 'vue';
+import { useChatStore } from 'src/stores/chatStore';
+
 
 const chatStore = useChatStore();
+const isFlirt = ref(false);
+const isSessionStarted = ref(false);
+const messageField = ref('');
 
 const pageMessages = ref<Partial<SessionMessages>[]>([]);
 
-const isFirst = ref(true);
 
-const isFlirt = ref(false);
+const scrollToBottom = () => {
+    const allMessages = document.getElementById('messages');
+    if (allMessages) {
+        // bottom.scrollIntoView({ behavior: 'smooth' });
+        console.log(allMessages.scrollHeight);
+        allMessages.scrollTop = (allMessages.scrollHeight + 100);
+        console.log(allMessages.scrollTop);
+    }
+}
 
-const userMessage = ref('');
-
-const handleSubmit = async (message: Messages, isFirstMessage: boolean) => {
-    if (!isFirstMessage) {
-        const isSent = await chatStore.sendMessage(message);
-        if (isSent) {
-            if (chatStore.session.messages && chatStore.session.messages.length > 0) {
-                const answer = {
-                    id: chatStore.session.messages[chatStore.session.messages.length - 1].id,
-                    response: chatStore.session.messages[chatStore.session.messages.length - 1].response
-                }
-                pageMessages.value[pageMessages.value.length - 1] = { ...pageMessages.value[pageMessages.value.length - 1], ...answer };
-                console.log('Обновлённая сессия: ', chatStore.session);
+const startSession = async (autoMessage: string) => {
+    const isSuccess = await chatStore.createSession(autoMessage);
+    if (isSuccess) {
+        if (chatStore.session.messages && chatStore.session.messages.length > 0) {
+            const answer = {
+                id: chatStore.session.messages[0].id,
+                response: chatStore.session.messages[0].response
             }
+            pageMessages.value[pageMessages.value.length - 1] = { ...pageMessages.value[pageMessages.value.length - 1], ...answer };
+            console.log('Сообщения в чате ПОСЛЕ ответа сервера: ', pageMessages.value);
+            isSessionStarted.value = true;
+            scrollToBottom();
         }
-    } else {
-        const isCreated = await chatStore.createSession(message);
-        if (isCreated) {
-            if (chatStore.session.messages && chatStore.session.messages.length > 0) {
-                const answer = {
-                    id: chatStore.session.messages[chatStore.session.messages.length - 1].id,
-                    response: chatStore.session.messages[chatStore.session.messages.length - 1].response
-                }
-                pageMessages.value[pageMessages.value.length - 1] = { ...pageMessages.value[pageMessages.value.length - 1], ...answer };
+    }
+}
+
+const sendNewMessage = async (newMessage: string) => {
+    const isSuccess = await chatStore.sendMessage(newMessage);
+    if (isSuccess) {
+        if (chatStore.session.messages && chatStore.session.messages.length > 0) {
+            const answer = {
+                id: chatStore.session.messages[chatStore.session.messages.length - 1].id,
+                response: chatStore.session.messages[chatStore.session.messages.length - 1].response
             }
-            isFirst.value = false;
-            console.log('Созданная сессия: ', chatStore.session);
+            pageMessages.value[pageMessages.value.length - 1] = { ...pageMessages.value[pageMessages.value.length - 1], ...answer };
+            console.log('После добавления крайнеего ответа: ', pageMessages.value);
+            scrollToBottom();
         }
+
     }
 }
 
 const addMessage = () => {
-    const sessionMessage = {
-        content: userMessage.value,
-    }
-    pageMessages.value.push(sessionMessage);
-    const message = {
-        content: userMessage.value,
-        attachment: ''
-    }
-    userMessage.value = '';
-    if (isFirst.value === true) {
-        handleSubmit(message, isFirst.value);
-        isFirst.value = false;
+    const newMessage = messageField.value;
+    pageMessages.value.push({
+        content: newMessage
+    });
+    scrollToBottom();
+    messageField.value = '';
+    if (isSessionStarted.value) {
+        sendNewMessage(newMessage);
     } else {
-        handleSubmit(message, isFirst.value);
+        startSession(newMessage);
     }
 }
 
 onBeforeMount(() => {
-    console.log('Существующая сессия: ', chatStore.session);
     if (chatStore.session.prompt?.slice(-1) === '1') {
         isFlirt.value = true;
     }
-    if (!chatStore.session.id) {
-        if (isFirst.value === true) {
-            addMessage();
-        }
+
+    if (chatStore.session.messages && chatStore.session.messages.length > 0 && !isSessionStarted.value) {
+        isSessionStarted.value = true;
+        pageMessages.value = [...chatStore.session.messages];
+    }
+});
+
+onMounted(() => {
+    if (!isSessionStarted.value && isFlirt.value === true) {
+        const autoMessage = messageField.value;
+        pageMessages.value.push({
+            content: autoMessage
+        });
+        startSession(autoMessage);
     } else {
-        if (chatStore.session.messages && chatStore.session.messages.length > 0) {
-            pageMessages.value = chatStore.session.messages;
-        }
-        isFirst.value = false;
+        scrollToBottom();
     }
 });
 </script>
@@ -81,14 +95,17 @@ onBeforeMount(() => {
 
 <template>
     <div class="chat__body grid">
-        <div class="chat__messages messages" :class="{ 'flirt': isFlirt }">
+        <div class="chat__messages messages" :class="{ 'flirt': isFlirt }" id="messages">
             <div class="messages__item" v-for="item in pageMessages" :key="item.id">
                 <q-chat-message name="me" :text="[item.content]" sent />
-                <q-chat-message name="Assistent" :text="[item.response]" bg-color="primary" text-color="white" />
+                <q-chat-message name="Assistent" bg-color="primary" text-color="white" v-if="!item.response">
+                    <q-spinner-dots size="2rem" />
+                </q-chat-message>
+                <q-chat-message name="Assistent" :text="[item.response]" bg-color="primary" text-color="white" v-else />
             </div>
         </div>
         <form @submit.prevent="addMessage" class="chat__form self-end flex no-wrap gap-x-3">
-            <CustomInput type="text" v-model="userMessage" class="chat__input" />
+            <CustomInput type="text" v-model="messageField" class="chat__input" />
             <button type="submit" class="send w-auto">
                 <svg width="54px" height="54px" viewBox="2 2 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <defs>

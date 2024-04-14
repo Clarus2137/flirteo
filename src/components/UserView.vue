@@ -43,7 +43,7 @@ const userAge = calculateAge(userStore.user.dateOfBirth!);
         </div>
         <div class="home__user user my-8 lexend-bold text-lg">
             <p><span class="user__firstname">{{ userStore.user.firstName }}</span> <span class="user__lastname">{{
-                    userStore.user.lastName }}</span>, {{ userAge }} years</p>
+                userStore.user.lastName }}</span>, {{ userAge }} years</p>
             <p class="user__education lexend-bold mt-8">Education:</p>
             <p class="user__education lexend text-secondary text-sm">{{ userStore.user.education }}</p>
         </div>

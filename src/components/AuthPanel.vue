@@ -36,49 +36,8 @@ const title = {
                 <div class="form__title justify-center title-center">
                     <TitleRow :title="title" />
                 </div>
-                <CustomBtn @click="$router.push('/login')">Continue with Email</CustomBtn>
-                <div class="choice flex justify-between items-center">
-                    <hr class="w-[110px] h-px">
-                    <p class="lexend-light text-sm">or Sign In with</p>
-                    <hr class="w-[110px] h-px">
-                </div>
-                <div class="reg__outside outside flex justify-between">
-                    <q-btn class="outside__item w-[49%]" padding="13px 25px" color="white" text-color="black">
-                        <q-icon>
-                            <svg width="19" height="20" viewBox="0 0 19 20" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M18.7497 10.2088C18.7497 9.55706 18.6912 8.93036 18.5825 8.32874H9.92578V11.8842H14.8725C14.6594 13.0331 14.0118 14.0066 13.0384 14.6584V16.9646H16.0089C17.7469 15.3644 18.7497 13.0081 18.7497 10.2088Z"
-                                    fill="#4285F4" />
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M9.9258 19.1916C12.4075 19.1916 14.4881 18.3685 16.0089 16.9647L13.0384 14.6585C12.2153 15.21 11.1625 15.5359 9.9258 15.5359C7.53182 15.5359 5.50551 13.919 4.78272 11.7465H1.71191V14.1279C3.22434 17.1319 6.33275 19.1916 9.9258 19.1916Z"
-                                    fill="#34A853" />
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M4.78283 11.7463C4.599 11.1948 4.49455 10.6057 4.49455 9.9999C4.49455 9.3941 4.599 8.805 4.78283 8.25351V5.87207H1.71202C1.0895 7.11293 0.734375 8.51672 0.734375 9.9999C0.734375 11.4831 1.0895 12.8869 1.71202 14.1277L4.78283 11.7463Z"
-                                    fill="#FBBC05" />
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M9.9258 4.46419C11.2753 4.46419 12.4869 4.92795 13.4395 5.83875L16.0758 3.20245C14.484 1.71927 12.4033 0.808472 9.9258 0.808472C6.33275 0.808472 3.22434 2.86821 1.71191 5.87217L4.78272 8.25361C5.50551 6.08107 7.53182 4.46419 9.9258 4.46419Z"
-                                    fill="#EA4335" />
-                            </svg>
-                        </q-icon>
-                        <label class="ml-[13px] text-base">Google</label>
-                    </q-btn>
-                    <q-btn class="outside__item w-[49%]" padding="13px 25px" color="white" text-color="black">
-                        <q-icon>
-                            <svg width="25" height="24" viewBox="0 0 25 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M0.25 12C0.25 18.6274 5.62258 24 12.25 24C18.8774 24 24.25 18.6274 24.25 12C24.25 5.37258 18.8774 0 12.25 0C5.62258 0 0.25 5.37258 0.25 12Z"
-                                    fill="#1877F2" />
-                                <path
-                                    d="M18.25 12C18.25 8.7 15.55 6 12.25 6C8.95 6 6.25 8.7 6.25 12C6.25 15 8.425 17.475 11.275 17.925V13.725H9.775V12H11.275V10.65C11.275 9.15 12.175 8.325 13.525 8.325C14.2 8.325 14.875 8.475 14.875 8.475V9.975H14.125C13.375 9.975 13.15 10.425 13.15 10.875V12H14.8L14.5 13.725H13.075V18C16.075 17.55 18.25 15 18.25 12Z"
-                                    fill="white" />
-                            </svg>
-                        </q-icon>
-                        <label class="ml-[10px] text-base">Facebook</label>
-                    </q-btn>
-                </div>
-                <router-link to="/registration" class="text-center">Don't you have an account?</router-link>
+                <CustomBtn @click="$router.push('/registration')">Register Account</CustomBtn>
+                <CustomBtn @click="$router.push('/login')">Log in</CustomBtn>
             </div>
         </div>
     </div>
