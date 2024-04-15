@@ -1,5 +1,6 @@
 import { RouteRecordRaw } from 'vue-router';
 
+
 const routes: RouteRecordRaw[] = [
     {
         path: '',
@@ -7,17 +8,7 @@ const routes: RouteRecordRaw[] = [
         children: [{ path: '', component: () => import('pages/StartPage.vue') }],
         beforeEnter: (to, from, next) => {
             if (localStorage.getItem('isAuthorised') !== null) {
-                const isUserLogged = localStorage.getItem('currentUser');
-                if (isUserLogged !== null) {
-                    const isProfileCompleted = JSON.parse(localStorage.currentUser).userData.firstName;
-                    if (isProfileCompleted !== null) {
-                        next({ name: 'home' });
-                    } else {
-                        next({ name: 'complete' });
-                    }
-                } else {
-                    next({ name: 'auth' });
-                }
+                next({ name: 'auth' });
             } else {
                 next();
             }
@@ -55,9 +46,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/complete',
         component: () => import('layouts/InfoLayout.vue'),
-        children: [
-            { path: '', name: 'complete', component: () => import('pages/CompleteProfilePage.vue') }
-        ],
+        children: [{ path: '', name: 'complete', component: () => import('pages/CompleteProfilePage.vue') }]
     },
 
     {

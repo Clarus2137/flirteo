@@ -45,7 +45,6 @@ const editUser = async () => {
         location,
         education
     }
-    console.log('Sending Data is: ', editedData);
     const isSuccess = userStore.addUserData(editedData);
     if (isSuccess) {
         userStore.updateUser(userStore.user);

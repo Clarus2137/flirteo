@@ -21,7 +21,7 @@ export const useChatStore = defineStore('chat', {
     actions: {
         async getPrompts() {
             try {
-                const userToken = JSON.parse(localStorage.currentUser).userToken;
+                const userToken = sessionStorage.getItem('userToken');
                 const response = await axios.get(apiPrompts, {
                     headers: {
                         'Authorization': `Bearer ${userToken}`,
@@ -42,7 +42,7 @@ export const useChatStore = defineStore('chat', {
 
         async getResponseTypes() {
             try {
-                const userToken = JSON.parse(localStorage.currentUser).userToken;
+                const userToken = sessionStorage.getItem('userToken');
                 const response = await axios.get(apiRespTypes, {
                     headers: {
                         'Authorization': `Bearer ${userToken}`,
@@ -84,7 +84,7 @@ export const useChatStore = defineStore('chat', {
                     attachment: this.image
                 }]
             }
-            const userToken = JSON.parse(localStorage.currentUser).userToken;
+            const userToken = sessionStorage.getItem('userToken');
             try {
                 const response = await axios.post(apiSession, this.session, {
                     headers: {
@@ -110,7 +110,7 @@ export const useChatStore = defineStore('chat', {
                 content: message
             }
             try {
-                const userToken = JSON.parse(localStorage.currentUser).userToken;
+                const userToken = sessionStorage.getItem('userToken');
                 const response = await axios.post(apiMessages, newMessage, {
                     headers: {
                         'Authorization': `Bearer ${userToken}`,

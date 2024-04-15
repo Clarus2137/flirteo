@@ -28,16 +28,16 @@ const setGender = () => {
     }
 }
 
-const loadUserData = (strLocalStorage: string) => {
-    const userData: Partial<User> = JSON.parse(strLocalStorage).userData; // Assuming currentUser is the property holding user data. Adjust according to your store structure.
+const loadUserData = (strSessionStorage: string) => {
+    const userData: Partial<User> = JSON.parse(strSessionStorage); // Assuming currentUser is the property holding user data. Adjust according to your store structure.
     userStore.user = userData;
     activeGender.value = userData.gender || '';
 }
 
 onMounted(() => {
-    const strLocalStorage = localStorage.getItem('currentUser');
-    if (strLocalStorage !== null) {
-        loadUserData(strLocalStorage);
+    const strSessionStorage = sessionStorage.getItem('userData');
+    if (strSessionStorage !== null) {
+        loadUserData(strSessionStorage);
     }
     emit('sendTitle', title);
 })

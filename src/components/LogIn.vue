@@ -51,9 +51,7 @@ const handleSubmit = async (e: Event) => {
     e.preventDefault(); // Prevent form from submitting by default
 
     if (!validateEmailAndPassword()) {
-        console.log('Form is invalid');
     } else {
-        console.log('form submited');
         const userAccount = {
             email: enteredEmail.value,
             password: enteredPassword.value
@@ -68,7 +66,7 @@ const handleSubmit = async (e: Event) => {
             }
             isAuth.value = !isError.value;
             setTimeout(() => {
-                const isProfileCompleted = JSON.parse(localStorage.currentUser).userData.firstName
+                const isProfileCompleted = JSON.parse(sessionStorage.userData).firstName
                 if (isProfileCompleted !== null) {
                     emit('goToHome');
                 } else {

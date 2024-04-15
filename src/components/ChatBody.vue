@@ -1,25 +1,27 @@
 <script setup lang="ts">
-import { ref, onBeforeMount, onMounted } from 'vue';
+import { ref, onBeforeMount, onMounted, watch, nextTick } from 'vue';
 import { useChatStore } from 'src/stores/chatStore';
-
 
 const chatStore = useChatStore();
 const isFlirt = ref(false);
 const isSessionStarted = ref(false);
 const messageField = ref('');
-
 const pageMessages = ref<Partial<SessionMessages>[]>([]);
 
-
 const scrollToBottom = () => {
-    const allMessages = document.getElementById('messages');
-    if (allMessages) {
-        // bottom.scrollIntoView({ behavior: 'smooth' });
-        console.log(allMessages.scrollHeight);
-        allMessages.scrollTop = (allMessages.scrollHeight + 100);
-        console.log(allMessages.scrollTop);
-    }
-}
+    nextTick(() => {
+        const allMessages = document.getElementById('messages');
+        if (allMessages) {
+            allMessages.scrollTop = allMessages.scrollHeight;
+        }
+    });
+};
+
+watch(pageMessages, () => {
+    scrollToBottom();
+}, {
+    deep: true // Это позволяет отслеживать глубокие изменения в объекте
+});
 
 const startSession = async (autoMessage: string) => {
     const isSuccess = await chatStore.createSession(autoMessage);
@@ -28,14 +30,12 @@ const startSession = async (autoMessage: string) => {
             const answer = {
                 id: chatStore.session.messages[0].id,
                 response: chatStore.session.messages[0].response
-            }
+            };
             pageMessages.value[pageMessages.value.length - 1] = { ...pageMessages.value[pageMessages.value.length - 1], ...answer };
-            console.log('Сообщения в чате ПОСЛЕ ответа сервера: ', pageMessages.value);
             isSessionStarted.value = true;
-            scrollToBottom();
         }
     }
-}
+};
 
 const sendNewMessage = async (newMessage: string) => {
     const isSuccess = await chatStore.sendMessage(newMessage);
@@ -44,28 +44,24 @@ const sendNewMessage = async (newMessage: string) => {
             const answer = {
                 id: chatStore.session.messages[chatStore.session.messages.length - 1].id,
                 response: chatStore.session.messages[chatStore.session.messages.length - 1].response
-            }
+            };
             pageMessages.value[pageMessages.value.length - 1] = { ...pageMessages.value[pageMessages.value.length - 1], ...answer };
-            console.log('После добавления крайнеего ответа: ', pageMessages.value);
-            scrollToBottom();
         }
-
     }
-}
+};
 
 const addMessage = () => {
     const newMessage = messageField.value;
     pageMessages.value.push({
         content: newMessage
     });
-    scrollToBottom();
     messageField.value = '';
     if (isSessionStarted.value) {
         sendNewMessage(newMessage);
     } else {
         startSession(newMessage);
     }
-}
+};
 
 onBeforeMount(() => {
     if (chatStore.session.prompt?.slice(-1) === '1') {

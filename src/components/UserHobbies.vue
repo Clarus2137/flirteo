@@ -36,7 +36,6 @@ const updateUserData = async () => {
 
 onMounted(() => {
     emit('sendTitle', title);
-    console.log(userStore.hobbies)
 });
 </script>
 

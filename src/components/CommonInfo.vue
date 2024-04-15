@@ -24,7 +24,6 @@ const addData = (e: Event) => {
     e.preventDefault();
     const firstName = userFirstName.value;
     const lastName = userLastName.value;
-    // const dateOfBirth = userDateOfBirth.value ? userDateOfBirth.value : new Date().toISOString().split('T')[0];
     const dateOfBirth = userDateOfBirth.value;
     const location = userLocation.value;
     const education = userEducation.value;
@@ -36,7 +35,6 @@ const addData = (e: Event) => {
         location,
         education
     }
-    console.log('Adding Data is: ', addingData);
     const isSuccess = userStore.addUserData(addingData);
     if (isSuccess) {
         emit('goToGender');
@@ -50,8 +48,8 @@ const addData = (e: Event) => {
 
 }
 
-const loadUserData = (strLocalStorage: string) => {
-    const userData: Partial<User> = JSON.parse(strLocalStorage).userData; // Assuming currentUser is the property holding user data. Adjust according to your store structure.
+const loadUserData = (strSessionStorage: string) => {
+    const userData: Partial<User> = JSON.parse(strSessionStorage); // Assuming currentUser is the property holding user data. Adjust according to your store structure.
     userStore.user = userData;
     userFirstName.value = userData.firstName || '';
     userLastName.value = userData.lastName || '';
@@ -61,9 +59,9 @@ const loadUserData = (strLocalStorage: string) => {
 }
 
 onMounted(() => {
-    const strLocalStorage = localStorage.getItem('currentUser');
-    if (strLocalStorage !== null) {
-        loadUserData(strLocalStorage);
+    const strSessionStorage = sessionStorage.getItem('userData');
+    if (strSessionStorage !== null) {
+        loadUserData(strSessionStorage);
     }
     emit('sendTitle', title);
 });

@@ -20,12 +20,12 @@ const stepsDone: Ref<{ [key: number]: boolean }> = ref({});
 const nextStep = (currentStep: number) => {
     stepsDone.value[currentStep] = true;
     step.value = currentStep + 1;
-
 }
 
 onMounted(() => {
-    if (userStore.hobbies.length === 0)
+    if (userStore.user.interests?.length) {
         userStore.getHobbies();
+    }
 });
 </script>
 

@@ -8,16 +8,16 @@ const emit = defineEmits(['goToAuthorization']);
 const userStore = useUserStore();
 
 const logOut = () => {
-    localStorage.removeItem('currentUser');
+    sessionStorage.clear();
     emit('goToAuthorization');
 }
 
 const loadUserData = () => {
-    const strLocalStorage = localStorage.getItem('currentUser');
-    if (strLocalStorage === null) {
+    const strUserData = sessionStorage.getItem('userData');
+    if (strUserData === null) {
         throw new Error('User\'s data doesn\'t exist');
     } else {
-        userStore.user = JSON.parse(strLocalStorage).userData;
+        userStore.user = JSON.parse(strUserData);
     }
 }
 

@@ -48,9 +48,7 @@ const handleSubmit = async (e: Event) => {
     e.preventDefault(); // Prevent form from submitting by default
 
     if (!validateEmailAndPassword()) {
-        console.log('Form is invalid');
     } else {
-        console.log('form submited');
         const newUser = {
             email: enteredEmail.value,
             plainPassword: enteredPassword.value

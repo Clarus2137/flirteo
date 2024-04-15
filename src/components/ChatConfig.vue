@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, Ref, onMounted, onBeforeMount } from 'vue';
+import { ref, Ref, onMounted } from 'vue';
 import { useChatStore } from 'src/stores/chatStore';
 
 
@@ -10,7 +10,7 @@ const emit = defineEmits(['goToChat']);
 const apiUrl = process.env.API_SERVER;
 const promptsSource = `${apiUrl}/api/prompts/`;
 const respTypesSource = `${apiUrl}/api/response_types/`;
-const userID = JSON.parse(localStorage.currentUser).userData.id;
+const userID = JSON.parse(sessionStorage.userData).id;
 const userSource = `${apiUrl}/api/users/${userID}`;
 
 const isOptions = ref(true);
@@ -59,7 +59,6 @@ const setPlace = (place: string) => {
 
 const convertToString = (file: File) => {
     if (!file) {
-        console.log('File is not selected');
         return;
     }
     const reader = new FileReader();
@@ -87,15 +86,10 @@ const buildOptions = () => {
     emit('goToChat');
 }
 
-onBeforeMount(() => {
-    console.log(chatStore.session);
-});
-
 onMounted(async () => {
     const isPrompts = await chatStore.getPrompts();
     if (isPrompts) {
         prompts.value = chatStore.prompts;
-        // console.log(prompts);
     }
 
     const isTypes = await chatStore.getResponseTypes();
@@ -122,7 +116,7 @@ onMounted(async () => {
                 <p class="body-text lexend-light text-secondary">Choose conversation mode</p>
                 <CustomBtn type="button" v-for="prompt in prompts" :key="prompt.id"
                     @click="setPrompt(prompt.places, prompt.id); nextStep(2)">{{
-                        prompt.name }}</CustomBtn>
+            prompt.name }}</CustomBtn>
                 <q-stepper-navigation>
                     <q-btn flat @click="step = 1" color="primary" label="Back" class="q-ml-sm" />
                 </q-stepper-navigation>
@@ -131,7 +125,7 @@ onMounted(async () => {
             <q-step :name="3" title="Place" icon="settings" :done="step > 3">
                 <p class="body-text lexend-light text-secondary">Where would you like to go together?</p>
                 <CustomBtn type="button" v-for="place in places" :key="place.id" @click="setPlace(place.name)">{{
-                    place.name }}
+            place.name }}
                 </CustomBtn>
                 <q-stepper-navigation>
                     <q-btn flat @click="step = 2" color="primary" label="Back" class="q-ml-sm" />
@@ -160,7 +154,7 @@ onMounted(async () => {
                 <p class="body-text lexend-light text-secondary">What kind of conversation do you need?</p>
                 <CustomBtn type="button" v-for="style in respTypes" :key="style.id"
                     @click="setStyle(style.id); nextStep(5)">{{
-                        style.name }}
+            style.name }}
                 </CustomBtn>
                 <q-stepper-navigation>
                     <q-btn flat @click="stepBack" color="primary" label="Back" class="q-ml-sm" />
