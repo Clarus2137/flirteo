@@ -1,5 +1,9 @@
 <script setup lang="ts">
+// const customButton = document.querySelector('button.gradient-primary');
 
+// customButton?.addEventListener('mouseleave', () => {
+//     customButton.classList.remove('hover');
+// });
 </script>
 
 

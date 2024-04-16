@@ -86,8 +86,15 @@ body {
 }
 
 button.gradient-primary {
-    &:hover {
-        background: $bg_gradient_reverse;
+    // &:hover {
+    //     background: $bg_gradient_reverse;
+    // }
+
+    @media (hover: hover) and (pointer: fine) {
+        .button:hover {
+            /* Стили для :hover здесь будут применяться только если устройство поддерживает наведение курсором */
+            background-color: $bg_gradient_reverse;
+        }
     }
 
     &:active {

@@ -26,7 +26,7 @@ export const useUserStore = defineStore('user', {
             } catch (error) {
                 if (axios.isAxiosError(error)) {
                     // Handling Axios errors specifically
-                    console.error('Registration failed', error.response?.data);
+                    console.error('Registration failed: ', error.response?.data);
                 } else {
                     // Handling unexpected errors
                     console.error('An unexpected error occurred', error);
