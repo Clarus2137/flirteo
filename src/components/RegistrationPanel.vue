@@ -12,8 +12,9 @@ const validEmail = new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 const enteredEmail = ref('');
 const enteredPassword = ref('');
 
-const isVisibleEmail = ref(false);
-const isVisiblePassword = ref(false);
+const isVisibleEmailAlarm = ref(false);
+const existingEmail = ref(false);
+const isVisiblePasswordAlarm = ref(false);
 
 const userStore = useUserStore();
 
@@ -23,11 +24,11 @@ const validateEmailAndPassword = (): boolean => {
     let isValid = true;
 
     // Reset visibility states
-    isVisibleEmail.value = false;
-    isVisiblePassword.value = false;
+    isVisibleEmailAlarm.value = false;
+    isVisiblePasswordAlarm.value = false;
 
     if (!validEmail.test(enteredEmail.value)) {
-        isVisibleEmail.value = true;
+        isVisibleEmailAlarm.value = true;
         isValid = false;
     }
 
@@ -37,7 +38,7 @@ const validateEmailAndPassword = (): boolean => {
     const hasSpecialSymbol = /[-_!?&$#@]/.test(enteredPassword.value);
 
     if (!hasValidLength || !hasUpperCase || !hasNumber || !hasSpecialSymbol) {
-        isVisiblePassword.value = true;
+        isVisiblePasswordAlarm.value = true;
         isValid = false;
     }
 
@@ -55,12 +56,15 @@ const handleSubmit = async (e: Event) => {
         }
         const isSuccess = await userStore.registerUser(newUser);
         if (isSuccess) {
+            existingEmail.value = true;
             if (localStorage.getItem('isAuthorised') === null) {
                 localStorage.setItem('isAuthorised', 'true');
             }
             emit('goToVerification');
             enteredEmail.value = '';
             enteredPassword.value = '';
+        } else {
+            existingEmail.value = true;
         }
     }
 }
@@ -75,16 +79,25 @@ const handleSubmit = async (e: Event) => {
             <TitleRow :title="title" />
         </div>
         <form class="email__form mt-5" id="reg-account" @submit="handleSubmit">
-            <CustomInput type="text" placeholder="example@domain.com" v-model="enteredEmail" required />
-            <p class="text-center text-xs text-alarm font-bold duration-300"
-                :class="{ 'opacity-100': isVisibleEmail, 'opacity-0': !isVisibleEmail }">
-                Invalid E-mail
-            </p>
-            <CustomInput type="password" placeholder="Some password" v-model="enteredPassword" required />
-            <p class="text-center text-xs text-alarm font-bold duration-300"
-                :class="{ 'opacity-100': isVisiblePassword, 'opacity-0': !isVisiblePassword }">
-                Invalid Password
-            </p>
+            <div class="mb-3">
+                <CustomInput type="text" placeholder="example@domain.com" v-model="enteredEmail" required />
+                <p class="text-center text-xs text-alarm font-bold" v-if="isVisibleEmailAlarm">
+                    Invalid E-mail
+                </p>
+                <p class="text-center text-xs text-alarm font-bold" v-if="existingEmail">It seems this E-mail has been
+                    already used.</p>
+            </div>
+            <div>
+                <CustomInput type="password" placeholder="Some password" v-model="enteredPassword" required />
+                <p class="text-secondary text-[0.6rem] leading-[1.5]">Your password must be at least 8 letters a-z,
+                    containing at least 1
+                    capital letter, 1 number 0-9 and
+                    1 special character from "-, _, !, ?, &, $, #, @"</p>
+                <p class="text-center text-xs text-alarm font-bold duration-300"
+                    :class="{ 'opacity-100': isVisiblePasswordAlarm, 'opacity-0': !isVisiblePasswordAlarm }">
+                    Invalid Password
+                </p>
+            </div>
             <CustomBtn type="submit" class="mt-5">Continue</CustomBtn>
         </form>
     </div>
