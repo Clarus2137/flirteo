@@ -3,6 +3,7 @@ module.exports = {
     content: [
         './src/App.vue',
         './src/**/*.{vue,js,ts,jsx,tsx}',
+        './src-cordova/*.{html,vue,js,ts,jsx,tsx}',
         './src-cordova/**/*.{html,vue,js,ts,jsx,tsx}',
         './src-cordova/www/**/*.{html,vue,js,ts,jsx,tsx}'
     ],
