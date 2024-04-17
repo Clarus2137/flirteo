@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import PrivacyAndTerms from './PrivacyAndTerms.vue';
 
 
 const title = {
@@ -41,7 +40,6 @@ const title = {
             </div>
         </div>
     </div>
-    <PrivacyAndTerms />
 </template>
 
 

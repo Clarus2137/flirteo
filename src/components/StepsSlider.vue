@@ -10,22 +10,22 @@ const slideFirst = {
     id: 1,
     name: 'first',
     imgSrc: imgFirst,
-    headline: 'Find your partner with us',
-    bodyText: 'Amet minim mollit non deserunt sit aliqua dolor do amet sint.'
+    headline: 'Koniec z nieśmiałością!',
+    bodyText: 'Czy czujesz tremę na samą myśl o zagadaniu do kogoś? Flirteo pomoże Ci przełamać lody i pokaże jak łatwe może być nawiązywanie nowych kontaktów!'
 }
 const slideMiddle = {
     id: 2,
     name: 'middle',
     imgSrc: imgSecond,
-    headline: 'Dating betteer than ever before',
-    bodyText: 'Amet minim mollit non deserunt sit aliqua dolor do amet sint.'
+    headline: 'Zostań mistrzem flitru!',
+    bodyText: 'Flirteo wykorzystuje AI, oferując inteligentnie dopasowane podpowiedzi, które sprawią, że każda rozmowa będzie prostsza i bardziej naturalna.'
 }
 const slideFinal = {
     id: 3,
     name: 'final',
     imgSrc: imgThird,
-    headline: 'Find your perfect match',
-    bodyText: 'Amet minim mollit non deserunt sit aliqua dolor do amet sint.'
+    headline: 'Darmowa rejestracja.',
+    bodyText: 'Rejestrując się w Flirteo, odkryjesz, jak łatwo jest zamienić nieśmiałość na pewność siebie.'
 }
 const slides = [slideFirst, slideMiddle, slideFinal];
 

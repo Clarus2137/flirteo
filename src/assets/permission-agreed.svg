@@ -1,0 +1,8 @@
+<svg width="15px" height="15px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <g id="SVGRepo_iconCarrier">
+        <g fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m2.5.5h10c1.1045695 0 2 .8954305 2 2v10c0 1.1045695-.8954305 2-2 2h-10c-1.1045695 0-2-.8954305-2-2v-10c0-1.1045695.8954305-2 2-2z" stroke="#000" stroke-width="2"></path>
+            <path d="m4.5 7.5 2 2 4-4" stroke="#000" stroke-width="2"></path>
+        </g>
+    </g>
+</svg>

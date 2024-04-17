@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useUserStore } from 'src/stores/userStore';
+import PrivacyAndTerms from './PrivacyAndTerms.vue';
 
+
+
+const userStore = useUserStore();
+
+const emit = defineEmits(['goToVerification']);
 
 const title = {
     title: 'Create your account',
@@ -16,9 +22,7 @@ const isVisibleEmailAlarm = ref(false);
 const existingEmail = ref(false);
 const isVisiblePasswordAlarm = ref(false);
 
-const userStore = useUserStore();
-
-const emit = defineEmits(['goToVerification']);
+const isAccepted = ref(false);
 
 const validateEmailAndPassword = (): boolean => {
     let isValid = true;
@@ -68,13 +72,17 @@ const handleSubmit = async (e: Event) => {
         }
     }
 }
+
+const toggleState = () => {
+    isAccepted.value = !isAccepted.value;
+}
 </script>
 
 
 
 <template>
     <BackBtn class="mb-3" />
-    <div class="email">
+    <div class="email grow">
         <div class="email__title">
             <TitleRow :title="title" />
         </div>
@@ -98,7 +106,8 @@ const handleSubmit = async (e: Event) => {
                     Invalid Password
                 </p>
             </div>
-            <CustomBtn type="submit" class="mt-5">Continue</CustomBtn>
+            <CustomBtn type="submit" class="mt-5" :disabled="isAccepted === false">Continue</CustomBtn>
         </form>
     </div>
+    <PrivacyAndTerms @Agreement="toggleState" />
 </template>

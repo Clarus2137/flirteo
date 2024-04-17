@@ -97,12 +97,12 @@ onMounted(() => {
                 <q-chat-message name="Assistent" bg-color="primary" text-color="white" v-if="!item.response">
                     <q-spinner-dots size="2rem" />
                 </q-chat-message>
-                <q-chat-message name="Assistent" :text="[item.response]" bg-color="primary" text-color="white" v-else />
+                <q-chat-message name="Assistant" :text="[item.response]" bg-color="primary" text-color="white" v-else />
             </div>
         </div>
         <form @submit.prevent="addMessage" class="chat__form self-end flex no-wrap gap-x-3">
             <CustomInput type="text" v-model="messageField" class="chat__input" />
-            <button type="submit" class="send w-auto">
+            <button type="submit" class="send w-auto" :disabled="messageField === ''">
                 <svg width="54px" height="54px" viewBox="2 2 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="gradient_primary" x1="0%" y1="0%" x2="100%" y2="100%">
