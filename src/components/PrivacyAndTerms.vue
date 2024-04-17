@@ -2,12 +2,12 @@
 import { ref } from 'vue';
 
 
-const emit = defineEmits(['Agreement']);
+const emit = defineEmits(['agreement']);
 
 const isAgreed = ref(false);
 
 const switchAgreement = () => {
-    emit('Agreement');
+    emit('agreement');
 }
 </script>
 

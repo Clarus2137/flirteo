@@ -24,7 +24,9 @@ const nextStep = (currentStep: number) => {
 }
 
 onMounted(() => {
-    userStore.getHobbies();
+    if (!userStore.hobbies.length) {
+        userStore.getHobbies();
+    }
 });
 </script>
 

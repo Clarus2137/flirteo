@@ -23,6 +23,7 @@ const existingEmail = ref(false);
 const isVisiblePasswordAlarm = ref(false);
 
 const isAccepted = ref(false);
+const agreementAlarm = ref(true);
 
 const validateEmailAndPassword = (): boolean => {
     let isValid = true;
@@ -75,6 +76,11 @@ const handleSubmit = async (e: Event) => {
 
 const toggleState = () => {
     isAccepted.value = !isAccepted.value;
+    if (isAccepted.value === false) {
+        agreementAlarm.value = true;
+    } else {
+        agreementAlarm.value = false;
+    }
 }
 </script>
 
@@ -106,8 +112,13 @@ const toggleState = () => {
                     Invalid Password
                 </p>
             </div>
-            <CustomBtn type="submit" class="mt-5" :disabled="isAccepted === false">Continue</CustomBtn>
+            <CustomBtn type="submit" class="mt-5" :disabled="isAccepted === false">Continue
+            </CustomBtn>
+            <p class="agreement-alarm mt-5 lexend-bold text-secondary text-center text-sm" v-if="agreementAlarm">For
+                start please
+                express your consent
+                to the processing of your personal data down below</p>
         </form>
     </div>
-    <PrivacyAndTerms @Agreement="toggleState" />
+    <PrivacyAndTerms @agreement="toggleState" />
 </template>
