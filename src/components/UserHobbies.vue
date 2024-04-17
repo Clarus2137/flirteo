@@ -42,13 +42,14 @@ onMounted(() => {
 
 
 <template>
-    <div class="details__hobbies hobbies flex gap-x-2.5">
-        <div class="hobbies__item hobby p-3 rounded-[10px] hover:cursor-pointer"
-            :class="{ 'gradient-primary border-transparent text-white': item.checked, 'hobby-shadow': !item.checked }"
-            v-for="(item, index) in hobbies" :key="index" @click="toggleItem(item)">
-            {{ item.name }}
+    <div class="details__hobbies hobbies grid gap-y-8">
+        <div class="flex gap-1.5">
+            <div class="hobbies__item hobby p-3 rounded-[10px] hover:cursor-pointer"
+                :class="{ 'gradient-primary border-transparent text-white': item.checked, 'hobby-shadow': !item.checked }"
+                v-for="(item, index) in hobbies" :key="index" @click="toggleItem(item)">
+                {{ item.name }}
+            </div>
         </div>
+        <CustomBtn type="button" @click="updateUserData">Save</CustomBtn>
     </div>
-
-    <CustomBtn type="button" class="mt-5" @click="updateUserData">Save</CustomBtn>
 </template>

@@ -85,42 +85,45 @@ const handleSubmit = async (e: Event) => {
 
 
 <template>
-    <BackBtn />
-    <div class="email grid gap-y-8 content-center">
-        <div class="email__title text-center">
-            <TitleRow :title="title" />
-        </div>
-        <form class="email__form grid gap-y-2" id="reg-account" @submit="handleSubmit">
-            <div>
-                <CustomInput type="text" placeholder="example@domain.com" v-model="enteredEmail" required />
-                <p class="text-center text-xs text-alarm font-bold duration-300"
-                    :class="{ 'opacity-100': isVisibleEmail, 'opacity-0': !isVisibleEmail }">
-                    Invalid E-mail
+    <div class="grid grid-rows-[min-content_auto]">
+        <BackBtn />
+        <div class="email grid gap-y-8 content-center">
+            <div class="email__title text-center">
+                <TitleRow :title="title" />
+            </div>
+            <form class="email__form grid gap-y-2" id="reg-account" @submit="handleSubmit">
+                <div>
+                    <CustomInput type="text" placeholder="example@domain.com" v-model="enteredEmail" required />
+                    <p class="text-center text-xs text-alarm font-bold duration-300"
+                        :class="{ 'opacity-100': isVisibleEmail, 'opacity-0': !isVisibleEmail }">
+                        Invalid E-mail
+                    </p>
+                </div>
+                <div>
+                    <CustomInput type="password" placeholder="Some password" v-model="enteredPassword" required />
+                    <p class="text-center text-xs text-alarm font-bold duration-300"
+                        :class="{ 'opacity-100': isVisiblePassword, 'opacity-0': !isVisiblePassword }">
+                        Invalid Password
+                    </p>
+                </div>
+                <CustomBtn type="submit">Continue</CustomBtn>
+            </form>
+            <div class="mt-10 text-sm text-center" v-if="isError">
+                <p class="text-red font-medium">The User doesn't exist or invalid password.</p>
+                <router-link class="inline-block my-3 text-base text-primary font-medium underline"
+                    to="/registration">Do
+                    you really
+                    have an
+                    account?</router-link>
+                <p>If you are, check the password and try again or <span
+                        class="reset-link text-primary font-medium underline">just
+                        reset your
+                        password</span>
                 </p>
             </div>
-            <div>
-                <CustomInput type="password" placeholder="Some password" v-model="enteredPassword" required />
-                <p class="text-center text-xs text-alarm font-bold duration-300"
-                    :class="{ 'opacity-100': isVisiblePassword, 'opacity-0': !isVisiblePassword }">
-                    Invalid Password
-                </p>
+            <div class="mt-10 text-green font-medium text-center" v-if="isAuth">
+                <p>Authorization successful</p>
             </div>
-            <CustomBtn type="submit">Continue</CustomBtn>
-        </form>
-        <div class="mt-10 text-sm text-center" v-if="isError">
-            <p class="text-red font-medium">The User doesn't exist or invalid password.</p>
-            <router-link class="inline-block my-3 text-base text-primary font-medium underline" to="/registration">Do
-                you really
-                have an
-                account?</router-link>
-            <p>If you are, check the password and try again or <span
-                    class="reset-link text-primary font-medium underline">just
-                    reset your
-                    password</span>
-            </p>
-        </div>
-        <div class="mt-10 text-green font-medium text-center" v-if="isAuth">
-            <p>Authorization successful</p>
         </div>
     </div>
 </template>

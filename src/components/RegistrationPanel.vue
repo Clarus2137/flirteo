@@ -114,7 +114,8 @@ const toggleState = () => {
             </div>
             <CustomBtn type="submit" class="mt-5" :disabled="isAccepted === false">Continue
             </CustomBtn>
-            <p class="agreement-alarm mt-5 lexend-bold text-secondary text-center text-sm" v-if="agreementAlarm">For
+            <p class="agreement-alarm mt-5 lexend-bold text-secondary text-center text-sm"
+                :class="{ 'opacity-0': !agreementAlarm }">For
                 start please
                 express your consent
                 to the processing of your personal data down below</p>

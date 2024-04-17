@@ -24,6 +24,12 @@ module.exports = {
             'seconadry': '#989394',
             'inactive': '#eae9ea',
             'alarm': '#f00'
+        },
+
+        extend: {
+            aspectRatio: {
+                '4/3': '4 / 3'
+            }
         }
     },
     plugins: [],
