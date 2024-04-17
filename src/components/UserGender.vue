@@ -46,7 +46,7 @@ onMounted(() => {
 
 
 <template>
-    <div class="details__gender gender flex flex-col items-center gap-y-10">
+    <div class="details__gender gender grid grid-rows-[auto_min-content] gap-y-8">
         <div class="gender__items w-full flex justify-around gap-8">
             <div class="gender__item gender__male p-8 rounded-2xl border border-solid border-inactive text-center hover:cursor-pointer"
                 :class="{ 'border-primary active': activeGender === 'male' }" @click="chooseGender('male')">

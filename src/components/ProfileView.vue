@@ -56,8 +56,8 @@ onMounted(() => {
             <p>{{ userStore.user.email }}</p>
         </div>
     </div>
-    <q-list class="profile__items grow">
-        <q-item clickable v-ripple exact to="/profile/edit">
+    <q-list class="profile__items grid content-between">
+        <q-item class="min-h-min p-1" clickable v-ripple exact to="/profile/edit">
             <q-item-section avatar>
                 <q-icon>
                     <DetailsIcon />
@@ -70,7 +70,7 @@ onMounted(() => {
                 </q-icon>
             </q-item-section>
         </q-item>
-        <q-item clickable v-ripple>
+        <q-item class="min-h-min p-1" clickable v-ripple>
             <q-item-section avatar>
                 <q-icon>
                     <SettingsIcon />
@@ -83,7 +83,7 @@ onMounted(() => {
                 </q-icon>
             </q-item-section>
         </q-item>
-        <q-item clickable v-ripple exact to="/terms">
+        <q-item class="min-h-min p-1" clickable v-ripple exact to="/terms">
             <q-item-section avatar>
                 <q-icon>
                     <TermsIcon />
@@ -96,7 +96,7 @@ onMounted(() => {
                 </q-icon>
             </q-item-section>
         </q-item>
-        <q-item clickable v-ripple exact to="/privacy">
+        <q-item class="min-h-min p-1" clickable v-ripple exact to="/privacy">
             <q-item-section avatar>
                 <q-icon>
                     <PrivacyIcon />
@@ -109,7 +109,7 @@ onMounted(() => {
                 </q-icon>
             </q-item-section>
         </q-item>
-        <q-item clickable v-ripple>
+        <q-item class="min-h-min p-1" clickable v-ripple>
             <q-item-section avatar>
                 <q-icon>
                     <AboutIcon />
@@ -123,7 +123,7 @@ onMounted(() => {
             </q-item-section>
         </q-item>
     </q-list>
-    <div>
+    <div class="self-end">
         <CustomBtn class="flex justify-center items-center gap-x-2 mb-3" @click="logOut">
             <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <defs>

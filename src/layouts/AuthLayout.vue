@@ -5,9 +5,9 @@
 
 
 <template>
-   <q-layout class="flex flex-col">
-      <q-page-container class="flex flex-col reg-wrapper">
-         <router-view></router-view>
-      </q-page-container>
-   </q-layout>
+    <q-layout class="grid p-[3%]">
+        <q-page-container class="grid grid-rows-[min-content_auto] reg-wrapper">
+            <router-view></router-view>
+        </q-page-container>
+    </q-layout>
 </template>

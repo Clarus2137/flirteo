@@ -5,9 +5,9 @@ import StepsSlider from 'components/StepsSlider.vue'
 
 
 <template>
-   <div class="start flex">
-      <StepsSlider />
-   </div>
+    <div class="start grid">
+        <StepsSlider />
+    </div>
 </template>
 
 

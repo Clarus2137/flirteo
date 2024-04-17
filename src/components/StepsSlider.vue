@@ -40,21 +40,20 @@ const slideNext = () => {
 
 <template>
     <q-carousel v-model="slideItem" transition-prev="slide-right" transition-next="slide-left" control-color="primary"
-        swipeable animated navigation class="rounded-borders w-full h-full max-h-fit bg-transparent">
+        swipeable animated class="rounded-borders bg-transparent h-auto">
         <template v-slot:navigation-icon="{ active, onClick }">
             <q-btn v-if="active" class="pag__btn pag__btn_active" flat round dense />
             <q-btn v-else class="pag__btn" flat round dense @click="onClick" />
         </template>
-        <q-carousel-slide :name="slide.name" class="column no-wrap flex-center p-0 relative" v-for="slide in slides"
-            :key="slide.id">
-            <div class="start__item h-full max-h-fit text-center">
-                <q-img class="mx-auto" :src="slide.imgSrc" alt="Welcome" />
-                <div class="start__details bg-white mt-[30px] p-5 rounded-[30px]">
-                    <div class="details__title justify-center mb-[75px]">
-                        <h1 class="headline lexend-bold w-full">
+        <q-carousel-slide :name="slide.name" class="p-0" v-for="slide in slides" :key="slide.id">
+            <div class="start__item grid h-full text-center">
+                <img class="max-w-100% h-auto mx-auto" :src="slide.imgSrc" alt="Welcome">
+                <div class="start__details grid gap-y-5 self-end bg-white p-[4%] rounded-[30px]">
+                    <div class="details__title">
+                        <h1 class="headline lexend-bold">
                             {{ slide.headline }}
                         </h1>
-                        <p class="body-text text-secondary w-full">
+                        <p class="self-end body-text text-secondary">
                             {{ slide.bodyText }}
                         </p>
                     </div>

@@ -85,23 +85,27 @@ const handleSubmit = async (e: Event) => {
 
 
 <template>
-    <BackBtn class="mb-3" />
-    <div class="email">
-        <div class="email__title">
+    <BackBtn />
+    <div class="email grid gap-y-8 content-center">
+        <div class="email__title text-center">
             <TitleRow :title="title" />
         </div>
-        <form class="email__form mt-5" id="reg-account" @submit="handleSubmit">
-            <CustomInput type="text" placeholder="example@domain.com" v-model="enteredEmail" required />
-            <p class="text-center text-xs text-alarm font-bold duration-300"
-                :class="{ 'opacity-100': isVisibleEmail, 'opacity-0': !isVisibleEmail }">
-                Invalid E-mail
-            </p>
-            <CustomInput type="password" placeholder="Some password" v-model="enteredPassword" required />
-            <p class="text-center text-xs text-alarm font-bold duration-300"
-                :class="{ 'opacity-100': isVisiblePassword, 'opacity-0': !isVisiblePassword }">
-                Invalid Password
-            </p>
-            <CustomBtn type="submit" class="mt-5">Continue</CustomBtn>
+        <form class="email__form grid gap-y-2" id="reg-account" @submit="handleSubmit">
+            <div>
+                <CustomInput type="text" placeholder="example@domain.com" v-model="enteredEmail" required />
+                <p class="text-center text-xs text-alarm font-bold duration-300"
+                    :class="{ 'opacity-100': isVisibleEmail, 'opacity-0': !isVisibleEmail }">
+                    Invalid E-mail
+                </p>
+            </div>
+            <div>
+                <CustomInput type="password" placeholder="Some password" v-model="enteredPassword" required />
+                <p class="text-center text-xs text-alarm font-bold duration-300"
+                    :class="{ 'opacity-100': isVisiblePassword, 'opacity-0': !isVisiblePassword }">
+                    Invalid Password
+                </p>
+            </div>
+            <CustomBtn type="submit">Continue</CustomBtn>
         </form>
         <div class="mt-10 text-sm text-center" v-if="isError">
             <p class="text-red font-medium">The User doesn't exist or invalid password.</p>

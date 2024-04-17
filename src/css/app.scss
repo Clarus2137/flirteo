@@ -17,6 +17,7 @@ body {
 }
 
 body {
+    padding-top: env(safe-area-inset-top);
     color: $text_primary;
 }
 
@@ -37,11 +38,6 @@ body {
 .body-text {
     font-size: 0.875rem;
     line-height: 1.1875;
-}
-
-.q-page-container {
-    flex-grow: 1;
-    padding: 25px 20px;
 }
 
 .q-tabs {
@@ -71,9 +67,13 @@ body {
     background: rgba(0, 0, 0, .15);
 }
 
+.q-carousel .q-panel {
+    height: 100%;
+}
+
 [class*="__title"] {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    align-content: start;
     row-gap: 10px;
 
     &>* {
@@ -177,5 +177,21 @@ button.gradient-primary {
 
     .q-stepper__nav {
         padding: 0;
+    }
+}
+
+.profile .q-stepper {
+    .q-stepper__step {
+        display: grid;
+    }
+
+    .q-stepper__step-content {
+        display: grid;
+    }
+
+    .q-stepper__step-inner {
+        display: grid;
+        grid-template-rows: min-content auto;
+        row-gap: 12px;
     }
 }

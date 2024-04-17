@@ -70,8 +70,8 @@ onMounted(() => {
 
 
 <template>
-    <div class="details__photo photo text-center">
-        <div class="photo__img inline-block p-1 rounded-[50%] w-[100px] aspect-square">
+    <div class="details__photo photo grid justify-center">
+        <div class="photo__img inline-block p-1.5 rounded-[50%] w-[100px] h-[100px] aspect-square">
             <img src="./../assets/user-male.png" class="max-h-full mx-auto" alt="User Male"
                 v-if="userStore.user.gender === 'male'">
             <img src="./../assets/user-female.png" class="max-h-full mx-auto" alt="User Female"
@@ -79,7 +79,7 @@ onMounted(() => {
             <img src="./../assets/user-neutral.png" class="max-h-full mx-auto" alt="User Neutral" v-else>
         </div>
     </div>
-    <form class="details__personal-data flex flex-col gap-y-3" @submit="addData">
+    <form class="details__personal-data self-stretch grid content-between" @submit="addData">
         <div class="firstName">
             <CustomInput id="firstName" type="text" v-model="userFirstName" required />
             <label for="firstName">First Name</label>

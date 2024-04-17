@@ -32,12 +32,13 @@ onMounted(() => {
 
 
 <template>
-    <div class="profile">
-        <div class="profile__details details grid gap-y-6">
-            <div class="details__title">
+    <div class="profile grid">
+        <div class="profile__details details grid grid-rows-[min-content_auto] gap-y-3">
+            <div class="details__title self-start">
                 <TitleRow :title="pageTitle" />
             </div>
-            <q-stepper v-model="step" header-nav ref="stepper" color="primary" animated class="grid gap-y-10">
+            <q-stepper v-model="step" header-nav ref="stepper" color="primary" animated
+                class="grid grid-rows-[min-content_auto] gap-y-3">
                 <q-step :name="1" title="Details" icon="settings" :done="step > 1" :header-nav="step > 1">
 
                     <CommonInfo @goToGender="nextStep(1)" @sendTitle="getTitle" />
@@ -48,16 +49,16 @@ onMounted(() => {
 
                     <UserGender @goToInterests="nextStep(2)" @sendTitle="getTitle" />
 
-                    <q-stepper-navigation class="mt-4">
+                    <q-stepper-navigation>
                         <CustomBtn type="button" @click="() => step = 1">Back</CustomBtn>
                     </q-stepper-navigation>
                 </q-step>
 
-                <q-step :name="3" title="Hobbies" icon="view_list" :header-nav="step > 3">
+                <q-step :name="3" title="Hobbies" icon="view_list" :header-nav="step > 3" class="hobbies-step">
 
                     <UserHobbies @goToHome="$router.push('/home')" @sendTitle="getTitle" />
 
-                    <q-stepper-navigation class="mt-4">
+                    <q-stepper-navigation>
                         <CustomBtn type="button" @click="() => step = 2">Back</CustomBtn>
                     </q-stepper-navigation>
                 </q-step>
