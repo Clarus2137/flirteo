@@ -50,18 +50,13 @@ const slideNext = () => {
                 <img class="max-w-100% mx-auto self-center" :src="slide.imgSrc" alt="Welcome">
                 <div class="start__details grid gap-y-5 self-end bg-white p-[4%] rounded-[30px]">
                     <div class="details__title">
-                        <h1 class="headline lexend-bold">
+                        <h1 class="headline lexend-bold text-center">
                             {{ slide.headline }}
                         </h1>
-                        <p class="self-end body-text text-secondary">
+                        <p class="self-end body-text text-secondary text-center">
                             {{ slide.bodyText }}
                         </p>
                     </div>
-                    <!-- <div class="pag w-full my-[30px] flex justify-center items-center gap-x-[5px]">
-                     <div class="pag__btn pag__btn_active"></div>
-                     <div class="pag__btn"></div>
-                     <div class="pag__btn"></div>
-                  </div> -->
                     <CustomBtn v-if="slide.id < 3" @click="slideNext">Next</CustomBtn>
                     <CustomBtn v-else @click="$router.push('/authorization')">Get started</CustomBtn>
                 </div>

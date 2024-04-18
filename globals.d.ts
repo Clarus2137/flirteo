@@ -73,6 +73,12 @@ declare global {
         icon: string,
         name: string
     }
+
+    interface Navigator {
+        app: {
+            exitApp: () => void; // Добавьте другие методы по мере необходимости
+        }
+    }
 }
 
 export { };
