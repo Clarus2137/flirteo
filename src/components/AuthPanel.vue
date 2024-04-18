@@ -44,7 +44,7 @@ const title = {
 
 
 
-<style scoped lang="scss">
+<style lang="scss">
 .auth {
     flex-grow: 1;
 
