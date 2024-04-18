@@ -45,9 +45,9 @@ const slideNext = () => {
             <q-btn v-if="active" class="pag__btn pag__btn_active" flat round dense />
             <q-btn v-else class="pag__btn" flat round dense @click="onClick" />
         </template>
-        <q-carousel-slide :name="slide.name" class="p-0" v-for="slide in slides" :key="slide.id">
-            <div class="start__item grid h-full text-center">
-                <img class="max-w-100% h-auto mx-auto" :src="slide.imgSrc" alt="Welcome">
+        <q-carousel-slide :name="slide.name" class="grid p-0" v-for="slide in slides" :key="slide.id">
+            <div class="start__item grid grid-rows-[auto_min-content]">
+                <img class="max-w-100% mx-auto self-center" :src="slide.imgSrc" alt="Welcome">
                 <div class="start__details grid gap-y-5 self-end bg-white p-[4%] rounded-[30px]">
                     <div class="details__title">
                         <h1 class="headline lexend-bold">

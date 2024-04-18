@@ -34,7 +34,8 @@ const userAge = calculateAge(userStore.user.dateOfBirth!);
 
 <template>
     <div class="home grid grid-rows-[min-content_auto] gap-y-8">
-        <div class="home__photo photo flex justify-center items-center aspect-4/3 gradient-primary rounded-b-3xl">
+        <div
+            class="home__photo photo flex justify-center items-center h-[75vw] max-h-[320px] mt-[-1vw] mx-[-3vw] gradient-primary rounded-b-3xl">
             <img src="./../assets/user-male.png" alt="User Male" class="max-h-[200px]"
                 v-if="userStore.user.gender === 'male'">
             <img src="./../assets/user-female.png" alt="User Female" class="max-h-[300px]"
@@ -43,7 +44,7 @@ const userAge = calculateAge(userStore.user.dateOfBirth!);
         </div>
         <div class="home__user user grid grid-rows-[min-content_min-content_min-content] gap-y-5 lexend-bold text-lg">
             <p><span class="user__firstname">{{ userStore.user.firstName }}</span> <span class="user__lastname">{{
-                userStore.user.lastName }}</span>, {{ userAge }} years</p>
+                    userStore.user.lastName }}</span>, {{ userAge }} years</p>
             <div class="user__education">
                 <p class="lexend-bold">Education:</p>
                 <p class="lexend text-secondary text-sm">{{ userStore.user.education }}</p>
@@ -63,8 +64,13 @@ const userAge = calculateAge(userStore.user.dateOfBirth!);
 
 
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .photo {
-    margin: -25px -20px auto;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-top);
+
+    @media(min-width: calc(400px + 6vw)) {
+        margin: -1vw calc((100vw - 400px) / 2 * -1) 0;
+    }
 }
 </style>

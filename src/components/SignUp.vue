@@ -87,39 +87,43 @@ const toggleState = () => {
 
 
 <template>
-    <BackBtn class="mb-3" />
-    <div class="email grow">
-        <div class="email__title">
-            <TitleRow :title="title" />
+    <div class="grid grid-rows-[min-content_auto_min-content]">
+        <BackBtn />
+        <div class="email grid content-evenly">
+            <div class="email__title text-center">
+                <TitleRow :title="title" />
+            </div>
+            <form class="email__form" id="reg-account" @submit="handleSubmit">
+                <div class="mb-3">
+                    <CustomInput type="text" placeholder="example@domain.com" v-model="enteredEmail" required />
+                    <p class="text-center text-xs text-alarm font-bold" v-if="isVisibleEmailAlarm">
+                        Invalid E-mail
+                    </p>
+                    <p class="text-center text-xs text-alarm font-bold" v-if="existingEmail">It seems this E-mail has
+                        been
+                        already used.</p>
+                </div>
+                <div>
+                    <CustomInput type="password" placeholder="Some password" v-model="enteredPassword" required />
+                    <p class="text-secondary text-[0.6rem] leading-[1.5]">Your password must be at least 8 letters a-z,
+                        containing at least 1
+                        capital letter, 1 number 0-9 and
+                        1 special character from "-, _, !, ?, &, $, #, @"</p>
+                    <p class="text-center text-xs text-alarm font-bold duration-300"
+                        :class="{ 'opacity-100': isVisiblePasswordAlarm, 'opacity-0': !isVisiblePasswordAlarm }">
+                        Invalid Password
+                    </p>
+                </div>
+                <CustomBtn type="submit" class="mt-5"
+                    :disabled="isAccepted === false || enteredEmail === '' || enteredPassword === ''">Continue
+                </CustomBtn>
+                <p class="agreement-alarm mt-5 lexend-bold text-secondary text-center text-sm"
+                    :class="{ 'opacity-0': !agreementAlarm }">For
+                    start please
+                    express your consent
+                    to the processing of your personal data down below</p>
+            </form>
         </div>
-        <form class="email__form mt-5" id="reg-account" @submit="handleSubmit">
-            <div class="mb-3">
-                <CustomInput type="text" placeholder="example@domain.com" v-model="enteredEmail" required />
-                <p class="text-center text-xs text-alarm font-bold" v-if="isVisibleEmailAlarm">
-                    Invalid E-mail
-                </p>
-                <p class="text-center text-xs text-alarm font-bold" v-if="existingEmail">It seems this E-mail has been
-                    already used.</p>
-            </div>
-            <div>
-                <CustomInput type="password" placeholder="Some password" v-model="enteredPassword" required />
-                <p class="text-secondary text-[0.6rem] leading-[1.5]">Your password must be at least 8 letters a-z,
-                    containing at least 1
-                    capital letter, 1 number 0-9 and
-                    1 special character from "-, _, !, ?, &, $, #, @"</p>
-                <p class="text-center text-xs text-alarm font-bold duration-300"
-                    :class="{ 'opacity-100': isVisiblePasswordAlarm, 'opacity-0': !isVisiblePasswordAlarm }">
-                    Invalid Password
-                </p>
-            </div>
-            <CustomBtn type="submit" class="mt-5" :disabled="isAccepted === false">Continue
-            </CustomBtn>
-            <p class="agreement-alarm mt-5 lexend-bold text-secondary text-center text-sm"
-                :class="{ 'opacity-0': !agreementAlarm }">For
-                start please
-                express your consent
-                to the processing of your personal data down below</p>
-        </form>
+        <PrivacyAndTerms @agreement="toggleState" />
     </div>
-    <PrivacyAndTerms @agreement="toggleState" />
 </template>

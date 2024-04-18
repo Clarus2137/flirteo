@@ -42,8 +42,8 @@ onMounted(() => {
 
 
 <template>
-    <div class="details__hobbies hobbies grid gap-y-8">
-        <div class="flex gap-1.5">
+    <div class="details__hobbies hobbies grid grid-rows-[auto_min-content]">
+        <div class="flex items-start content-center gap-[3vw]">
             <div class="hobbies__item hobby p-3 rounded-[10px] hover:cursor-pointer"
                 :class="{ 'gradient-primary border-transparent text-white': item.checked, 'hobby-shadow': !item.checked }"
                 v-for="(item, index) in hobbies" :key="index" @click="toggleItem(item)">

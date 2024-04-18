@@ -71,15 +71,15 @@ onMounted(() => {
 
 <template>
     <div class="details__photo photo grid justify-center">
-        <div class="photo__img inline-block p-1.5 rounded-[50%] w-[100px] h-[100px] aspect-square">
-            <img src="./../assets/user-male.png" class="max-h-full mx-auto" alt="User Male"
+        <div class="photo__img inline-block p-1.5 rounded-[50%] w-[100px] h-[100px]">
+            <img src="./../assets/user-male.png" class="h-full mx-auto" alt="User Male"
                 v-if="userStore.user.gender === 'male'">
-            <img src="./../assets/user-female.png" class="max-h-full mx-auto" alt="User Female"
+            <img src="./../assets/user-female.png" class="h-full mx-auto" alt="User Female"
                 v-else-if="userStore.user.gender === 'female'">
-            <img src="./../assets/user-neutral.png" class="max-h-full mx-auto" alt="User Neutral" v-else>
+            <img src="./../assets/user-neutral.png" class="h-full mx-auto" alt="User Neutral" v-else>
         </div>
     </div>
-    <form class="details__personal-data self-stretch grid gap-y-2" @submit="addData">
+    <form class="details__personal-data grid gap-y-[1.25vh]" @submit="addData">
         <div class="firstName">
             <CustomInput id="firstName" type="text" v-model="userFirstName" required />
             <label for="firstName">First Name</label>
@@ -101,7 +101,7 @@ onMounted(() => {
             <CustomInput id="education" type="text" v-model="userEducation" required />
             <label for="education">Education</label>
         </div>
-        <CustomBtn type="submit">Continue</CustomBtn>
+        <CustomBtn type="submit" class="self-end">Continue</CustomBtn>
     </form>
     <div class="w-full h-full absolute top-0 left-0 hover:cursor-pointer bg-black opacity-75"
         :class="{ 'hidden': !isVisible, 'block': isVisible }" @click="isVisible = !isVisible"></div>
@@ -115,7 +115,7 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .details__personal-data {
-    grid-template-rows: repeat(6, min-content);
+    grid-template-rows: repeat(5, min-content) 1fr;
 
     &>* {
         position: relative;

@@ -5,7 +5,7 @@
 
 
 <template>
-    <q-layout class="grid p-[3%]">
+    <q-layout class="grid p-[3vw]">
         <q-page-container class="grid grid-rows-[min-content_auto] gap-y-3 overflow-hidden relative">
             <BackBtn />
             <router-view />

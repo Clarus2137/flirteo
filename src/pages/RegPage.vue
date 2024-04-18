@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import RegistrationPanel from 'src/components/RegistrationPanel.vue';
+import SignUp from 'src/components/SignUp.vue';
 </script>
 
 
 
 <template>
-   <RegistrationPanel @goToVerification="$router.push('/registration/verification')" />
+    <SignUp @goToVerification="$router.push('/registration/verification')" />
 </template>

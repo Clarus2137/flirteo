@@ -10,7 +10,6 @@ const title = {
     subtitle: 'Please enter your e-mail & password to continue'
 }
 
-const validEmail = new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
 const enteredEmail = ref('');
 const enteredPassword = ref('');
 
@@ -22,62 +21,34 @@ const isAuth = ref(false);
 
 const userStore = useUserStore();
 
-const validateEmailAndPassword = (): boolean => {
-    let isValid = true;
-
-    // Reset visibility states
-    isVisibleEmail.value = false;
-    isVisiblePassword.value = false;
-
-    if (!validEmail.test(enteredEmail.value)) {
-        isVisibleEmail.value = true;
-        isValid = false;
-    }
-
-    const hasValidLength = enteredPassword.value.length >= 8;
-    const hasUpperCase = /[A-Z]/.test(enteredPassword.value);
-    const hasNumber = /[0-9]/.test(enteredPassword.value);
-    const hasSpecialSymbol = /[-_!?&$#@]/.test(enteredPassword.value);
-
-    if (!hasValidLength || !hasUpperCase || !hasNumber || !hasSpecialSymbol) {
-        isVisiblePassword.value = true;
-        isValid = false;
-    }
-
-    return isValid;
-}
-
 const handleSubmit = async (e: Event) => {
     e.preventDefault(); // Prevent form from submitting by default
 
-    if (!validateEmailAndPassword()) {
+    const userAccount = {
+        email: enteredEmail.value,
+        password: enteredPassword.value
+    }
+    const isSuccess = await userStore.authoriseUser(userAccount);
+    if (isSuccess) {
+        if (localStorage.getItem('isAuthorised') === null) {
+            localStorage.setItem('isAuthorised', 'true');
+        }
+        if (isError.value) {
+            isError.value = !isError.value;
+        }
+        isAuth.value = !isError.value;
+        setTimeout(() => {
+            const isProfileCompleted = JSON.parse(sessionStorage.userData).firstName
+            if (isProfileCompleted !== null) {
+                emit('goToHome');
+            } else {
+                emit('goToComplete');
+            }
+        }, 300);
+        enteredEmail.value = '';
+        enteredPassword.value = '';
     } else {
-        const userAccount = {
-            email: enteredEmail.value,
-            password: enteredPassword.value
-        }
-        const isSuccess = await userStore.authoriseUser(userAccount);
-        if (isSuccess) {
-            if (localStorage.getItem('isAuthorised') === null) {
-                localStorage.setItem('isAuthorised', 'true');
-            }
-            if (isError.value) {
-                isError.value = !isError.value;
-            }
-            isAuth.value = !isError.value;
-            setTimeout(() => {
-                const isProfileCompleted = JSON.parse(sessionStorage.userData).firstName
-                if (isProfileCompleted !== null) {
-                    emit('goToHome');
-                } else {
-                    emit('goToComplete');
-                }
-            }, 300);
-            enteredEmail.value = '';
-            enteredPassword.value = '';
-        } else {
-            isError.value = true;
-        }
+        isError.value = true;
     }
 }
 </script>
@@ -87,7 +58,7 @@ const handleSubmit = async (e: Event) => {
 <template>
     <div class="grid grid-rows-[min-content_auto]">
         <BackBtn />
-        <div class="email grid gap-y-8 content-center">
+        <div class="email grid content-evenly">
             <div class="email__title text-center">
                 <TitleRow :title="title" />
             </div>
@@ -106,7 +77,7 @@ const handleSubmit = async (e: Event) => {
                         Invalid Password
                     </p>
                 </div>
-                <CustomBtn type="submit">Continue</CustomBtn>
+                <CustomBtn type="submit" :disabled="enteredEmail === '' || enteredPassword === ''">Continue</CustomBtn>
             </form>
             <div class="mt-10 text-sm text-center" v-if="isError">
                 <p class="text-red font-medium">The User doesn't exist or invalid password.</p>

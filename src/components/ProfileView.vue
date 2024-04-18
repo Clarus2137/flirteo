@@ -56,7 +56,7 @@ onMounted(() => {
             <p>{{ userStore.user.email }}</p>
         </div>
     </div>
-    <q-list class="profile__items grid content-between">
+    <q-list class="profile__items grid justify-self-center content-between max-w-[320px] w-full">
         <q-item class="min-h-min p-1" clickable v-ripple exact to="/profile/edit">
             <q-item-section avatar>
                 <q-icon>

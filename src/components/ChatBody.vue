@@ -165,8 +165,10 @@ onMounted(() => {
             fill: url(#gradient_primary);
         }
 
-        &:hover path {
-            fill: url(#gradient_primary-hover);
+        @media (hover: hover) and (pointer: fine) {
+            &:hover path {
+                fill: url(#gradient_primary-hover);
+            }
         }
     }
 }

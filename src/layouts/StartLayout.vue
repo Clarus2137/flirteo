@@ -5,7 +5,7 @@
 
 
 <template>
-    <q-layout class="grid p-[3%] bg-[#fcebf0]">
+    <q-layout class="grid p-[3vw] bg-[#fcebf0]">
         <q-page-container class="grid">
             <router-view></router-view>
         </q-page-container>

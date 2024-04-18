@@ -74,7 +74,7 @@ body {
 [class*="__title"] {
     display: grid;
     align-content: start;
-    row-gap: 10px;
+    row-gap: 5px;
 
     &>* {
         width: 100%;
@@ -86,13 +86,9 @@ body {
 }
 
 button.gradient-primary {
-    // &:hover {
-    //     background: $bg_gradient_reverse;
-    // }
 
     @media (hover: hover) and (pointer: fine) {
         .button:hover {
-            /* Стили для :hover здесь будут применяться только если устройство поддерживает наведение курсором */
             background-color: $bg_gradient_reverse;
         }
     }
@@ -106,8 +102,6 @@ button.gradient-primary {
             fill: url(#gradient_primary);
         }
     }
-
-
 }
 
 .text-gradient-primary {
@@ -185,15 +179,29 @@ button.gradient-primary {
 .profile .q-stepper {
     .q-stepper__step {
         display: grid;
-    }
 
-    .q-stepper__step-content {
-        display: grid;
-    }
+        .q-stepper__step-content {
+            display: grid;
+        }
 
-    .q-stepper__step-inner {
-        display: grid;
-        grid-template-rows: min-content auto;
-        row-gap: 12px;
+        .q-stepper__step-inner {
+            display: grid;
+            grid-template-rows: min-content auto;
+            row-gap: 12px;
+        }
+
+        &.step-gender {
+            .q-stepper__step-inner {
+                grid-template-rows: auto min-content;
+            }
+        }
+
+        &.step-gender .q-stepper__step-inner {
+            grid-template-rows: auto min-content;
+        }
+
+        &.step-hobbies .q-stepper__step-inner {
+            grid-template-rows: auto min-content;
+        }
     }
 }
