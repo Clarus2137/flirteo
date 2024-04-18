@@ -79,7 +79,7 @@ onMounted(() => {
             <img src="./../assets/user-neutral.png" class="max-h-full mx-auto" alt="User Neutral" v-else>
         </div>
     </div>
-    <form class="details__personal-data self-stretch grid content-between" @submit="addData">
+    <form class="details__personal-data self-stretch grid gap-y-2" @submit="addData">
         <div class="firstName">
             <CustomInput id="firstName" type="text" v-model="userFirstName" required />
             <label for="firstName">First Name</label>
@@ -114,25 +114,29 @@ onMounted(() => {
 
 
 <style scoped lang="scss">
-.details__personal-data>* {
-    position: relative;
+.details__personal-data {
+    grid-template-rows: repeat(6, min-content);
 
-    label {
-        padding: 0 3px;
-        font-size: 0.75rem;
-        line-height: 1;
-        position: absolute;
-        top: 3px;
-        left: 20px;
-        transition: 0.3s;
-    }
+    &>* {
+        position: relative;
 
-    input:active,
-    input:focus {
-        &+label {
-            background: #fff;
-            color: #f24e80;
-            top: -6px;
+        label {
+            padding: 0 3px;
+            font-size: 0.75rem;
+            line-height: 1;
+            position: absolute;
+            top: 3px;
+            left: 20px;
+            transition: 0.3s;
+        }
+
+        input:active,
+        input:focus {
+            &+label {
+                background: #fff;
+                color: #f24e80;
+                top: -6px;
+            }
         }
     }
 }
