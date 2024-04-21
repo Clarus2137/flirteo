@@ -33,13 +33,13 @@ onMounted(() => {
 
 
 <template>
-    <div class="profile grid">
-        <div class="profile__details details grid grid-rows-[min-content_auto] gap-y-3">
-            <div class="details__title self-start">
+    <div class="profile grow flex flex-col">
+        <div class="profile__details details grow flex flex-col gap-y-3">
+            <div class="details__title">
                 <TitleRow :title="pageTitle" />
             </div>
             <q-stepper v-model="step" header-nav ref="stepper" color="primary" animated
-                class="grid grid-rows-[min-content_auto] gap-y-3">
+                class="grow flex flex-col gap-y-3">
                 <q-step :name="1" title="Details" icon="settings" :done="step > 1" :header-nav="step > 1"
                     class="step-common">
 

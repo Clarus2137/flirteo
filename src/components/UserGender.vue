@@ -46,9 +46,9 @@ onMounted(() => {
 
 
 <template>
-    <div class="details__gender gender grid grid-rows-[auto_min-content]">
-        <div class="gender__items grid content-center gap-y-10">
-            <div class="grid grid-rows-[min-content] grid-cols-[min-content_min-content] justify-around">
+    <div class="details__gender gender grow flex flex-col">
+        <div class="gender__items grid content-center grow gap-y-10">
+            <div class="flex justify-around">
                 <div class="gender__item gender__male p-8 rounded-2xl border border-solid border-inactive text-center hover:cursor-pointer"
                     :class="{ 'border-primary active': activeGender === 'male' }" @click="chooseGender('male')">
                     <svg width="62" height="61" viewBox="0 0 62 61" xmlns="http://www.w3.org/2000/svg">
@@ -91,7 +91,7 @@ onMounted(() => {
 
 
 
-<style scoped lang="scss">
+<style lang="scss">
 .active>svg {
     fill: #f24e80;
 }

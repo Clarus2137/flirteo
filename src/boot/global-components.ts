@@ -16,29 +16,35 @@ import TermsIcon from 'src/components/UI/TermsIcon.vue'
 import PrivacyIcon from 'src/components/UI/PrivacyIcon.vue'
 import AboutIcon from 'src/components/UI/AboutIcon.vue'
 import SvgGradient from 'src/components/UI/SvgGradient.vue'
+import CommonInfo from 'src/components/CommonInfo.vue';
+import UserGender from 'src/components/UserGender.vue';
+import UserHobbies from 'src/components/UserHobbies.vue';
 
 const components = [
-   { name: 'HomeBtn', component: HomeBtn },
-   { name: 'CustomBtn', component: CustomBtn },
-   { name: 'BackBtn', component: BackBtn },
-   { name: 'CustomInput', component: CustomInput },
-   { name: 'TitleRow', component: TitleRow },
-   { name: 'HomeTab', component: HomeTab },
-   { name: 'SearchTab', component: SearchTab },
-   { name: 'FavoritesTab', component: FavoritesTab },
-   { name: 'ChatTab', component: ChatTab },
-   { name: 'ProfileTab', component: ProfileTab },
-   { name: 'ArrowTriangle', component: ArrowTriangle },
-   { name: 'DetailsIcon', component: DetailsIcon },
-   { name: 'SettingsIcon', component: SettingsIcon },
-   { name: 'TermsIcon', component: TermsIcon },
-   { name: 'PrivacyIcon', component: PrivacyIcon },
-   { name: 'AboutIcon', component: AboutIcon },
-   { name: 'SvgGradient', component: SvgGradient }
+    { name: 'HomeBtn', component: HomeBtn },
+    { name: 'CustomBtn', component: CustomBtn },
+    { name: 'BackBtn', component: BackBtn },
+    { name: 'CustomInput', component: CustomInput },
+    { name: 'TitleRow', component: TitleRow },
+    { name: 'HomeTab', component: HomeTab },
+    { name: 'SearchTab', component: SearchTab },
+    { name: 'FavoritesTab', component: FavoritesTab },
+    { name: 'ChatTab', component: ChatTab },
+    { name: 'ProfileTab', component: ProfileTab },
+    { name: 'ArrowTriangle', component: ArrowTriangle },
+    { name: 'DetailsIcon', component: DetailsIcon },
+    { name: 'SettingsIcon', component: SettingsIcon },
+    { name: 'TermsIcon', component: TermsIcon },
+    { name: 'PrivacyIcon', component: PrivacyIcon },
+    { name: 'AboutIcon', component: AboutIcon },
+    { name: 'SvgGradient', component: SvgGradient },
+    { name: 'CommonInfo', component: CommonInfo },
+    { name: 'UserGender', component: UserGender },
+    { name: 'UserHobbies', component: UserHobbies }
 ];
 
 export default boot(({ app }) => {
-   components.forEach(({ name, component }) => {
-      app.component(name, component);
-   });
+    components.forEach(({ name, component }) => {
+        app.component(name, component);
+    });
 });

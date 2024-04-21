@@ -6,8 +6,8 @@
 
 <template>
     <q-layout class="grid p-[3vw]">
-        <q-page-container class="grid grid-rows-[min-content_auto] gap-y-3 overflow-hidden relative">
-            <BackBtn />
+        <q-page-container class="flex flex-col gap-y-3 overflow-hidden relative">
+            <BackBtn class="self-start" />
             <router-view />
         </q-page-container>
     </q-layout>

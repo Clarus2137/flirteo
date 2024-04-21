@@ -79,7 +79,7 @@ onMounted(() => {
             <img src="./../assets/user-neutral.png" class="h-full mx-auto" alt="User Neutral" v-else>
         </div>
     </div>
-    <form class="details__personal-data grid gap-y-[1.25vh]" @submit="addData">
+    <form class="details__personal-data grow flex flex-col gap-y-[1.25vh]" @submit="addData">
         <div class="firstName">
             <CustomInput id="firstName" type="text" v-model="userFirstName" required />
             <label for="firstName">First Name</label>
@@ -101,7 +101,9 @@ onMounted(() => {
             <CustomInput id="education" type="text" v-model="userEducation" required />
             <label for="education">Education</label>
         </div>
-        <CustomBtn type="submit" class="self-end">Continue</CustomBtn>
+        <div class="grow flex content-end">
+            <CustomBtn type="submit">Continue</CustomBtn>
+        </div>
     </form>
     <div class="w-full h-full absolute top-0 left-0 hover:cursor-pointer bg-black opacity-75"
         :class="{ 'hidden': !isVisible, 'block': isVisible }" @click="isVisible = !isVisible"></div>
@@ -113,11 +115,10 @@ onMounted(() => {
 
 
 
-<style scoped lang="scss">
+<style lang="scss">
 .details__personal-data {
-    grid-template-rows: repeat(5, min-content) 1fr;
-
     &>* {
+        width: 100%;
         position: relative;
 
         label {

@@ -9,7 +9,3 @@ import StepsSlider from 'components/StepsSlider.vue'
         <StepsSlider />
     </div>
 </template>
-
-
-
-<style scoped lang="scss"></style>

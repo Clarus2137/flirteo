@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import './../../node_modules/tailwindcss/base.css';
+@import './../../node_modules/tailwindcss/components.css';
+@import './../../node_modules/tailwindcss/utilities.css';
 
 @import './fonts.scss';
 
@@ -177,31 +177,44 @@ button.gradient-primary {
 }
 
 .profile .q-stepper {
-    .q-stepper__step {
-        display: grid;
 
-        .q-stepper__step-content {
-            display: grid;
-        }
+    .q-stepper__content {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
 
-        .q-stepper__step-inner {
-            display: grid;
-            grid-template-rows: min-content auto;
-            row-gap: 12px;
-        }
+        .q-panel {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
 
-        &.step-gender {
-            .q-stepper__step-inner {
-                grid-template-rows: auto min-content;
+            .q-stepper__step {
+                display: grid;
+
+                .q-stepper__step-content {
+                    display: grid;
+
+                    .q-stepper__step-inner {
+                        display: flex;
+                        flex-direction: column;
+                        row-gap: 12px;
+                    }
+
+                    &.step-gender {
+                        .q-stepper__step-inner {
+                            grid-template-rows: auto min-content;
+                        }
+                    }
+
+                    &.step-gender .q-stepper__step-inner {
+                        grid-template-rows: auto min-content;
+                    }
+
+                    &.step-hobbies .q-stepper__step-inner {
+                        grid-template-rows: auto min-content;
+                    }
+                }
             }
-        }
-
-        &.step-gender .q-stepper__step-inner {
-            grid-template-rows: auto min-content;
-        }
-
-        &.step-hobbies .q-stepper__step-inner {
-            grid-template-rows: auto min-content;
         }
     }
 }
