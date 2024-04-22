@@ -124,8 +124,10 @@ onMounted(async () => {
 
             <q-step :name="3" title="Place" icon="settings" :done="step > 3">
                 <p class="body-text lexend-light text-secondary">Where would you like to go together?</p>
-                <CustomBtn type="button" v-for="place in places" :key="place.id" @click="setPlace(place.name)">{{
-            place.name }}
+                <CustomBtn class="place__btn flex justify-center items-center gap-x-3" type="button"
+                    v-for="place in places" :key="place.id" @click="setPlace(place.name)">
+                    <img class="place__icon" :src="`${apiUrl}/uploads/icons/${place.icon}`" :alt="place.name">
+                    {{ place.name }}
                 </CustomBtn>
                 <q-stepper-navigation>
                     <q-btn flat @click="step = 2" color="primary" label="Back" class="q-ml-sm" />
@@ -194,6 +196,15 @@ onMounted(async () => {
 
     .q-stepper__step-content {
         padding-left: 36px;
+    }
+}
+
+.place__btn {
+    height: 56px;
+    padding: 5px 7px;
+
+    .place__icon {
+        height: 46px;
     }
 }
 </style>

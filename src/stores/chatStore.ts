@@ -29,6 +29,7 @@ export const useChatStore = defineStore('chat', {
                     }
                 });
                 this.prompts = response.data;
+                console.log(this.prompts);
                 return true;
             } catch (error) {
                 if (axios.isAxiosError(error)) {
