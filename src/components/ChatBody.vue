@@ -8,6 +8,16 @@ const isSessionStarted = ref(false);
 const messageField = ref('');
 const pageMessages = ref<Partial<SessionMessages>[]>([]);
 
+
+const dialog = ref(false);
+const backdropFilter = ref('');
+
+const applyFilter = () => {
+    dialog.value = true;
+    backdropFilter.value = 'blur(4px) saturate(150%)'
+}
+
+
 const scrollToBottom = () => {
     nextTick(() => {
         const allMessages = document.getElementById('messages');
@@ -25,7 +35,7 @@ watch(pageMessages, () => {
 
 const startSession = async (autoMessage: string) => {
     const isSuccess = await chatStore.createSession(autoMessage);
-    if (isSuccess) {
+    if (isSuccess === true) {
         if (chatStore.session.messages && chatStore.session.messages.length > 0) {
             const answer = {
                 id: chatStore.session.messages[0].id,
@@ -34,12 +44,15 @@ const startSession = async (autoMessage: string) => {
             pageMessages.value[pageMessages.value.length - 1] = { ...pageMessages.value[pageMessages.value.length - 1], ...answer };
             isSessionStarted.value = true;
         }
+    } else if (isSuccess === 403) {
+        console.log('WORKS');
+        applyFilter();
     }
 };
 
 const sendNewMessage = async (newMessage: string) => {
     const isSuccess = await chatStore.sendMessage(newMessage);
-    if (isSuccess) {
+    if (isSuccess === true) {
         if (chatStore.session.messages && chatStore.session.messages.length > 0) {
             const answer = {
                 id: chatStore.session.messages[chatStore.session.messages.length - 1].id,
@@ -47,6 +60,9 @@ const sendNewMessage = async (newMessage: string) => {
             };
             pageMessages.value[pageMessages.value.length - 1] = { ...pageMessages.value[pageMessages.value.length - 1], ...answer };
         }
+    } else if (isSuccess === 403) {
+        console.log('WORKS');
+        applyFilter();
     }
 };
 
@@ -120,6 +136,22 @@ onMounted(() => {
 
             </button>
         </form>
+
+        <q-dialog v-model="dialog" :backdrop-filter="backdropFilter">
+            <q-card>
+                <q-card-section class="row items-center q-pb-none text-h6">
+                    UPS!
+                </q-card-section>
+
+                <q-card-section>
+                    Kup więcej tokenów.
+                </q-card-section>
+
+                <q-card-actions align="right">
+                    <q-btn flat label="Close" color="primary" v-close-popup @click="$router.push('/profile')" />
+                </q-card-actions>
+            </q-card>
+        </q-dialog>
     </div>
 </template>
 

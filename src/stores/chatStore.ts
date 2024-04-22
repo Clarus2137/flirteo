@@ -97,7 +97,11 @@ export const useChatStore = defineStore('chat', {
                 return true;
             } catch (error) {
                 if (axios.isAxiosError(error)) {
-                    console.error('Axios failed to create the new session', error);
+                    if (error.response?.status === 403) {
+                        return error.response?.status;
+                    } else {
+                        console.error('Axios failed to add the new message to the session: ', error);
+                    }
                 } else {
                     console.error('An unexpected error occurred', error);
                 }
@@ -130,7 +134,11 @@ export const useChatStore = defineStore('chat', {
                 return true;
             } catch (error) {
                 if (axios.isAxiosError(error)) {
-                    console.error('Axios failed to add the new message to the session', error);
+                    if (error.response?.status === 403) {
+                        return error.response?.status;
+                    } else {
+                        console.error('Axios failed to add the new message to the session: ', error);
+                    }
                 } else {
                     console.error('An unexpected error occurred', error);
                 }

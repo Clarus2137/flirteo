@@ -46,8 +46,6 @@ const title = {
 
 <style lang="scss">
 .auth {
-    flex-grow: 1;
-
     .auth__body>* {
         width: 100%;
     }
