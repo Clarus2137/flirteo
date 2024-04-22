@@ -56,13 +56,13 @@ const handleSubmit = async (e: Event) => {
 
 
 <template>
-    <div class="grid grid-rows-[min-content_auto]">
-        <BackBtn />
-        <div class="email grid content-evenly">
+    <div class="flex flex-col">
+        <BackBtn class="self-start" />
+        <div class="email grow flex flex-col justify-center gap-y-8">
             <div class="email__title text-center">
                 <TitleRow :title="title" />
             </div>
-            <form class="email__form grid gap-y-2" id="reg-account" @submit="handleSubmit">
+            <form class="email__form flex flex-col justify-start gap-y-3" id="reg-account" @submit="handleSubmit">
                 <div>
                     <CustomInput type="text" placeholder="example@domain.com" v-model="enteredEmail" required />
                     <p class="text-center text-xs text-alarm font-bold duration-300"

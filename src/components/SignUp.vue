@@ -87,9 +87,9 @@ const toggleState = () => {
 
 
 <template>
-    <div class="grid grid-rows-[min-content_auto_min-content]">
-        <BackBtn />
-        <div class="email grid content-evenly">
+    <div class="flex flex-col justify-between">
+        <BackBtn class="self-start" />
+        <div class="email flex flex-col gap-y-8">
             <div class="email__title text-center">
                 <TitleRow :title="title" />
             </div>
@@ -114,7 +114,7 @@ const toggleState = () => {
                         Invalid Password
                     </p>
                 </div>
-                <CustomBtn type="submit" class="mt-5"
+                <CustomBtn type="submit"
                     :disabled="isAccepted === false || enteredEmail === '' || enteredPassword === ''">Continue
                 </CustomBtn>
                 <p class="agreement-alarm mt-5 lexend-bold text-secondary text-center text-sm"
