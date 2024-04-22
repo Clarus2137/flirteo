@@ -39,7 +39,7 @@ onMounted(() => {
     <h1 class="lexend-bold leading-normal text-center capitalize">My profile</h1>
     <div class="profile__user user text-center">
         <div class="user__photo photo">
-            <div class="photo__img inline-block p-1 mx-auto rounded-[50%] w-[100px] aspect-square">
+            <div class="photo__img inline-block p-1 mx-auto rounded-[50%] w-[100px] h-[100px]">
                 <img src="./../assets/user-male.png" class="max-h-full mx-auto" alt="User Male"
                     v-if="userStore.user.gender === 'male'">
                 <img src="./../assets/user-female.png" class="max-h-full mx-auto" alt="User Female"
