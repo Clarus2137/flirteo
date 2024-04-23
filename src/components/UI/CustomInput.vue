@@ -16,6 +16,16 @@ const onInput = (event: Event) => {
 
 <template>
     <input
-        class="w-full border border-solid border-inactive rounded-[10px] p-3.5 focus:outline-none focus:border-primary active:outline-none active:border-primary"
+        class="flrt-input w-full border border-solid border-inactive rounded-[10px] p-3.5 focus:border-primary active:border-primary"
         :value="modelValue" @input="onInput" :type="type">
 </template>
+
+
+
+<style scoped lang="scss">
+.flrt-input,
+.flrt-input:focus,
+.flrt-input:active {
+    outline: none !important;
+}
+</style>
