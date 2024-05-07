@@ -2,8 +2,10 @@
 import { ref } from 'vue';
 import { useUserStore } from 'src/stores/userStore';
 import PrivacyAndTerms from './PrivacyAndTerms.vue';
+import { useI18n } from 'vue-i18n';
 
 
+const { t } = useI18n();
 
 const userStore = useUserStore();
 
@@ -118,10 +120,7 @@ const toggleState = () => {
                     :disabled="isAccepted === false || enteredEmail === '' || enteredPassword === ''">Continue
                 </CustomBtn>
                 <p class="agreement-alarm mt-5 lexend-bold text-secondary text-center text-sm"
-                    :class="{ 'opacity-0': !agreementAlarm }">For
-                    start please
-                    express your consent
-                    to the processing of your personal data down below</p>
+                    :class="{ 'opacity-0': !agreementAlarm }">{{ t('Consent') }}</p>
             </form>
         </div>
         <PrivacyAndTerms @agreement="toggleState" />
