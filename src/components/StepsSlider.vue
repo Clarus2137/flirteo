@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import imgFirst from './../assets/welcome.png';
-import imgSecond from './../assets/dating.png';
-import imgThird from './../assets/match.png';
+import imgFirst from './slideFirst.vue';
+import imgSecond from './slideSecond.vue';
+import imgThird from './slideThird.vue';
 
 const slideItem = ref('first');
 
@@ -45,20 +45,55 @@ const slideNext = () => {
             <q-btn v-if="active" class="pag__btn pag__btn_active" flat round dense />
             <q-btn v-else class="pag__btn" flat round dense @click="onClick" />
         </template>
-        <q-carousel-slide :name="slide.name" class="grid p-0" v-for="slide in slides" :key="slide.id">
+        <q-carousel-slide name="first" class="grid p-0">
             <div class="start__item grid grid-rows-[auto_min-content]">
-                <img class="max-w-100% mx-auto self-center" :src="slide.imgSrc" alt="Welcome">
+                <imgFirst class="w-full max-w-[200px] self-center mx-auto" />
                 <div class="start__details grid gap-y-5 self-end bg-white p-[4%] rounded-[30px]">
                     <div class="details__title">
                         <h1 class="headline lexend-bold text-center">
-                            {{ slide.headline }}
+                            Koniec z nieśmiałością!
                         </h1>
                         <p class="self-end body-text text-secondary text-center">
-                            {{ slide.bodyText }}
+                            Czy czujesz tremę na samą myśl o zagadaniu do kogoś? Flirteo pomoże Ci przełamać lody i
+                            pokaże jak
+                            łatwe może być nawiązywanie nowych kontaktów!
                         </p>
                     </div>
-                    <CustomBtn v-if="slide.id < 3" @click="slideNext">Next</CustomBtn>
-                    <CustomBtn v-else @click="$router.push('/authorization')">Get started</CustomBtn>
+                    <CustomBtn @click="slideNext">Next</CustomBtn>
+                </div>
+            </div>
+        </q-carousel-slide>
+        <q-carousel-slide name="middle" class="grid p-0">
+            <div class="start__item grid grid-rows-[auto_min-content]">
+                <imgSecond class="w-full max-w-[200px] self-center mx-auto" />
+                <div class="start__details grid gap-y-5 self-end bg-white p-[4%] rounded-[30px]">
+                    <div class="details__title">
+                        <h1 class="headline lexend-bold text-center">
+                            Zostań mistrzem flitru!
+                        </h1>
+                        <p class="self-end body-text text-secondary text-center">
+                            Flirteo wykorzystuje AI, oferując inteligentnie dopasowane podpowiedzi, które sprawią, że
+                            każda
+                            rozmowa będzie prostsza i bardziej naturalna.
+                        </p>
+                    </div>
+                    <CustomBtn @click="slideNext">Next</CustomBtn>
+                </div>
+            </div>
+        </q-carousel-slide>
+        <q-carousel-slide name="final" class="grid p-0">
+            <div class="start__item grid grid-rows-[auto_min-content]">
+                <imgThird class="w-full max-w-[200px] self-center mx-auto" />
+                <div class="start__details grid gap-y-5 self-end bg-white p-[4%] rounded-[30px]">
+                    <div class="details__title">
+                        <h1 class="headline lexend-bold text-center">
+                            Darmowa rejestracja.
+                        </h1>
+                        <p class="self-end body-text text-secondary text-center">
+                            Rejestrując się w Flirteo, odkryjesz, jak łatwo jest zamienić nieśmiałość na pewność siebie.
+                        </p>
+                    </div>
+                    <CustomBtn @click="$router.push('/authorization')">Get started</CustomBtn>
                 </div>
             </div>
         </q-carousel-slide>
