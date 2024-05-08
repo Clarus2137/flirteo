@@ -12,8 +12,8 @@ const userStore = useUserStore();
 const emit = defineEmits(['goToVerification']);
 
 const title = {
-    title: 'Create your account',
-    subtitle: 'Please enter your e-mail & password to continue'
+    title: t('SignUp'),
+    subtitle: t('Email_Pass')
 }
 
 const validEmail = new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
@@ -23,6 +23,7 @@ const enteredPassword = ref('');
 const isVisibleEmailAlarm = ref(false);
 const existingEmail = ref(false);
 const isVisiblePasswordAlarm = ref(false);
+const isLoading = ref(false);
 
 const isAccepted = ref(false);
 const agreementAlarm = ref(true);
@@ -55,13 +56,14 @@ const validateEmailAndPassword = (): boolean => {
 const handleSubmit = async (e: Event) => {
     e.preventDefault(); // Prevent form from submitting by default
 
-    if (!validateEmailAndPassword()) {
-    } else {
+    if (validateEmailAndPassword()) {
+        isLoading.value = true;
         const newUser = {
             email: enteredEmail.value,
             plainPassword: enteredPassword.value
         }
         const isSuccess = await userStore.registerUser(newUser);
+        isLoading.value = false;
         if (isSuccess) {
             existingEmail.value = true;
             if (localStorage.getItem('isAuthorised') === null) {
@@ -97,30 +99,29 @@ const toggleState = () => {
             </div>
             <form class="email__form" id="reg-account" @submit="handleSubmit">
                 <div class="mb-3">
-                    <CustomInput type="text" placeholder="example@domain.com" v-model="enteredEmail" required />
+                    <CustomInput type="text" :placeholder="t('Email')" v-model="enteredEmail" required />
                     <p class="text-center text-xs text-alarm font-bold" v-if="isVisibleEmailAlarm">
-                        Invalid E-mail
+                        {{ t('Invalid.email') }}
                     </p>
-                    <p class="text-center text-xs text-alarm font-bold" v-if="existingEmail">It seems this E-mail has
-                        been
-                        already used.</p>
+                    <p class="text-center text-xs text-alarm font-bold" v-if="existingEmail">{{ t('Used_email') }}</p>
                 </div>
                 <div>
-                    <CustomInput type="password" placeholder="Some password" v-model="enteredPassword" required />
-                    <p class="text-secondary text-[0.6rem] leading-[1.5]">Your password must be at least 8 letters a-z,
-                        containing at least 1
-                        capital letter, 1 number 0-9 and
-                        1 special character from "-, _, !, ?, &, $, #, @"</p>
+                    <CustomInput type="password" :placeholder="t('Pass')" v-model="enteredPassword" required />
+                    <p class="text-secondary text-[0.6rem] leading-[1.5]">{{ t('Pass_hint') }} "-, _, !, ?, &, $, #, @"
+                    </p>
                     <p class="text-center text-xs text-alarm font-bold duration-300"
                         :class="{ 'opacity-100': isVisiblePasswordAlarm, 'opacity-0': !isVisiblePasswordAlarm }">
-                        Invalid Password
+                        {{ t('Invalid.pass') }}
                     </p>
                 </div>
                 <CustomBtn type="submit"
-                    :disabled="isAccepted === false || enteredEmail === '' || enteredPassword === ''">Continue
+                    :disabled="isAccepted === false || enteredEmail === '' || enteredPassword === ''" class="mb-5">{{
+                    t('Continue')
+                }}
                 </CustomBtn>
-                <p class="agreement-alarm mt-5 lexend-bold text-secondary text-center text-sm"
-                    :class="{ 'opacity-0': !agreementAlarm }">{{ t('Consent') }}</p>
+                <FormLoader v-if="isLoading" />
+                <p class="agreement-alarm lexend-bold text-secondary text-center text-sm" v-if="agreementAlarm">{{
+                    $t('Consent') }}</p>
             </form>
         </div>
         <PrivacyAndTerms @agreement="toggleState" />

@@ -40,9 +40,11 @@ const switchAgreement = () => {
                 class="hover:cursor-pointer">
         </div>
         <label for="permission" class="hover:cursor-pointer">
-            I accept all the <p><span><router-link class="text-gradient-primary" to="/terms">Terms &
-                        Conditions</router-link></span> & <span><router-link class="text-gradient-primary"
-                        to="/privacy">Privacy Policy</router-link></span></p>
+            {{ $t('Terms_and_Privacy.Accept') }} <p><span><router-link class="text-gradient-primary" to="/terms">{{
+                $t('Terms_and_Privacy.Terms')
+            }}</router-link></span> {{ $t('Terms_and_Privacy.And') }} <span><router-link
+                        class="text-gradient-primary" to="/privacy">{{ $t('Terms_and_Privacy.Privacy')
+                        }}</router-link></span></p>
         </label>
     </div>
 </template>
@@ -53,6 +55,7 @@ const switchAgreement = () => {
 .permition {
     width: 15px;
     height: 15px;
+    margin-right: 10px;
     position: relative;
 
     * {

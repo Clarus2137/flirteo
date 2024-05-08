@@ -1,5 +1,6 @@
 <template>
-    <svg viewBox="0 0 100 133" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 100 133" fill="none" xmlns="http://www.w3.org/2000/svg"
+        class="w-full max-w-[200px] self-center mx-auto">
         <SvgGradient />
         <g clip-path="url(#clip0_50_18)">
             <path

@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useUserStore } from 'src/stores/userStore';
+import { useI18n } from 'vue-i18n';
 
+
+const { t } = useI18n();
 
 const emit = defineEmits(['goToComplete', 'goToHome']);
 
 const title = {
-    title: 'Log in to your account',
-    subtitle: 'Please enter your e-mail & password to continue'
+    title: t('Log.title'),
+    subtitle: t('Log.subtitle')
 }
 
 const enteredEmail = ref('');
@@ -64,36 +67,32 @@ const handleSubmit = async (e: Event) => {
             </div>
             <form class="email__form flex flex-col justify-start gap-y-3" id="reg-account" @submit="handleSubmit">
                 <div>
-                    <CustomInput type="text" placeholder="example@domain.com" v-model="enteredEmail" required />
+                    <CustomInput type="text" :placeholder="t('Email')" v-model="enteredEmail" required />
                     <p class="text-center text-xs text-alarm font-bold duration-300"
                         :class="{ 'opacity-100': isVisibleEmail, 'opacity-0': !isVisibleEmail }">
-                        Invalid E-mail
+                        {{ t('Invalid.email') }}
                     </p>
                 </div>
                 <div>
-                    <CustomInput type="password" placeholder="Some password" v-model="enteredPassword" required />
+                    <CustomInput type="password" :placeholder="t('Pass')" v-model="enteredPassword" required />
                     <p class="text-center text-xs text-alarm font-bold duration-300"
                         :class="{ 'opacity-100': isVisiblePassword, 'opacity-0': !isVisiblePassword }">
-                        Invalid Password
+                        {{ t('Invalid.pass') }}
                     </p>
                 </div>
-                <CustomBtn type="submit" :disabled="enteredEmail === '' || enteredPassword === ''">Continue</CustomBtn>
+                <CustomBtn type="submit" :disabled="enteredEmail === '' || enteredPassword === ''">{{ t('Continue') }}
+                </CustomBtn>
             </form>
             <div class="mt-10 text-sm text-center" v-if="isError">
-                <p class="text-red font-medium">The User doesn't exist or invalid password.</p>
+                <p class="text-red font-medium">{{ t('Invalid.user') }} {{ t('Invalid.pass') }}</p>
                 <router-link class="inline-block my-3 text-base text-primary font-medium underline"
-                    to="/registration">Do
-                    you really
-                    have an
-                    account?</router-link>
-                <p>If you are, check the password and try again or <span
-                        class="reset-link text-primary font-medium underline">just
-                        reset your
-                        password</span>
+                    to="/registration">{{ t('Invalid.account') }}</router-link>
+                <p>{{ t('Check_Pass') }} <span class="reset-link text-primary font-medium underline">{{ t('Reset_Pass')
+                        }}</span>
                 </p>
             </div>
             <div class="mt-10 text-green font-medium text-center" v-if="isAuth">
-                <p>Authorization successful</p>
+                <p>{{ t('Auth.success') }}</p>
             </div>
         </div>
     </div>

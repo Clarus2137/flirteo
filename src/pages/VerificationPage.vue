@@ -6,7 +6,7 @@
 
 <template>
     <div class="grid content-center">
-        <p class="text-center mb-5">Please check your email. After success verification you may enter your account.</p>
-        <CustomBtn type="button" @click="$router.push('/login')">Log In</CustomBtn>
+        <p class="text-center mb-5">{{ $t('Confirm') }}</p>
+        <CustomBtn type="button" @click="$router.push('/login')">{{ $t('LogIn') }}</CustomBtn>
     </div>
 </template>
