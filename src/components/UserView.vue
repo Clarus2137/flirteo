@@ -44,13 +44,13 @@ const userAge = calculateAge(userStore.user.dateOfBirth!);
         </div>
         <div class="home__user user grid grid-rows-[min-content_min-content_min-content] gap-y-5 lexend-bold text-lg">
             <p><span class="user__firstname">{{ userStore.user.firstName }}</span> <span class="user__lastname">{{
-                    userStore.user.lastName }}</span>, {{ userAge }} years</p>
+                userStore.user.lastName }}</span>, {{ userAge }} {{ $t('Years') }}</p>
             <div class="user__education">
-                <p class="lexend-bold">Education:</p>
+                <p class="lexend-bold">{{ $t('Education') }}</p>
                 <p class="lexend text-secondary text-sm">{{ userStore.user.education }}</p>
             </div>
             <div class="user__ihobbies hobbies" v-if="userStore.user.interests!.length > 0">
-                <p class="lexend-bold mb-2">Interests</p>
+                <p class="lexend-bold mb-2">{{ $t('Hobbies') }}</p>
                 <div class="hobbies__wrapper w-full flex justify-start gap-2.5">
                     <div class="hobbies__item hobby p-3 rounded-[10px] hobby-shadow"
                         v-for="(item, index) in userStore.user.interests" :key="index">

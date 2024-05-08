@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useUserStore } from 'src/stores/userStore';
+import { useI18n } from 'vue-i18n';
 
+
+const { t } = useI18n();
 
 const emit = defineEmits(['goToGender', 'sendTitle']);
 
 const title: PageTitle = {
-    title: 'Your information',
-    subtitle: 'Please fill the fields below'
+    title: t('Your_Info.title'),
+    subtitle: t('Your_Info.subtitle')
 }
 
 const isVisible = ref(false);
@@ -82,34 +85,34 @@ onMounted(() => {
     <form class="details__personal-data grow flex flex-col gap-y-[1.25vh]" @submit="addData">
         <div class="firstName">
             <CustomInput id="firstName" type="text" v-model="userFirstName" required />
-            <label for="firstName">First Name</label>
+            <label for="firstName">{{ t('First_Name') }}</label>
         </div>
         <div class="lastName">
             <CustomInput id="lastName" type="text" v-model="userLastName" required />
-            <label for="lastName">Last Name</label>
+            <label for="lastName">{{ t('Last_Name') }}</label>
         </div>
         <div class="date">
             <CustomInput id="date" type="text" @click="isVisible = !isVisible" class="hover:cursor-pointer"
                 v-model="userDateOfBirth" required />
-            <label for="date">Date of birth</label>
+            <label for="date">{{ t('Date_of_birth') }}</label>
         </div>
         <div class="location">
             <CustomInput id="location" type="text" v-model="userLocation" required />
-            <label for="location">Location</label>
+            <label for="location">{{ t('Location') }}</label>
         </div>
         <div class="education">
             <CustomInput id="education" type="text" v-model="userEducation" required />
-            <label for="education">Education</label>
+            <label for="education">{{ t('Education') }}</label>
         </div>
         <div class="grow flex content-end">
-            <CustomBtn type="submit">Continue</CustomBtn>
+            <CustomBtn type="submit">{{ t('Continue') }}</CustomBtn>
         </div>
     </form>
     <div class="w-full h-full absolute top-0 left-0 hover:cursor-pointer bg-black opacity-75"
         :class="{ 'hidden': !isVisible, 'block': isVisible }" @click="isVisible = !isVisible"></div>
     <div class="date-picker w-full text-center absolute duration-300" :class="{ 'visible': isVisible }">
         <q-date v-model="userDateOfBirth" mask="YYYY-MM-DD" color="pink-4" text-color="black" class="w-full mb-3" />
-        <CustomBtn type="submit" class="max-w-[200px]" @click="isVisible = !isVisible">Select</CustomBtn>
+        <CustomBtn type="submit" class="max-w-[200px]" @click="isVisible = !isVisible">{{ t('Select') }}</CustomBtn>
     </div>
 </template>
 

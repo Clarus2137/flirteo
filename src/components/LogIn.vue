@@ -22,16 +22,20 @@ const isVisiblePassword = ref(false);
 const isError = ref(false);
 const isAuth = ref(false);
 
+const isLoading = ref(false);
+
 const userStore = useUserStore();
 
 const handleSubmit = async (e: Event) => {
     e.preventDefault(); // Prevent form from submitting by default
+    isLoading.value = true;
 
     const userAccount = {
         email: enteredEmail.value,
         password: enteredPassword.value
     }
     const isSuccess = await userStore.authoriseUser(userAccount);
+    isLoading.value = false;
     if (isSuccess) {
         if (localStorage.getItem('isAuthorised') === null) {
             localStorage.setItem('isAuthorised', 'true');
@@ -82,6 +86,7 @@ const handleSubmit = async (e: Event) => {
                 </div>
                 <CustomBtn type="submit" :disabled="enteredEmail === '' || enteredPassword === ''">{{ t('Continue') }}
                 </CustomBtn>
+                <FormLoader class="mt-5" v-if="isLoading" />
             </form>
             <div class="mt-10 text-sm text-center" v-if="isError">
                 <p class="text-red font-medium">{{ t('Invalid.user') }} {{ t('Invalid.pass') }}</p>

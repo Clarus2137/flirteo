@@ -103,70 +103,68 @@ onMounted(async () => {
 
 <template>
     <div class="chat">
-        <h1 class="mb-8 lexend-bold text-2xl text-center">Please give the assistent some information</h1>
+        <h1 class="mb-8 lexend-bold text-2xl text-center">{{ $t('Chat_Config_Title') }}</h1>
         <q-stepper v-model="step" vertical color="primary" animated v-if="isOptions">
-            <q-step :name="1" title="Gender" icon="settings" :done="step > 1">
-                <p class="body-text lexend-light text-secondary">Please choose the gender of the person you'd like to
-                    chat with</p>
-                <CustomBtn type="button" @click="selectedGender = 'male'; nextStep(1)">Male</CustomBtn>
-                <CustomBtn type="button" @click="selectedGender = 'female'; nextStep(1)">Female</CustomBtn>
+            <q-step :name="1" :title="$t('Gender.title')" icon="settings" :done="step > 1">
+                <p class="body-text lexend-light text-secondary">{{ $t('Gender.hint') }}</p>
+                <CustomBtn type="button" @click="selectedGender = 'male'; nextStep(1)">{{ $t('Male') }}</CustomBtn>
+                <CustomBtn type="button" @click="selectedGender = 'female'; nextStep(1)">{{ $t('Female') }}</CustomBtn>
             </q-step>
 
-            <q-step :name="2" title="Mode" icon="settings" :done="step > 2">
-                <p class="body-text lexend-light text-secondary">Choose conversation mode</p>
+            <q-step :name="2" :title="$t('Mode')" icon="settings" :done="step > 2">
+                <p class="body-text lexend-light text-secondary">{{ $t('Mode_hint') }}</p>
                 <CustomBtn type="button" v-for="prompt in prompts" :key="prompt.id"
                     @click="setPrompt(prompt.places, prompt.id); nextStep(2)">{{
-            prompt.name }}</CustomBtn>
+                        prompt.name }}</CustomBtn>
                 <q-stepper-navigation>
-                    <q-btn flat @click="step = 1" color="primary" label="Back" class="q-ml-sm" />
+                    <q-btn flat @click="step = 1" color="primary" :label="$t('Back')" class="q-ml-sm" />
                 </q-stepper-navigation>
             </q-step>
 
-            <q-step :name="3" title="Place" icon="settings" :done="step > 3">
-                <p class="body-text lexend-light text-secondary">Where would you like to go together?</p>
+            <q-step :name="3" :title="$t('Place')" icon="settings" :done="step > 3">
+                <p class="body-text lexend-light text-secondary">{{ $t('Place_hint') }}</p>
                 <CustomBtn class="place__btn flex justify-center items-center gap-x-3" type="button"
                     v-for="place in places" :key="place.id" @click="setPlace(place.name)">
                     <img class="place__icon" :src="`${apiUrl}/uploads/icons/${place.icon}`" :alt="place.name">
                     {{ place.name }}
                 </CustomBtn>
                 <q-stepper-navigation>
-                    <q-btn flat @click="step = 2" color="primary" label="Back" class="q-ml-sm" />
+                    <q-btn flat @click="step = 2" color="primary" :label="$t('Back')" class="q-ml-sm" />
                 </q-stepper-navigation>
             </q-step>
 
-            <q-step :name="4" title="Example" icon="settings" :done="step > 4" :disable="selectedPrompt !== 1">
-                <p class="body-text lexend-light text-secondary">Please give me some example of a conversation you have
-                    already had. A screenshot is a perfect option.</p>
+            <q-step :name="4" :title="$t('Example')" icon="settings" :done="step > 4" :disable="selectedPrompt !== 1">
+                <p class="body-text lexend-light text-secondary">{{ $t('Example_hint') }}</p>
                 <q-file clearable color="primary" standout bottom-slots v-model="model" label=".jpg, .png" counter
                     accept=".jpg, .png" @update:modelValue="convertToString">
                     <template v-slot:prepend>
                         <q-icon name="attach_file" />
                     </template>
                     <template v-slot:hint>
-                        Required field
+                        {{ $t('Required_field') }}
                     </template>
                 </q-file>
-                <CustomBtn type="button" v-if="model !== null" @click="nextStep(4)">Continue</CustomBtn>
+                <CustomBtn type="button" v-if="model !== null" @click="nextStep(4)">{{ $t('Continue') }}</CustomBtn>
                 <q-stepper-navigation>
-                    <q-btn flat @click="step = 3" color="primary" label="Back" class="q-ml-sm" />
+                    <q-btn flat @click="step = 3" color="primary" :label="$t('Back')" class="q-ml-sm" />
                 </q-stepper-navigation>
             </q-step>
 
-            <q-step :name="5" title="Style" icon="settings" :done="step > 5">
-                <p class="body-text lexend-light text-secondary">What kind of conversation do you need?</p>
+            <q-step :name="5" :title="$t('Style')" icon="settings" :done="step > 5">
+                <p class="body-text lexend-light text-secondary">{{ $t('Style_hint') }}</p>
                 <CustomBtn type="button" v-for="style in respTypes" :key="style.id"
                     @click="setStyle(style.id); nextStep(5)">{{
-            style.name }}
+                        style.name }}
                 </CustomBtn>
                 <q-stepper-navigation>
-                    <q-btn flat @click="stepBack" color="primary" label="Back" class="q-ml-sm" />
+                    <q-btn flat @click="stepBack" color="primary" :label="$t('Back')" class="q-ml-sm" />
                 </q-stepper-navigation>
             </q-step>
 
-            <q-step :name="6" title="Finish" icon="settings" class="last">
+            <q-step :name="6" :title="$t('Finish')" icon="settings" class="last">
                 <q-stepper-navigation class="w-full flex justify-center">
-                    <q-btn color="primary" label="Finish" @click="buildOptions" />
-                    <q-btn flat @click="step = 5" color="primary" label="Back" class="q-ml-sm" />
+                    <q-btn color="primary" :label="$t('Finish')" @click="buildOptions" />
+                    <q-btn flat @click="step = 5" color="primary" :label="$t('Back')" class="q-ml-sm" />
                 </q-stepper-navigation>
             </q-step>
         </q-stepper>

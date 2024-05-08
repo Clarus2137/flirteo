@@ -21,6 +21,10 @@ const loadUserData = () => {
     }
 }
 
+const goToWebsite = () => {
+    window.open('https://flirteo.eu', '_blank');
+}
+
 const deleteAcc = async () => {
     const isSuccess = await userStore.removeUser();
     if (isSuccess) {
@@ -36,7 +40,7 @@ onMounted(() => {
 
 
 <template>
-    <h1 class="lexend-bold leading-normal text-center capitalize">My profile</h1>
+    <h1 class="lexend-bold leading-normal text-center capitalize">{{ $t('Profile') }}</h1>
     <div class="profile__user user text-center">
         <div class="user__photo photo">
             <div class="photo__img inline-block p-1 mx-auto rounded-[50%] w-[100px] h-[100px]">
@@ -49,7 +53,7 @@ onMounted(() => {
         </div>
         <div class="user__name lexend-bold text-lg">
             <p><span class="user__firstname">{{ userStore.user.firstName }}</span> <span class="user__lastname">{{
-                        userStore.user.lastName }}</span>
+                userStore.user.lastName }}</span>
             </p>
         </div>
         <div class="user__email lexend-light text-secondary text-sm">
@@ -63,7 +67,7 @@ onMounted(() => {
                     <DetailsIcon />
                 </q-icon>
             </q-item-section>
-            <q-item-section>Profile Details</q-item-section>
+            <q-item-section>{{ $t('Profile_Details') }}</q-item-section>
             <q-item-section avatar>
                 <q-icon class="q-icon-arrow">
                     <ArrowTriangle />
@@ -76,7 +80,7 @@ onMounted(() => {
                     <SettingsIcon />
                 </q-icon>
             </q-item-section>
-            <q-item-section>Settings</q-item-section>
+            <q-item-section>{{ $t('Settings') }}</q-item-section>
             <q-item-section avatar>
                 <q-icon class="q-icon-arrow">
                     <ArrowTriangle />
@@ -89,7 +93,7 @@ onMounted(() => {
                     <TermsIcon />
                 </q-icon>
             </q-item-section>
-            <q-item-section>Terms & Conditions</q-item-section>
+            <q-item-section>{{ $t('Terms_and_Privacy.Terms') }}</q-item-section>
             <q-item-section avatar>
                 <q-icon class="q-icon-arrow">
                     <ArrowTriangle />
@@ -102,20 +106,20 @@ onMounted(() => {
                     <PrivacyIcon />
                 </q-icon>
             </q-item-section>
-            <q-item-section>Privacy Policy</q-item-section>
+            <q-item-section>{{ $t('Terms_and_Privacy.Privacy') }}</q-item-section>
             <q-item-section avatar>
                 <q-icon class="q-icon-arrow">
                     <ArrowTriangle />
                 </q-icon>
             </q-item-section>
         </q-item>
-        <q-item class="min-h-min p-1" clickable v-ripple>
+        <q-item class="min-h-min p-1" clickable v-ripple @click="goToWebsite">
             <q-item-section avatar>
                 <q-icon>
                     <AboutIcon />
                 </q-icon>
             </q-item-section>
-            <q-item-section>About Us</q-item-section>
+            <q-item-section>{{ $t('About') }}</q-item-section>
             <q-item-section avatar>
                 <q-icon class="q-icon-arrow">
                     <ArrowTriangle />
@@ -139,8 +143,8 @@ onMounted(() => {
                     d="M20.5416 11.5402L17.7016 8.69016C17.4116 8.40016 16.9316 8.40016 16.6416 8.69016C16.3516 8.98016 16.3516 9.46016 16.6416 9.75016L18.2016 11.3102H14.1016V12.8102H18.1916L16.6316 14.3702C16.3416 14.6602 16.3416 15.1402 16.6316 15.4302C16.7816 15.5802 16.9716 15.6502 17.1616 15.6502C17.3516 15.6502 17.5416 15.5802 17.6916 15.4302L20.5316 12.5802C20.8316 12.3002 20.8316 11.8302 20.5416 11.5402Z"
                     fill="#fff" />
             </svg>
-            Logout
+            {{ $t('LogOut') }}
         </CustomBtn>
-        <CustomBtn @click="deleteAcc">Delete account</CustomBtn>
+        <CustomBtn @click="deleteAcc">{{ $t('Delete_Acc') }}</CustomBtn>
     </div>
 </template>

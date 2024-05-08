@@ -30,7 +30,7 @@ const scrollToBottom = () => {
 watch(pageMessages, () => {
     scrollToBottom();
 }, {
-    deep: true // Это позволяет отслеживать глубокие изменения в объекте
+    deep: true
 });
 
 const startSession = async (autoMessage: string) => {
@@ -45,7 +45,6 @@ const startSession = async (autoMessage: string) => {
             isSessionStarted.value = true;
         }
     } else if (isSuccess === 403) {
-        console.log('WORKS');
         applyFilter();
     }
 };
@@ -61,7 +60,6 @@ const sendNewMessage = async (newMessage: string) => {
             pageMessages.value[pageMessages.value.length - 1] = { ...pageMessages.value[pageMessages.value.length - 1], ...answer };
         }
     } else if (isSuccess === 403) {
-        console.log('WORKS');
         applyFilter();
     }
 };
@@ -109,11 +107,12 @@ onMounted(() => {
     <div class="chat__body grid">
         <div class="chat__messages messages" :class="{ 'flirt': isFlirt }" id="messages">
             <div class="messages__item" v-for="item in pageMessages" :key="item.id">
-                <q-chat-message name="me" :text="[item.content]" sent />
-                <q-chat-message name="Assistent" bg-color="primary" text-color="white" v-if="!item.response">
+                <q-chat-message :name="$t('Me')" :text="[item.content]" sent />
+                <q-chat-message :name="$t('Assistant')" bg-color="primary" text-color="white" v-if="!item.response">
                     <q-spinner-dots size="2rem" />
                 </q-chat-message>
-                <q-chat-message name="Assistant" :text="[item.response]" bg-color="primary" text-color="white" v-else />
+                <q-chat-message :name="$t('Assistant')" :text="[item.response]" bg-color="primary" text-color="white"
+                    v-else />
             </div>
         </div>
         <form @submit.prevent="addMessage" class="chat__form self-end flex no-wrap gap-x-3">

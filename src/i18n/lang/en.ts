@@ -44,5 +44,51 @@ export default {
         And: 'and',
         Privacy: 'Privacy Policy'
     },
-    Confirm: 'Please check your email. After success verification you may enter your account.'
+    Confirm: 'Please check your email. After success verification you may enter your account.',
+    Details: 'Details',
+    Hobbies: 'Hobbies',
+    Back: 'Back',
+    Your_Info: {
+        title: 'Your information',
+        subtitle: 'Please fill the fields below'
+    },
+    First_Name: 'First Name',
+    Last_Name: 'Last Name',
+    Date_of_birth: 'Date of birth',
+    Location: 'Location',
+    Education: 'Education',
+    Select: 'Select',
+    Gender: {
+        title: 'Gender',
+        subtitle: 'Please select your gender',
+        hint: 'Please choose the gender of the person you\'d like to chat with'
+    },
+    Male: 'Male',
+    Female: 'Female',
+    Other: 'Other',
+    Interests: {
+        title: 'Select your interests',
+        subtitle: 'Select a few of your interests to match with users who have similar things in common'
+    },
+    Save: 'Save',
+    Years: 'years',
+    Profile: 'My profile',
+    Profile_Details: 'Profile Details',
+    Settings: 'Settings',
+    About: 'About Us',
+    LogOut: 'Log Out',
+    Delete_Acc: 'Delete Account',
+    Chat_Config_Title: 'Please give the assistent some information',
+    Mode: 'Mode',
+    Mode_hint: 'Choose conversation mode',
+    Place: 'Place',
+    Place_hint: 'Where would you like to go together?',
+    Example: 'Example',
+    Example_hint: 'Please give me some example of a conversation you have already had. A screenshot is a perfect option.',
+    Required_field: 'Required field',
+    Style: 'Style',
+    Style_hint: 'What kind of conversation do you need?',
+    Finish: 'Finish',
+    Me: 'Me',
+    Assistant: 'Assistant'
 };
