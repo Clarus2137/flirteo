@@ -5,11 +5,11 @@ import { useUserStore } from 'src/stores/userStore';
 const userStore = useUserStore();
 
 const strUserData = sessionStorage.getItem('userData');
-if (strUserData === null) {
-    throw new Error('Item \'userData\' doesn\'t exist in sessionStorage');
-} else {
+if (strUserData !== null) {
     const userData: Partial<User> = JSON.parse(sessionStorage.userData);
     userStore.getStoreUserData(userData);
+} else {
+    throw new Error('Item \'userData\' doesn\'t exist in sessionStorage');
 }
 
 const calculateAge = (birthDateString: string): number => {
@@ -44,7 +44,7 @@ const userAge = calculateAge(userStore.user.dateOfBirth!);
         </div>
         <div class="home__user user grid grid-rows-[min-content_min-content_min-content] gap-y-5 lexend-bold text-lg">
             <p><span class="user__firstname">{{ userStore.user.firstName }}</span> <span class="user__lastname">{{
-                    userStore.user.lastName }}</span>, {{ userAge }} {{ $t('Years') }}</p>
+                userStore.user.lastName }}</span>, {{ userAge }} {{ $t('Years') }}</p>
             <div class="user__education">
                 <p class="lexend-bold">{{ $t('Education') }}</p>
                 <p class="lexend text-secondary text-sm">{{ userStore.user.education }}</p>

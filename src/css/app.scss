@@ -31,7 +31,7 @@ body {
 }
 
 .headline {
-    font-size: clamp(1.5rem, 7.5vw, 1.75rem);
+    font-size: clamp(1.375rem, 6.5vw, 1.75rem);
     line-height: 1.23;
 }
 
@@ -235,8 +235,14 @@ button.gradient-primary {
     .q-stepper {
         background: none;
 
-        .q-stepper__tab--disabled .q-stepper__dot {
-            background: rgba(255, 255, 255, .4);
+        .q-stepper__tab--disabled {
+            .q-stepper__dot {
+                background: rgba(255, 255, 255, .25);
+            }
+
+            .q-stepper__label {
+                color: rgba(255, 255, 255, .25);
+            }
         }
 
         &.q-stepper--vertical .q-stepper__dot::after {
@@ -244,12 +250,23 @@ button.gradient-primary {
         }
     }
 
-    .q-icon svg {
-        fill: $text_light;
-
-        path {
+    .q-icon,
+    .gender__item:not(.active) {
+        svg {
             fill: $text_light;
+
+            path {
+                fill: $text_light;
+            }
         }
+    }
+
+    .q-field__inner {
+        background: $text_light;
+    }
+
+    .q-field__bottom {
+        color: $text_light;
     }
 
     .item-shadow {
@@ -258,10 +275,13 @@ button.gradient-primary {
 
     .back-btn {
         background: $text_light;
-        ;
     }
 
     .step-slider {
         background: $text_primary;
+    }
+
+    .details__personal-data>* label {
+        color: rgba(0, 0, 0, .5);
     }
 }

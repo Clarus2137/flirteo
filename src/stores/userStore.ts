@@ -67,6 +67,7 @@ export const useUserStore = defineStore('user', {
                             'Accept-Language': this.lang
                         }
                     });
+                    console.log(response.data);
                     const defaultHobbies = response.data;
                     if (this.user.interests?.length) {
                         const activatedHobbies = defaultHobbies.map((item: { name: string }) => ({

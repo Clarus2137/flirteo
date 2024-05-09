@@ -22,14 +22,20 @@ declare module 'vue-i18n' {
 /* eslint-enable @typescript-eslint/no-empty-interface */
 
 export default boot(({ app }) => {
-    const deviceLang = navigator.language.substring(0, 2) || navigator.languages[0].substring(0, 2);
+    const supportedLanguages = ['pl', 'en'];
+    let activeLang = navigator.language.substring(0, 2) || navigator.languages[0].substring(0, 2);
+
+    if (localStorage.getItem('flirteoLang') !== null) {
+        activeLang = localStorage.flirteoLang;
+    } else if (!supportedLanguages.includes(activeLang)) {
+        activeLang = 'en';
+    }
 
     const i18n = createI18n({
-        locale: deviceLang,
+        locale: activeLang,
         legacy: false,
         messages,
     });
 
-    // Set i18n instance on app
     app.use(i18n);
 });

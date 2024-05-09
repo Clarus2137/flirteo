@@ -11,6 +11,7 @@ const userStore = useUserStore();
 const emit = defineEmits(['goToPass']);
 
 const isLoading = ref(false);
+const isLoadingLang = ref(false);
 
 const isActive = ref(false);
 
@@ -22,6 +23,12 @@ const toggleLang = () => {
         locale.value = 'pl'
     } else {
         locale.value = 'en';
+    }
+
+    if (localStorage.getItem('flirteoLang') !== null) {
+        localStorage.flirteoLang = locale.value;
+    } else {
+        localStorage.setItem('flirteoLang', locale.value);
     }
 }
 
@@ -87,6 +94,7 @@ onBeforeMount(() => {
                     @click="toggleLang">
                     Pl
                 </div>
+                <FormLoader v-if="isLoadingLang" />
             </div>
             <div class="flex items-center gap-[10px] settings__item">
                 <p class="settings__item-title">{{ $t('Theme') }}:</p>
