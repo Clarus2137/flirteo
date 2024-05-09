@@ -6,7 +6,7 @@ import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
-const emit = defineEmits(['goToComplete', 'goToHome']);
+const emit = defineEmits(['goToComplete', 'goToHome', 'goToPass']);
 
 const title = {
     title: t('Log.title'),
@@ -58,6 +58,15 @@ const handleSubmit = async (e: Event) => {
         isError.value = true;
     }
 }
+
+const resetPass = async () => {
+    isLoading.value = true;
+    const isSuccess = await userStore.resetPassword(enteredEmail.value);
+    isLoading.value = false;
+    if (isSuccess) {
+        emit('goToPass');
+    }
+}
 </script>
 
 
@@ -92,8 +101,10 @@ const handleSubmit = async (e: Event) => {
                 <p class="text-red font-medium">{{ t('Invalid.user') }} {{ t('Invalid.pass') }}</p>
                 <router-link class="inline-block my-3 text-base text-primary font-medium underline"
                     to="/registration">{{ t('Invalid.account') }}</router-link>
-                <p>{{ t('Check_Pass') }} <span class="reset-link text-primary font-medium underline">{{ t('Reset_Pass')
-                        }}</span>
+                <p>{{ t('Check_Pass') }} <span
+                        class="reset-link text-primary font-medium underline hover:cursor-pointer" @click="resetPass">{{
+                    t('Reset_Pass')
+                }}</span>
                 </p>
             </div>
             <div class="mt-10 text-green font-medium text-center" v-if="isAuth">

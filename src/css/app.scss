@@ -19,6 +19,11 @@ body {
 body {
     padding-top: env(safe-area-inset-top);
     color: $text_primary;
+
+    &.dark-mode {
+        background: $text_primary;
+        color: $text_light;
+    }
 }
 
 .title-center>* {
@@ -83,6 +88,7 @@ body {
 
 .gradient-primary {
     background: $bg_gradient;
+    color: $text_light;
 }
 
 button.gradient-primary {
@@ -128,8 +134,8 @@ button.gradient-primary {
     box-shadow: inset 0 0 7px 1px $primary;
 }
 
-.hobby-shadow {
-    box-shadow: inset 0 0 0 2px #000;
+.item-shadow {
+    box-shadow: inset 0 0 0 2px $text_primary;
 }
 
 .q-stepper {
@@ -216,5 +222,46 @@ button.gradient-primary {
                 }
             }
         }
+    }
+}
+
+
+
+.dark-mode {
+    .flrt-input {
+        color: $text_primary;
+    }
+
+    .q-stepper {
+        background: none;
+
+        .q-stepper__tab--disabled .q-stepper__dot {
+            background: rgba(255, 255, 255, .4);
+        }
+
+        &.q-stepper--vertical .q-stepper__dot::after {
+            background: $text_light;
+        }
+    }
+
+    .q-icon svg {
+        fill: $text_light;
+
+        path {
+            fill: $text_light;
+        }
+    }
+
+    .item-shadow {
+        box-shadow: inset 0 0 0 2px $text_light;
+    }
+
+    .back-btn {
+        background: $text_light;
+        ;
+    }
+
+    .step-slider {
+        background: $text_primary;
     }
 }

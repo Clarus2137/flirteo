@@ -52,10 +52,10 @@ onMounted(() => {
 <template>
     <div class="details__gender gender grow flex flex-col">
         <div class="gender__items grid content-center grow gap-y-10">
-            <div class="flex justify-around">
-                <div class="gender__item gender__male p-8 rounded-2xl border border-solid border-inactive text-center hover:cursor-pointer"
+            <div class="flex gap-[3vw] gender__classic">
+                <div class="gender__item gender__male p-[3vw] rounded-2xl border border-solid border-inactive text-center hover:cursor-pointer"
                     :class="{ 'border-primary active': activeGender === 'male' }" @click="chooseGender('male')">
-                    <svg width="62" height="61" viewBox="0 0 62 61" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="62" height="61" viewBox="0 0 62 61" xmlns="http://www.w3.org/2000/svg" class="mx-auto">
                         <defs>
                             <linearGradient id="maleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                                 <stop offset="0%" style="stop-color:#FF84A7;" />
@@ -68,7 +68,7 @@ onMounted(() => {
                     </svg>
                     <p class="mt-4 text-xl" :class="{ 'text-primary': activeGender === 'male' }">{{ t('Male') }}</p>
                 </div>
-                <div class="gender__item gender__female p-8 rounded-2xl border border-solid border-inactive text-center hover:cursor-pointer"
+                <div class="gender__item gender__female p-[3vw] rounded-2xl border border-solid border-inactive text-center hover:cursor-pointer"
                     :class="{ 'border-primary active': activeGender === 'female' }" @click="chooseGender('female')">
                     <svg width="50" height="66" viewBox="0 0 50 66" xmlns="http://www.w3.org/2000/svg" class="mx-auto">
                         <defs>
@@ -96,6 +96,10 @@ onMounted(() => {
 
 
 <style lang="scss">
+.gender__classic>* {
+    width: calc((100% - 3vw) / 2);
+}
+
 .active>svg {
     fill: #f24e80;
 }

@@ -44,6 +44,12 @@ const routes: RouteRecordRaw[] = [
     },
 
     {
+        path: '/edit-password',
+        component: () => import('layouts/AuthLayout.vue'),
+        children: [{ path: '', component: () => import('pages/PassPage.vue') }],
+    },
+
+    {
         path: '/complete',
         component: () => import('layouts/InfoLayout.vue'),
         children: [{ path: '', name: 'complete', component: () => import('pages/CompleteProfilePage.vue') }]
@@ -68,6 +74,12 @@ const routes: RouteRecordRaw[] = [
             { path: '', component: () => import('pages/ProfilePage.vue') },
             { path: 'edit', component: () => import('pages/EditProfilePage.vue') }
         ]
+    },
+
+    {
+        path: '/settings',
+        component: () => import('layouts/BaseLayout.vue'),
+        children: [{ path: '', component: () => import('pages/SettingsPage.vue') }]
     },
 
     {

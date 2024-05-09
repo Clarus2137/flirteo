@@ -15,7 +15,8 @@ export const useChatStore = defineStore('chat', {
         respTypes: [] as ResponseAI[],
         session: {} as Partial<Session>,
         messages: [] as Partial<SessionMessages>[],
-        image: ''
+        image: '',
+        lang: ''
     }),
 
     actions: {
@@ -25,7 +26,7 @@ export const useChatStore = defineStore('chat', {
                 const response = await axios.get(apiPrompts, {
                     headers: {
                         'Authorization': `Bearer ${userToken}`,
-                        'Accept-Language': 'en'
+                        'Accept-Language': this.lang
                     }
                 });
                 this.prompts = response.data;
@@ -47,7 +48,7 @@ export const useChatStore = defineStore('chat', {
                 const response = await axios.get(apiRespTypes, {
                     headers: {
                         'Authorization': `Bearer ${userToken}`,
-                        'Accept-Language': 'pl'
+                        'Accept-Language': this.lang
                     }
                 });
                 this.respTypes = response.data
@@ -90,7 +91,7 @@ export const useChatStore = defineStore('chat', {
                 const response = await axios.post(apiSession, this.session, {
                     headers: {
                         'Authorization': `Bearer ${userToken}`,
-                        'Accept-Language': 'en'
+                        'Accept-Language': this.lang
                     }
                 });
                 this.session = response.data;
@@ -119,7 +120,7 @@ export const useChatStore = defineStore('chat', {
                 const response = await axios.post(apiMessages, newMessage, {
                     headers: {
                         'Authorization': `Bearer ${userToken}`,
-                        'Accept-Language': 'en'
+                        'Accept-Language': this.lang
                     }
                 });
                 this.session = { ...this.session, ...{ updatedAt: response.data.updatedAt } };

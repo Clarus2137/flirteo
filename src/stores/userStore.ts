@@ -7,12 +7,14 @@ const regUser = `${apiUrl}/api/users`;
 const authUser = `${apiUrl}/auth`;
 const apiUser = `${apiUrl}/api/users/me`;
 const apiHobbies = `${apiUrl}/api/interests`;
+const apiResetPass = `${apiUrl}/api/reset-password/request`;
 
 
 export const useUserStore = defineStore('user', {
     state: () => ({
         user: {} as Partial<User>,
-        hobbies: [] as BaseInterests[]
+        hobbies: [] as BaseInterests[],
+        lang: ''
     }),
 
     actions: {
@@ -62,7 +64,7 @@ export const useUserStore = defineStore('user', {
                     const response = await axios.get(apiHobbies, {
                         headers: {
                             'Authorization': `Bearer ${userToken}`,
-                            'Accept-Language': 'en'
+                            'Accept-Language': this.lang
                         }
                     });
                     const defaultHobbies = response.data;
@@ -139,18 +141,13 @@ export const useUserStore = defineStore('user', {
                         'Authorization': `Bearer ${userToken}`
                     }
                 });
-                console.log('User removing successful', response.data);
+                console.log(response.data);
                 this.user = {};
                 this.hobbies = [];
                 sessionStorage.clear();
                 localStorage.clear();
                 return true;
             } catch (error) {
-                // if (axios.isAxiosError(error)) {
-                //     console.error('User removing failed', error);
-                // } else {
-                //     console.error('An unexpected error occurred', error);
-                // }
                 return false;
             }
         },
@@ -158,6 +155,19 @@ export const useUserStore = defineStore('user', {
         getStoreUserData(userData: Partial<User>) {
             this.user = userData;
         },
+
+        async resetPassword(email: string) {
+            try {
+                const userEmail = {
+                    email: email
+                }
+                const response = await axios.post(apiResetPass, userEmail);
+                console.log(response.data);
+                return true;
+            } catch (error) {
+                return false;
+            }
+        }
 
         // async isUserExists() {
         //     try {

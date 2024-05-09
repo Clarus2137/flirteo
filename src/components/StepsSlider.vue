@@ -53,15 +53,15 @@ const slideNext = () => {
                 <component :is="slide.imgSrc" />
                 <div class="start__details grid gap-y-5 self-end bg-white p-[4%] rounded-[30px]">
                     <div class="details__title">
-                        <h1 class="headline lexend-bold text-center">
+                        <h1 class="headline lexend-bold text-black text-center">
                             {{ slide.headline }}
                         </h1>
                         <p class="self-end body-text text-secondary text-center">
                             {{ slide.bodyText }}
                         </p>
                     </div>
-                    <CustomBtn v-if="slide.id < 3" @click="slideNext">Next</CustomBtn>
-                    <CustomBtn v-else @click="$router.push('/authorization')">Get started</CustomBtn>
+                    <CustomBtn v-if="slide.id < 3" @click="slideNext">{{ t('Next') }}</CustomBtn>
+                    <CustomBtn v-else @click="$router.push('/authorization')">{{ t('Get_started') }}</CustomBtn>
                 </div>
             </div>
         </q-carousel-slide>

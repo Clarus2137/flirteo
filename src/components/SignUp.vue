@@ -65,7 +65,7 @@ const handleSubmit = async (e: Event) => {
         const isSuccess = await userStore.registerUser(newUser);
         isLoading.value = false;
         if (isSuccess) {
-            existingEmail.value = true;
+            existingEmail.value = false;
             if (localStorage.getItem('isAuthorised') === null) {
                 localStorage.setItem('isAuthorised', 'true');
             }

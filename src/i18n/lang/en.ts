@@ -1,4 +1,6 @@
 export default {
+    Next: 'Next',
+    Get_started: 'Get started',
     Slide_first: {
         title: 'End the Shyness!',
         subtitle: 'Do you feel nervous at the mere thought of striking up a conversation with someone? Flirteo will help you break the ice and show you how easy it can be to make new connections!'
@@ -17,7 +19,7 @@ export default {
         success: 'Authorization successful'
     },
     Log: {
-        title: 'Log in to your account',
+        title: 'Log in with your account',
         subtitle: 'Please enter your e-mail & password to continue'
     },
     Reg: 'Registration',
@@ -36,6 +38,7 @@ export default {
     Pass_hint: 'Your password must be at least 8 letters a-z, containing at least 1 capital letter, 1 number 0-9 and 1 special character from',
     Check_Pass: 'If you are, check the password and try again or',
     Reset_Pass: 'just reset your password',
+    New_Pass: 'Your new password',
     Continue: 'Continue',
     Consent: 'For start please express your consent to the processing of your personal data down below',
     Terms_and_Privacy: {
@@ -44,7 +47,7 @@ export default {
         And: 'and',
         Privacy: 'Privacy Policy'
     },
-    Confirm: 'Please check your email. After success verification you may enter your account.',
+    Confirm: 'Please check your email and follow the instructions.',
     Details: 'Details',
     Hobbies: 'Hobbies',
     Back: 'Back',
@@ -82,7 +85,7 @@ export default {
     Mode: 'Mode',
     Mode_hint: 'Choose conversation mode',
     Place: 'Place',
-    Place_hint: 'Where would you like to go together?',
+    Place_hint: 'Where will your communication take place?',
     Example: 'Example',
     Example_hint: 'Please give me some example of a conversation you have already had. A screenshot is a perfect option.',
     Required_field: 'Required field',
@@ -90,5 +93,11 @@ export default {
     Style_hint: 'What kind of conversation do you need?',
     Finish: 'Finish',
     Me: 'Me',
-    Assistant: 'Assistant'
+    Assistant: 'Assistant',
+    Lang: 'Language',
+    Theme: 'Theme',
+    Light: 'Light',
+    Dark: 'Dark',
+    Change: 'Change',
+    Send: 'Send'
 };

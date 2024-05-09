@@ -53,7 +53,7 @@ onMounted(() => {
         </div>
         <div class="user__name lexend-bold text-lg">
             <p><span class="user__firstname">{{ userStore.user.firstName }}</span> <span class="user__lastname">{{
-                userStore.user.lastName }}</span>
+        userStore.user.lastName }}</span>
             </p>
         </div>
         <div class="user__email lexend-light text-secondary text-sm">
@@ -74,7 +74,7 @@ onMounted(() => {
                 </q-icon>
             </q-item-section>
         </q-item>
-        <q-item class="min-h-min p-1" clickable v-ripple>
+        <q-item class="min-h-min p-1" clickable v-ripple exact to="/settings">
             <q-item-section avatar>
                 <q-icon>
                     <SettingsIcon />

@@ -104,7 +104,8 @@ onMounted(async () => {
 <template>
     <div class="chat">
         <h1 class="mb-8 lexend-bold text-2xl text-center">{{ $t('Chat_Config_Title') }}</h1>
-        <q-stepper v-model="step" vertical color="primary" animated v-if="isOptions">
+        <q-stepper v-model="step" vertical done-color="primary" active-color="primary" inactive-color="secondary"
+            animated v-if="isOptions">
             <q-step :name="1" :title="$t('Gender.title')" icon="settings" :done="step > 1">
                 <p class="body-text lexend-light text-secondary">{{ $t('Gender.hint') }}</p>
                 <CustomBtn type="button" @click="selectedGender = 'male'; nextStep(1)">{{ $t('Male') }}</CustomBtn>
@@ -115,7 +116,7 @@ onMounted(async () => {
                 <p class="body-text lexend-light text-secondary">{{ $t('Mode_hint') }}</p>
                 <CustomBtn type="button" v-for="prompt in prompts" :key="prompt.id"
                     @click="setPrompt(prompt.places, prompt.id); nextStep(2)">{{
-                        prompt.name }}</CustomBtn>
+            prompt.name }}</CustomBtn>
                 <q-stepper-navigation>
                     <q-btn flat @click="step = 1" color="primary" :label="$t('Back')" class="q-ml-sm" />
                 </q-stepper-navigation>
@@ -154,7 +155,7 @@ onMounted(async () => {
                 <p class="body-text lexend-light text-secondary">{{ $t('Style_hint') }}</p>
                 <CustomBtn type="button" v-for="style in respTypes" :key="style.id"
                     @click="setStyle(style.id); nextStep(5)">{{
-                        style.name }}
+            style.name }}
                 </CustomBtn>
                 <q-stepper-navigation>
                     <q-btn flat @click="stepBack" color="primary" :label="$t('Back')" class="q-ml-sm" />

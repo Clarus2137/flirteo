@@ -51,7 +51,7 @@ onMounted(() => {
     <div class="details__hobbies hobbies grow flex flex-col gap-[3vw]">
         <div class="grow flex items-center gap-[3vw]">
             <div class="hobbies__item hobby p-3 rounded-[10px] hover:cursor-pointer"
-                :class="{ 'gradient-primary border-transparent text-white': item.checked, 'hobby-shadow': !item.checked }"
+                :class="{ 'gradient-primary border-transparent text-white': item.checked, 'item-shadow': !item.checked }"
                 v-for="(item, index) in hobbies" :key="index" @click="toggleItem(item)">
                 {{ item.name }}
             </div>
