@@ -111,7 +111,7 @@ onMounted(() => {
     <div class="w-full h-full absolute top-0 left-0 hover:cursor-pointer bg-black opacity-75"
         :class="{ 'hidden': !isVisible, 'block': isVisible }" @click="isVisible = !isVisible"></div>
     <div class="date-picker w-full text-center absolute duration-300" :class="{ 'visible': isVisible }">
-        <q-date v-model="userDateOfBirth" mask="YYYY-MM-DD" color="pink-4" text-color="black" class="w-full mb-3" />
+        <q-date v-model="userDateOfBirth" mask="YYYY-MM-DD" color="pink-4" class="w-full mb-3" />
         <CustomBtn type="submit" class="max-w-[200px]" @click="isVisible = !isVisible">{{ t('Select') }}</CustomBtn>
     </div>
 </template>

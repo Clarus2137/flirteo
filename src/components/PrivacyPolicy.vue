@@ -5,67 +5,43 @@
 
 
 <template>
+    <BackBtn />
     <div class="privacy">
         <h1 class="lexend-bold text-lg text-center leading-normal mb-5">{{ $t('Terms_and_Privacy.Privacy') }}</h1>
-        <p class="lexend-light text-secondary">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam sunt
-            illo
-            aliquid suscipit quasi, rem, fugit vero nisi, mollitia velit necessitatibus error corporis soluta iste
-            officiis
-            nihil pariatur. Beatae sunt deleniti assumenda quaerat nulla at quas nisi impedit. Dolorum enim tempore
-            similique
-            illo et blanditiis numquam, quibusdam at quisquam, sed, accusamus ipsum corrupti. Non ab enim aut iure
-            minima in
-            aperiam minus sequi nostrum adipisci deleniti repellendus inventore, culpa tempora asperiores! Dolor
-            suscipit
-            quidem consectetur, velit harum minus ea explicabo officia accusamus, atque nostrum nulla unde odio debitis
-            id
-            eius accusantium? Dolorum eius repellendus delectus tempore quasi, natus odio voluptatibus aliquam harum
-            ipsam ut
-            sint consequatur doloribus quae ipsum aspernatur dignissimos qui pariatur cupiditate earum. Eaque beatae
-            explicabo
-            laboriosam ut quae perspiciatis nesciunt, iste quisquam magni, consequuntur aperiam, atque sint recusandae
-            necessitatibus hic esse molestiae consequatur temporibus minus qui non. Ullam officia optio repellendus
-            architecto
-            quod. Nisi odio atque magni quam tempore sed iusto vel corrupti possimus unde, natus delectus, molestiae
-            voluptatum facilis neque exercitationem praesentium provident totam eveniet asperiores. Laboriosam, illum
-            repudiandae fugiat voluptatibus veritatis provident non? Molestias, amet! Dolor incidunt reiciendis ratione
-            commodi! Sed similique quam debitis iure quibusdam dicta, molestias iste tenetur, tempora molestiae quia
-            nobis
-            soluta repellat quos maxime assumenda ex voluptates modi. Necessitatibus architecto dolorum provident non,
-            qui
-            adipisci, facilis, labore neque vel voluptatum quod vitae ad est amet animi maxime officiis temporibus
-            exercitationem voluptate laboriosam earum! Tempora, quaerat dolores quis consectetur ad harum. Nesciunt,
-            corporis,
-            nihil minima molestias ea rerum maiores, inventore optio repellat nostrum esse et eum accusamus voluptas
-            iusto
-            beatae libero earum vitae. Consequuntur fugit sit ut quibusdam exercitationem! Odit natus ab similique
-            recusandae
-            quas maiores. Beatae autem quod minus iure repellendus! Quis dicta sequi obcaecati! Quisquam rem ducimus
-            explicabo
-            placeat accusantium itaque corporis eaque fugit, impedit velit dolore culpa delectus voluptatibus cupiditate
-            numquam minima maiores enim aliquid asperiores quae. Soluta hic, nam minus velit distinctio cupiditate
-            tempora
-            voluptatem debitis ipsa voluptas corrupti optio maxime quia ullam nihil omnis suscipit sapiente quae
-            laboriosam.
-            Quia, quibusdam. Consequatur sunt nam amet, laboriosam enim atque omnis vero praesentium illo esse magnam
-            explicabo, voluptatibus iste delectus pariatur! Minus ab odio, optio veniam sunt, dolor ipsa aut obcaecati
-            similique, nisi laborum dolorem cum! Incidunt amet deleniti eius totam quisquam fugiat vero, ullam,
-            dignissimos
-            architecto doloribus culpa itaque, nisi voluptatem quam expedita recusandae tempore. Laborum doloribus ipsa
-            iste
-            incidunt? Provident exercitationem, velit optio deleniti dolore veniam nesciunt unde reprehenderit quia
-            eaque,
-            repudiandae aliquid expedita voluptatibus. Praesentium dolore maxime accusantium, consequuntur fuga voluptas
-            debitis eligendi, adipisci rerum, consectetur veritatis ea. Ut laborum in quas, modi repudiandae, accusamus
-            dicta
-            aliquam culpa necessitatibus nobis provident deserunt excepturi nulla hic atque quia at odit ratione iste
-            vel sed
-            tenetur maiores iusto? Facere, sit. Corporis quia adipisci porro aperiam reiciendis perferendis. Provident
-            mollitia ipsam doloremque consequatur nesciunt. Impedit, exercitationem? Totam officia porro veniam rerum
-            quod
-            eligendi aliquam, quidem quas. Quis asperiores, magni est adipisci nesciunt doloremque recusandae, vel quam
-            tenetur, soluta impedit quaerat perferendis. Tenetur sit mollitia repellendus tempore praesentium sunt
-            soluta
-            aspernatur.</p>
+        <p class="lexend-bold text-lg mt-5 mb-3">1. Wprowadzenie</p>
+        <p class="lexend text-secondary text-base leading-normal mb-1.5">1.1. Polityka prywatności opisuje zasady
+            przetwarzania informacji o użytkownikach, w tym danych
+            osobowych, przez Serwis Flirteo dostępny pod adresem <a class="text-gradient-primary"
+                href="http://www.flirteo.eu/">www.flirteo.eu</a>.
+        </p>
+        <p class="lexend text-secondary text-base leading-normal mb-1.5">1.2. Administratorem danych jest [Nazwa Firmy],
+            zarejestrowana pod adresem [Adres Firmy].</p>
+        <p class="lexend-bold text-lg mt-5 mb-3">2. Zakres zbieranych danych</p>
+        <p class="lexend text-secondary text-base leading-normal mb-1.5">2.1. Serwis zbiera informacje dobrowolnie
+            podane przez użytkowników w procesie rejestracji oraz dane
+            zbierane automatycznie podczas ich korzystania z Serwisu, takie jak adres IP, rodzaj przeglądarki, czas
+            spędzony na stronie oraz strony, które odwiedzili.</p>
+        <p class="lexend-bold text-lg mt-5 mb-3">3. Cele przetwarzania danych</p>
+        <p class="lexend text-secondary text-base leading-normal mb-1.5">3.1. Dane zbierane podczas rejestracji
+            wykorzystywane są do umożliwienia użytkownikom korzystania z
+            pełnej funkcjonalności Serwisu.</p>
+        <p class="lexend text-secondary text-base leading-normal mb-1.5">3.2. Dane zbierane automatycznie służą do
+            analizy zachowań użytkowników, usprawnienia działania Serwisu
+            oraz lepszego dopasowania treści i reklam do ich preferencji.</p>
+        <p class="lexend-bold text-lg mt-5 mb-3">4. Bezpieczeństwo danych</p>
+        <p class="lexend text-secondary text-base leading-normal mb-1.5">4.1. Serwis stosuje różnorodne środki
+            techniczne i organizacyjne w celu zapewnienia bezpieczeństwa
+            przetwarzanych danych, zgodnie z obowiązującymi przepisami o ochronie danych osobowych.</p>
+        <p class="lexend-bold text-lg mt-5 mb-3">5. Prawa użytkowników</p>
+        <p class="lexend text-secondary text-base leading-normal mb-1.5">5.1. Użytkownik ma prawo do dostępu do swoich
+            danych, ich sprostowania, usunięcia, a także prawo do
+            żądania ograniczenia przetwarzania.</p>
+        <p class="lexend text-secondary text-base leading-normal mb-1.5">5.2. Użytkownik ma prawo do wniesienia
+            sprzeciwu przeciwko przetwarzaniu jego danych oraz prawo do
+            przenoszenia danych.</p>
+        <p class="lexend-bold text-lg mt-5 mb-3">6. Zmiany w polityce prywatności</p>
+        <p class="lexend text-secondary text-base leading-normal mb-1.5">6.1. [Nazwa Firmy] zastrzega sobie prawo do
+            dokonywania zmian w polityce prywatności. Każda zmiana będzie
+            publikowana na stronie Serwisu oraz użytkownicy zostaną o niej poinformowani.</p>
     </div>
 </template>

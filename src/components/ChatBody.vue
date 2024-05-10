@@ -2,6 +2,9 @@
 import { ref, onBeforeMount, onMounted, watch, nextTick } from 'vue';
 import { useChatStore } from 'src/stores/chatStore';
 
+
+const emit = defineEmits(['goToHome']);
+
 const chatStore = useChatStore();
 const isFlirt = ref(false);
 const isSessionStarted = ref(false);
@@ -10,11 +13,11 @@ const pageMessages = ref<Partial<SessionMessages>[]>([]);
 
 
 const dialog = ref(false);
-const backdropFilter = ref('');
+const backdropFilter = ref('blur(4x)');
 
 const applyFilter = () => {
     dialog.value = true;
-    backdropFilter.value = 'blur(4px) saturate(150%)'
+    backdropFilter.value = 'blur(4px) saturate(150%)';
 }
 
 
@@ -77,6 +80,12 @@ const addMessage = () => {
     }
 };
 
+const endSession = () => {
+    chatStore.clearSession();
+    pageMessages.value = [];
+    emit('goToHome');
+}
+
 onBeforeMount(() => {
     if (chatStore.session.prompt?.slice(-1) === '1') {
         isFlirt.value = true;
@@ -84,6 +93,7 @@ onBeforeMount(() => {
 
     if (chatStore.session.messages && chatStore.session.messages.length > 0 && !isSessionStarted.value) {
         isSessionStarted.value = true;
+        console.log(chatStore.session);
         pageMessages.value = [...chatStore.session.messages];
     }
 });
@@ -136,18 +146,19 @@ onMounted(() => {
             </button>
         </form>
 
-        <q-dialog v-model="dialog" :backdrop-filter="backdropFilter">
+        <q-dialog v-model="dialog" :backdrop-filter="backdropFilter" full-width>
             <q-card>
-                <q-card-section class="row items-center q-pb-none text-h6">
-                    UPS!
+                <q-card-section class="row items-center justify-center q-pb-none text-h6">
+                    {{ $t('TokensOut') }}
                 </q-card-section>
 
                 <q-card-section>
-                    Kup więcej tokenów.
+                    {{ $t('TokensOut_Description') }}
                 </q-card-section>
 
-                <q-card-actions align="right">
-                    <q-btn flat label="Close" color="primary" v-close-popup @click="$router.push('/profile')" />
+                <q-card-actions class="flex justify-between">
+                    <q-btn flat :label="$t('Purchase')" color="primary" v-close-popup @click="endSession" />
+                    <q-btn flat :label="$t('Later')" color="primary" v-close-popup @click="endSession" />
                 </q-card-actions>
             </q-card>
         </q-dialog>

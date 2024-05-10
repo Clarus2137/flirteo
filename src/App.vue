@@ -1,9 +1,21 @@
 <script setup lang="ts">
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, onMounted, onBeforeUnmount } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useUserStore } from 'src/stores/userStore';
 import { useChatStore } from 'src/stores/chatStore';
 
+
+interface CordovaNavigator extends Navigator {
+    app: {
+        exitApp: () => void;
+    };
+}
+
+
+const onBackButton = (e: Event) => {
+    e.preventDefault();
+    (navigator as CordovaNavigator).app.exitApp();
+}
 
 const isDark = ref(false);
 
@@ -22,6 +34,13 @@ onBeforeMount(() => {
     chatStore.lang = locale.value;
 });
 
+onMounted(() => {
+    document.addEventListener('backbutton', onBackButton, false);
+});
+
+onBeforeUnmount(() => {
+    document.removeEventListener('backbutton', onBackButton, false);
+});
 </script>
 
 

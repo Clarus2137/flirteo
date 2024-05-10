@@ -1,4 +1,5 @@
 export default {
+    ChooseLang: 'Choose the language',
     Next: 'Next',
     Get_started: 'Get started',
     Slide_first: {
@@ -45,7 +46,8 @@ export default {
         Accept: 'I accept all the',
         Terms: 'Terms & Conditions',
         And: 'and',
-        Privacy: 'Privacy Policy'
+        Privacy: 'Privacy Policy',
+        Privacy2: 'Privacy Policy'
     },
     Confirm: 'Please check your email and follow the instructions.',
     Details: 'Details',
@@ -64,7 +66,7 @@ export default {
     Gender: {
         title: 'Gender',
         subtitle: 'Please select your gender',
-        hint: 'Please choose the gender of the person you\'d like to chat with'
+        hint: 'Please select the gender of the person you need help with'
     },
     Male: 'Male',
     Female: 'Female',
@@ -84,7 +86,7 @@ export default {
     Chat_Config_Title: 'Please give the assistent some information',
     Mode: 'Mode',
     Mode_hint: 'Choose conversation mode',
-    Place: 'Place',
+    Place: 'Location',
     Place_hint: 'Where will your communication take place?',
     Example: 'Example',
     Example_hint: 'Please give me some example of a conversation you have already had. A screenshot is a perfect option.',
@@ -99,5 +101,9 @@ export default {
     Light: 'Light',
     Dark: 'Dark',
     Change: 'Change',
-    Send: 'Send'
+    Send: 'Send',
+    TokensOut: 'Tokens have run out.',
+    TokensOut_Description: 'To continue interacting with the assistant, please purchase a new token package.',
+    Purchase: 'Purchase tokens',
+    Later: 'Later'
 };

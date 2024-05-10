@@ -5,6 +5,9 @@ import imgSecond from './slideSecond.vue';
 import imgThird from './slideThird.vue';
 import { useI18n } from 'vue-i18n';
 
+// const dialog = ref(true);
+// const backdropFilter = ref('blur(4px)');
+
 const { t } = useI18n();
 
 const slideItem = ref('first');
@@ -43,7 +46,7 @@ const slideNext = () => {
 
 <template>
     <q-carousel v-model="slideItem" transition-prev="slide-right" transition-next="slide-left" control-color="primary"
-        swipeable animated class="rounded-borders bg-transparent h-auto">
+        swipeable animated class="grow rounded-borders bg-transparent h-auto">
         <template v-slot:navigation-icon="{ active, onClick }">
             <q-btn v-if="active" class="pag__btn pag__btn_active" flat round dense />
             <q-btn v-else class="pag__btn" flat round dense @click="onClick" />
@@ -66,6 +69,22 @@ const slideNext = () => {
             </div>
         </q-carousel-slide>
     </q-carousel>
+
+    <!-- <q-dialog v-model="dialog" :backdrop-filter="backdropFilter" full-width>
+        <q-card>
+            <q-card-section class="row items-center justify-center q-pb-none text-h6">
+                {{ t('ChooseLang') }}
+            </q-card-section>
+
+            <q-card-section class="flex justify-center items-center gap-[5vw]">
+
+            </q-card-section>
+
+            <q-card-actions class="flex justify-center">
+                <q-btn flat :label="t('Save')" color="primary" v-close-popup />
+            </q-card-actions>
+        </q-card>
+    </q-dialog> -->
 </template>
 
 

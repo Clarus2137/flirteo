@@ -143,7 +143,7 @@ button.gradient-primary {
 
     .q-stepper__header {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: 1fr 1fr;
         border: none;
 
         .q-stepper__tab {
@@ -225,6 +225,14 @@ button.gradient-primary {
     }
 }
 
+.q-date {
+    color: $text_light;
+
+    .q-date__main {
+        color: $text_primary;
+    }
+}
+
 
 
 .dark-mode {
@@ -283,5 +291,16 @@ button.gradient-primary {
 
     .details__personal-data>* label {
         color: rgba(0, 0, 0, .5);
+    }
+
+    .q-card {
+        background: #333;
+    }
+
+    .q-date {
+        .q-date__main {
+            background: #333;
+            color: $text_light;
+        }
     }
 }

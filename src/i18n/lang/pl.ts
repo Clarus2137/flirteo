@@ -1,4 +1,5 @@
 export default {
+    ChooseLang: 'Wybierz język',
     Next: 'Dalej',
     Get_started: 'Zacząć',
     Slide_first: {
@@ -45,7 +46,8 @@ export default {
         Accept: 'Akceptuję wszystkie',
         Terms: 'Warunki i zasady',
         And: 'oraz',
-        Privacy: 'Politykę prywatności'
+        Privacy: 'Polityka prywatności',
+        Privacy2: 'Politykę prywatności'
     },
     Confirm: 'Sprawdź swój e-mail i postępuj zgodnie z instrukcjami.',
     Details: 'Szczegóły',
@@ -64,7 +66,7 @@ export default {
     Gender: {
         title: 'Płeć',
         subtitle: 'Wybierz swoją płeć',
-        hint: 'Wybierz płeć osoby, z którą chciałbyś porozmawiać'
+        hint: 'Wybierz płeć osoby, z którą potrzebujesz pomocy'
     },
     Male: 'Mężczyzna',
     Female: 'Kobieta',
@@ -84,7 +86,7 @@ export default {
     Chat_Config_Title: 'Podaj asystentowi kilka informacji',
     Mode: 'Tryb',
     Mode_hint: 'Wybierz tryb konwersacji',
-    Place: 'Miejsce',
+    Place: 'Lokalizacja',
     Place_hint: 'Gdzie będzie odbywać się Twoja komunikacja?',
     Example: 'Przykład',
     Example_hint: 'Proszę podać mi przykład rozmowy, którą już odbyłeś. Zrzut ekranu jest doskonałą opcją.',
@@ -99,5 +101,9 @@ export default {
     Light: 'Jasny',
     Dark: 'Ciemny',
     Change: 'Zmienić',
-    Send: 'Wyślij'
+    Send: 'Wyślij',
+    TokensOut: 'Skończyły się tokeny.',
+    TokensOut_Description: 'Aby kontynuować rozmowę z asystentem, kup nowy pakiet tokenów.',
+    Purchase: 'Kup tokeny',
+    Later: 'Później'
 };

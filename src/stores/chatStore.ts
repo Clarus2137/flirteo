@@ -145,6 +145,11 @@ export const useChatStore = defineStore('chat', {
                 }
                 return false;
             }
+        },
+
+        clearSession() {
+            this.messages = [];
+            this.session = {}
         }
     }
 });

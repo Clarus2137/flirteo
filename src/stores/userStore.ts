@@ -6,14 +6,13 @@ const apiUrl = process.env.API_SERVER;
 const regUser = `${apiUrl}/api/users`;
 const authUser = `${apiUrl}/auth`;
 const apiUser = `${apiUrl}/api/users/me`;
-const apiHobbies = `${apiUrl}/api/interests`;
+// const apiHobbies = `${apiUrl}/api/interests`;
 const apiResetPass = `${apiUrl}/api/reset-password/request`;
 
 
 export const useUserStore = defineStore('user', {
     state: () => ({
         user: {} as Partial<User>,
-        hobbies: [] as BaseInterests[],
         lang: ''
     }),
 
@@ -57,46 +56,46 @@ export const useUserStore = defineStore('user', {
             }
         },
 
-        async getHobbies() {
-            const userToken = sessionStorage.getItem('userToken');
-            if (userToken !== null) {
-                try {
-                    const response = await axios.get(apiHobbies, {
-                        headers: {
-                            'Authorization': `Bearer ${userToken}`,
-                            'Accept-Language': this.lang
-                        }
-                    });
-                    console.log(response.data);
-                    const defaultHobbies = response.data;
-                    if (this.user.interests?.length) {
-                        const activatedHobbies = defaultHobbies.map((item: { name: string }) => ({
-                            name: item.name,
-                            checked: this.user.interests?.includes(item.name) ? true : false
-                        }));
-                        this.hobbies = activatedHobbies;
-                    } else {
-                        defaultHobbies.forEach((item: { name: string; }) => {
-                            const hobby = {
-                                name: item.name,
-                                checked: false
-                            }
-                            this.hobbies.push(hobby);
-                        });
-                    }
-                } catch (error) {
-                    if (axios.isAxiosError(error)) {
-                        // Handling Axios errors specifically
-                        console.error('Authorization failed', error.response?.data);
-                    } else {
-                        // Handling unexpected errors
-                        console.error('An unexpected error occurred', error);
-                    }
-                }
-            } else {
-                console.log('User\'s data doesn\'t exist');
-            }
-        },
+        // async getHobbies() {
+        //     const userToken = sessionStorage.getItem('userToken');
+        //     if (userToken !== null) {
+        //         try {
+        //             const response = await axios.get(apiHobbies, {
+        //                 headers: {
+        //                     'Authorization': `Bearer ${userToken}`,
+        //                     'Accept-Language': this.lang
+        //                 }
+        //             });
+        //             console.log(response.data);
+        //             const defaultHobbies = response.data;
+        //             if (this.user.interests?.length) {
+        //                 const activatedHobbies = defaultHobbies.map((item: { name: string }) => ({
+        //                     name: item.name,
+        //                     checked: this.user.interests?.includes(item.name) ? true : false
+        //                 }));
+        //                 this.hobbies = activatedHobbies;
+        //             } else {
+        //                 defaultHobbies.forEach((item: { name: string; }) => {
+        //                     const hobby = {
+        //                         name: item.name,
+        //                         checked: false
+        //                     }
+        //                     this.hobbies.push(hobby);
+        //                 });
+        //             }
+        //         } catch (error) {
+        //             if (axios.isAxiosError(error)) {
+        //                 // Handling Axios errors specifically
+        //                 console.error('Authorization failed', error.response?.data);
+        //             } else {
+        //                 // Handling unexpected errors
+        //                 console.error('An unexpected error occurred', error);
+        //             }
+        //         }
+        //     } else {
+        //         console.log('User\'s data doesn\'t exist');
+        //     }
+        // },
 
         addUserData(newUserData: Partial<User>) {
             try {
@@ -144,9 +143,8 @@ export const useUserStore = defineStore('user', {
                 });
                 console.log(response.data);
                 this.user = {};
-                this.hobbies = [];
+                // this.hobbies = [];
                 sessionStorage.clear();
-                localStorage.clear();
                 return true;
             } catch (error) {
                 return false;

@@ -6,8 +6,7 @@ import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
-
-const emit = defineEmits(['goToInterests', 'sendTitle']);
+const emit = defineEmits(['goToHome', 'sendTitle']);
 
 const title: PageTitle = {
     title: t('Gender.title'),
@@ -18,17 +17,29 @@ const userStore = useUserStore();
 
 const activeGender = ref<string | null>(null);
 
+const isLoading = ref(false);
+
 const chooseGender = (gender: string) => {
     if (activeGender.value !== gender) {
         activeGender.value = gender;
     }
 }
 
+const updateUserData = async () => {
+    isLoading.value = true;
+    const isSuccess = await userStore.updateUser(userStore.user);
+    isLoading.value = false;
+    if (isSuccess) {
+        emit('goToHome');
+    }
+}
+
 const setGender = () => {
     const gender = activeGender.value ? activeGender.value : 'Not specified';
-    const isSuccess = userStore.addUserData({ gender });
-    if (isSuccess) {
-        emit('goToInterests');
+    const interests = <[]>([]);
+    const isAdded = userStore.addUserData({ gender, interests });
+    if (isAdded) {
+        updateUserData();
     }
 }
 
@@ -50,7 +61,7 @@ onMounted(() => {
 
 
 <template>
-    <div class="details__gender gender grow flex flex-col">
+    <div class="details__gender gender grow flex flex-col gap-[3vw]">
         <div class="gender__items grid content-center grow gap-y-10">
             <div class="flex gap-[3vw] gender__classic">
                 <div class="gender__item gender__male p-[3vw] rounded-2xl border border-solid border-inactive text-center hover:cursor-pointer"
@@ -89,7 +100,8 @@ onMounted(() => {
                 <p class="text-xl" :class="{ 'text-primary': activeGender === 'other' }">{{ t('Other') }}</p>
             </div>
         </div>
-        <CustomBtn type="button" @click="setGender">{{ t('Continue') }}</CustomBtn>
+        <FormLoader :class="{ 'opacity-0': !isLoading }" />
+        <CustomBtn type="button" @click="setGender">{{ t('Save') }}</CustomBtn>
     </div>
 </template>
 

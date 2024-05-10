@@ -5,7 +5,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: '',
         component: () => import('layouts/StartLayout.vue'),
-        children: [{ path: '', component: () => import('pages/StartPage.vue') }],
+        children: [{ path: '', component: () => import('pages/LangPage.vue') }],
         beforeEnter: (to, from, next) => {
             if (localStorage.getItem('isAuthorised') !== null) {
                 next({ name: 'auth' });
@@ -13,6 +13,12 @@ const routes: RouteRecordRaw[] = [
                 next();
             }
         }
+    },
+
+    {
+        path: '/introducing',
+        component: () => import('layouts/StartLayout.vue'),
+        children: [{ path: '', component: () => import('pages/StartPage.vue') }]
     },
 
     // Always leave this as last one,

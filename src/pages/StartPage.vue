@@ -5,7 +5,7 @@ import StepsSlider from 'components/StepsSlider.vue'
 
 
 <template>
-    <div class="start grid">
+    <div class="start flex flex-col gap-[3vw]">
         <StepsSlider />
     </div>
 </template>
