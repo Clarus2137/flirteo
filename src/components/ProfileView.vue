@@ -21,17 +21,6 @@ const loadUserData = () => {
     }
 }
 
-const goToWebsite = () => {
-    window.open('https://flirteo.eu', '_blank');
-}
-
-const deleteAcc = async () => {
-    const isSuccess = await userStore.removeUser();
-    if (isSuccess) {
-        emit('goToAuthorization');
-    }
-}
-
 onMounted(() => {
     loadUserData();
 });
@@ -53,7 +42,7 @@ onMounted(() => {
         </div>
         <div class="user__name lexend-bold text-lg">
             <p><span class="user__firstname">{{ userStore.user.firstName }}</span> <span class="user__lastname">{{
-        userStore.user.lastName }}</span>
+                userStore.user.lastName }}</span>
             </p>
         </div>
         <div class="user__email lexend-light text-secondary text-sm">
@@ -113,7 +102,7 @@ onMounted(() => {
                 </q-icon>
             </q-item-section>
         </q-item>
-        <q-item class="min-h-min p-1" clickable v-ripple @click="goToWebsite">
+        <q-item class="min-h-min p-1" clickable v-ripple exact to="/about">
             <q-item-section avatar>
                 <q-icon>
                     <AboutIcon />
@@ -145,6 +134,5 @@ onMounted(() => {
             </svg>
             {{ $t('LogOut') }}
         </CustomBtn>
-        <CustomBtn @click="deleteAcc">{{ $t('Delete_Acc') }}</CustomBtn>
     </div>
 </template>

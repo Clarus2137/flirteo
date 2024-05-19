@@ -14,6 +14,7 @@ const userID = JSON.parse(sessionStorage.userData).id;
 const userSource = `${apiUrl}/api/users/${userID}`;
 
 const isOptions = ref(true);
+const isFinished = ref(false);
 
 const prompts = ref<Prompts[]>([]);
 const respTypes = ref<ResponseAI[]>([]);
@@ -71,6 +72,7 @@ const convertToString = (file: File) => {
 
 const setStyle = (style: number) => {
     selectedStyle.value = style;
+    isFinished.value = true;
 }
 
 const buildOptions = () => {
@@ -116,7 +118,7 @@ onMounted(async () => {
                 <p class="body-text lexend-light text-secondary">{{ $t('Mode_hint') }}</p>
                 <CustomBtn type="button" v-for="prompt in prompts" :key="prompt.id"
                     @click="setPrompt(prompt.places, prompt.id); nextStep(2)">{{
-            prompt.name }}</CustomBtn>
+                        prompt.name }}</CustomBtn>
                 <q-stepper-navigation>
                     <q-btn flat @click="step = 1" color="primary" :label="$t('Back')" class="q-ml-sm" />
                 </q-stepper-navigation>
@@ -153,21 +155,24 @@ onMounted(async () => {
 
             <q-step :name="5" :title="$t('Style')" icon="settings" :done="step > 5">
                 <p class="body-text lexend-light text-secondary">{{ $t('Style_hint') }}</p>
-                <CustomBtn type="button" v-for="style in respTypes" :key="style.id"
-                    @click="setStyle(style.id); nextStep(5)">{{
-            style.name }}
-                </CustomBtn>
-                <q-stepper-navigation>
+                <div class="w-full" v-if="!isFinished">
+                    <CustomBtn type="button" v-for="style in respTypes" :key="style.id" @click="setStyle(style.id)">
+                        {{
+                            style.name }}
+                    </CustomBtn>
+                </div>
+                <q-stepper-navigation v-else>
+                    <q-btn color="primary" :label="$t('Finish')" @click="buildOptions" />
                     <q-btn flat @click="stepBack" color="primary" :label="$t('Back')" class="q-ml-sm" />
                 </q-stepper-navigation>
             </q-step>
 
-            <q-step :name="6" :title="$t('Finish')" icon="settings" class="last">
+            <!-- <q-step :name="6" :title="$t('Finish')" icon="settings" class="last">
                 <q-stepper-navigation class="w-full flex justify-center">
                     <q-btn color="primary" :label="$t('Finish')" @click="buildOptions" />
                     <q-btn flat @click="step = 5" color="primary" :label="$t('Back')" class="q-ml-sm" />
                 </q-stepper-navigation>
-            </q-step>
+            </q-step> -->
         </q-stepper>
     </div>
 </template>
@@ -203,7 +208,8 @@ onMounted(async () => {
     padding: 5px 7px;
 
     .place__icon {
-        height: 46px;
+        max-width: 60px;
+        max-height: 46px;
     }
 }
 </style>

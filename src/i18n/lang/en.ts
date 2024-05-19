@@ -100,10 +100,22 @@ export default {
     Theme: 'Theme',
     Light: 'Light',
     Dark: 'Dark',
-    Change: 'Change',
+    Change_Pass: 'Change password',
     Send: 'Send',
     TokensOut: 'Tokens have run out.',
     TokensOut_Description: 'To continue interacting with the assistant, please purchase a new token package.',
     Purchase: 'Purchase tokens',
-    Later: 'Later'
+    Later: 'Later',
+    Days: 'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday',
+    Days_Short: 'Sun_Mon_Tue_Wed_Thu_Fri_Sat',
+    Months: 'January_February_March_April_May_June_July_August_September_October_November_December',
+    Months_Short: 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec',
+    New_Session: {
+        title: 'New conversation',
+        confirm: 'Do you want to start the new chat?',
+        desc: 'All the current messages will be deleted'
+    },
+    Yes: 'Yes',
+    No: 'No',
+    No_I_will_continue: 'No, I will continue'
 };

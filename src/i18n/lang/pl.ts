@@ -100,10 +100,22 @@ export default {
     Theme: 'Motyw',
     Light: 'Jasny',
     Dark: 'Ciemny',
-    Change: 'Zmienić',
+    Change_Pass: 'Zmiana hasła',
     Send: 'Wyślij',
     TokensOut: 'Skończyły się tokeny.',
     TokensOut_Description: 'Aby kontynuować rozmowę z asystentem, kup nowy pakiet tokenów.',
     Purchase: 'Kup tokeny',
-    Later: 'Później'
+    Later: 'Później',
+    Days: 'Niedziela_Poniedziałek_Wtorek_Środa_Czwartek_Piątek_Sobota',
+    Days_Short: 'Ndz_Pon_Wt_Śr_Czw_Pt_Sob',
+    Months: 'Styczeń_Luty_Marzec_Kwiecień_Maj_Czerwiec_Lipiec_Sierpień_Wrzesień_Październik_Listopad_Grudzień',
+    Months_Short: 'Sty_Lut_Mar_Kwi_May_Cze_Lip_Sie_Wrz_Paź_Lis_Gru',
+    New_Session: {
+        title: 'Nowa rozmowa',
+        confirm: 'Czy chcesz rozpocząć nową rozmowę?',
+        desc: 'Wszystkie bieżące wiadomości zostaną usunięte.'
+    },
+    Yes: 'Tak',
+    No: 'Nie',
+    No_I_will_continue: 'Nie, kontunuuję'
 };

@@ -3,21 +3,32 @@ import { ref, onBeforeMount, onMounted, watch, nextTick } from 'vue';
 import { useChatStore } from 'src/stores/chatStore';
 
 
-const emit = defineEmits(['goToHome']);
+const emit = defineEmits(['goToHome', 'goToChatConfig']);
 
 const chatStore = useChatStore();
-const isFlirt = ref(false);
 const isSessionStarted = ref(false);
 const messageField = ref('');
 const pageMessages = ref<Partial<SessionMessages>[]>([]);
 
 
-const dialog = ref(false);
-const backdropFilter = ref('blur(4x)');
+const dialogTokens = ref(false);
+const dialogSession = ref(false);
+const backdropFilter = ref('');
 
-const applyFilter = () => {
-    dialog.value = true;
+const openDialogTokens = () => {
+    dialogTokens.value = true;
     backdropFilter.value = 'blur(4px) saturate(150%)';
+}
+
+const openDialogSession = () => {
+    dialogSession.value = true;
+    backdropFilter.value = 'blur(4px) saturate(150%)';
+}
+
+const closeDialog = () => {
+    dialogTokens.value = false;
+    dialogSession.value = false;
+    backdropFilter.value = '';
 }
 
 
@@ -48,7 +59,7 @@ const startSession = async (autoMessage: string) => {
             isSessionStarted.value = true;
         }
     } else if (isSuccess === 403) {
-        applyFilter();
+        openDialogTokens();
     }
 };
 
@@ -63,7 +74,7 @@ const sendNewMessage = async (newMessage: string) => {
             pageMessages.value[pageMessages.value.length - 1] = { ...pageMessages.value[pageMessages.value.length - 1], ...answer };
         }
     } else if (isSuccess === 403) {
-        applyFilter();
+        openDialogTokens();
     }
 };
 
@@ -80,17 +91,17 @@ const addMessage = () => {
     }
 };
 
+const startNewSession = () => {
+    endSession();
+    emit('goToChatConfig');
+}
+
 const endSession = () => {
     chatStore.clearSession();
     pageMessages.value = [];
-    emit('goToHome');
 }
 
 onBeforeMount(() => {
-    if (chatStore.session.prompt?.slice(-1) === '1') {
-        isFlirt.value = true;
-    }
-
     if (chatStore.session.messages && chatStore.session.messages.length > 0 && !isSessionStarted.value) {
         isSessionStarted.value = true;
         console.log(chatStore.session);
@@ -99,7 +110,8 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
-    if (!isSessionStarted.value && isFlirt.value === true) {
+    if (!isSessionStarted.value) {
+        isSessionStarted.value = true;
         const autoMessage = messageField.value;
         pageMessages.value.push({
             content: autoMessage
@@ -114,8 +126,12 @@ onMounted(() => {
 
 
 <template>
-    <div class="chat__body grid">
-        <div class="chat__messages messages" :class="{ 'flirt': isFlirt }" id="messages">
+    <div class="chat__body flex flex-col">
+        <div class="restart py-2 text-center absolute left-0 right-0 z-10 shadow-md">
+            <CustomBtn type="button" @click="openDialogSession">{{ $t('New_Session.title') }}</CustomBtn>
+        </div>
+        <div class="grow px-2 pt-[56px] chat__messages messages" :class="{ 'auto-mes': isSessionStarted }"
+            id="messages">
             <div class="messages__item" v-for="item in pageMessages" :key="item.id">
                 <q-chat-message :name="$t('Me')" :text="[item.content]" sent />
                 <q-chat-message :name="$t('Assistant')" bg-color="primary" text-color="white" v-if="!item.response">
@@ -146,7 +162,7 @@ onMounted(() => {
             </button>
         </form>
 
-        <q-dialog v-model="dialog" :backdrop-filter="backdropFilter" full-width>
+        <q-dialog v-model="dialogTokens" :backdrop-filter="backdropFilter" full-width>
             <q-card>
                 <q-card-section class="row items-center justify-center q-pb-none text-h6">
                     {{ $t('TokensOut') }}
@@ -157,8 +173,27 @@ onMounted(() => {
                 </q-card-section>
 
                 <q-card-actions class="flex justify-between">
-                    <q-btn flat :label="$t('Purchase')" color="primary" v-close-popup @click="endSession" />
-                    <q-btn flat :label="$t('Later')" color="primary" v-close-popup @click="endSession" />
+                    <q-btn flat :label="$t('Purchase')" color="primary" v-close-popup
+                        @click="endSession; emit('goToHome')" />
+                    <q-btn flat :label="$t('Later')" color="primary" v-close-popup
+                        @click="endSession; emit('goToHome')" />
+                </q-card-actions>
+            </q-card>
+        </q-dialog>
+
+        <q-dialog v-model="dialogSession" :backdrop-filter="backdropFilter" full-width>
+            <q-card>
+                <q-card-section class="row items-center justify-center q-pb-none text-h6">
+                    {{ $t('New_Session.confirm') }}
+                </q-card-section>
+
+                <q-card-section>
+                    {{ $t('New_Session.desc') }}
+                </q-card-section>
+
+                <q-card-actions class="flex justify-between">
+                    <q-btn flat :label="$t('Yes')" color="primary" v-close-popup @click="startNewSession" />
+                    <q-btn flat :label="$t('No_I_will_continue')" color="primary" v-close-popup @click="closeDialog" />
                 </q-card-actions>
             </q-card>
         </q-dialog>
@@ -169,12 +204,21 @@ onMounted(() => {
 
 <style lang="scss">
 .chat__body {
+    .restart {
+        background: #fff;
+
+        button {
+            width: auto;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+    }
+
     .messages {
-        padding: 0 8px;
-        max-height: calc(100vh - 135px);
+        max-height: calc(100vh - 110px);
         overflow-y: scroll;
 
-        &.flirt>.messages__item:first-child .q-message-sent {
+        &.auto-mes>.messages__item:first-child .q-message-sent {
             display: none;
         }
     }

@@ -1,9 +1,9 @@
 {
     "name": "package",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "A Quasar Project",
     "productName": "Flirteo",
-    "author": "",
+    "author": "Web Systems",
     "private": true,
     "scripts": {
         "lint": "eslint --ext .js,.ts,.vue ./",

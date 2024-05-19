@@ -240,6 +240,10 @@ button.gradient-primary {
         color: $text_primary;
     }
 
+    .chat__body .restart {
+        background: $text_primary;
+    }
+
     .q-stepper {
         background: none;
 
@@ -290,7 +294,7 @@ button.gradient-primary {
     }
 
     .details__personal-data>* label {
-        color: rgba(0, 0, 0, .5);
+        color: $text_primary;
     }
 
     .q-card {

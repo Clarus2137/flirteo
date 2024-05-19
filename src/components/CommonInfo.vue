@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onBeforeMount, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { useUserStore } from 'src/stores/userStore';
 import { useI18n } from 'vue-i18n';
 
@@ -13,15 +14,27 @@ const title: PageTitle = {
     subtitle: t('Your_Info.subtitle')
 }
 
+const level = ref('');
+const options = ref<string[]>([]);
+
 const isVisible = ref(false);
 
 const userFirstName = ref('');
 const userLastName = ref('');
 const userDateOfBirth = ref('');
 const userLocation = ref('');
-const userEducation = ref('');
+
+const dateLocale = {
+    days: t('Days').split('_'),
+    daysShort: t('Days_Short').split('_'),
+    months: t('Months').split('_'),
+    monthsShort: t('Months_Short').split('_'),
+    firstDayOfWeek: 1, // 0-6, 0 - Sunday, 1 Monday, ...
+    format24h: true
+}
 
 const userStore = useUserStore();
+const router = useRouter();
 
 const addData = (e: Event) => {
     e.preventDefault();
@@ -29,14 +42,14 @@ const addData = (e: Event) => {
     const lastName = userLastName.value;
     const dateOfBirth = userDateOfBirth.value;
     const location = userLocation.value;
-    const education = userEducation.value;
+    const educationLevel = level.value;
 
     const addingData: Partial<User> = {
         firstName,
         lastName,
         dateOfBirth,
         location,
-        education
+        educationLevel
     }
     const isSuccess = userStore.addUserData(addingData);
     if (isSuccess) {
@@ -47,7 +60,7 @@ const addData = (e: Event) => {
     userLastName.value = '';
     userDateOfBirth.value = '';
     userLocation.value = '';
-    userEducation.value = '';
+    level.value = '';
 
 }
 
@@ -58,15 +71,29 @@ const loadUserData = (strSessionStorage: string) => {
     userLastName.value = userData.lastName || '';
     userDateOfBirth.value = userData.dateOfBirth || '';
     userLocation.value = userData.location || '';
-    userEducation.value = userData.education || '';
+    level.value = userData.educationLevel || '';
 }
 
-onMounted(() => {
+onMounted(async () => {
+    if (userStore.education[0]) {
+        userStore.education.forEach(level => {
+            options.value.push(level.name);
+        });
+    } else {
+        await userStore.getEducation();
+        userStore.education.forEach(level => {
+            options.value.push(level.name);
+        });
+    }
+});
+
+onBeforeMount(() => {
     const strSessionStorage = sessionStorage.getItem('userData');
     if (strSessionStorage !== null) {
         loadUserData(strSessionStorage);
     }
     emit('sendTitle', title);
+    userStore.setRouter(router);
 });
 </script>
 
@@ -100,10 +127,11 @@ onMounted(() => {
             <CustomInput id="location" type="text" v-model="userLocation" required />
             <label for="location">{{ t('Location') }}</label>
         </div>
-        <div class="education">
+        <!-- <div class="education">
             <CustomInput id="education" type="text" v-model="userEducation" required />
             <label for="education">{{ t('Education') }}</label>
-        </div>
+        </div> -->
+        <q-select v-model="level" :options="options" :label="t('Education')" class="education" />
         <div class="grow flex content-end">
             <CustomBtn type="submit">{{ t('Continue') }}</CustomBtn>
         </div>
@@ -111,7 +139,7 @@ onMounted(() => {
     <div class="w-full h-full absolute top-0 left-0 hover:cursor-pointer bg-black opacity-75"
         :class="{ 'hidden': !isVisible, 'block': isVisible }" @click="isVisible = !isVisible"></div>
     <div class="date-picker w-full text-center absolute duration-300" :class="{ 'visible': isVisible }">
-        <q-date v-model="userDateOfBirth" mask="YYYY-MM-DD" color="pink-4" class="w-full mb-3" />
+        <q-date v-model="userDateOfBirth" :locale="dateLocale" mask="YYYY-MM-DD" color="pink-4" class="w-full mb-3" />
         <CustomBtn type="submit" class="max-w-[200px]" @click="isVisible = !isVisible">{{ t('Select') }}</CustomBtn>
     </div>
 </template>
@@ -186,5 +214,40 @@ onMounted(() => {
         transform: translateY(-50%);
         opacity: 1;
     }
+}
+
+.education {
+    .q-field__inner {
+        padding: 0 14px;
+        background: #fff;
+        border-radius: 10px;
+
+        .q-field__label {
+            color: $text_primary;
+            font-size: 0.75rem;
+            font-weight: 300;
+        }
+    }
+}
+
+[id^="q-portal--dialog--"] {
+    .q-dialog--modal {
+        .q-field__inner {
+            background: none;
+        }
+
+        .q-field--filled .q-field__control {
+            background: none;
+
+            &::before {
+                background: none;
+            }
+        }
+
+        .q-item__label {
+            color: $text_primary;
+        }
+    }
+
 }
 </style>

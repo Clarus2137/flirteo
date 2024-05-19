@@ -35,7 +35,6 @@ const handleSubmit = async (e: Event) => {
         password: enteredPassword.value
     }
     const isSuccess = await userStore.authoriseUser(userAccount);
-    isLoading.value = false;
     if (isSuccess) {
         if (localStorage.getItem('isAuthorised') === null) {
             localStorage.setItem('isAuthorised', 'true');
@@ -44,19 +43,27 @@ const handleSubmit = async (e: Event) => {
             isError.value = !isError.value;
         }
         isAuth.value = !isError.value;
-        setTimeout(() => {
-            const isProfileCompleted = JSON.parse(sessionStorage.userData).firstName
-            if (isProfileCompleted !== null) {
-                emit('goToHome');
-            } else {
-                emit('goToComplete');
-            }
-        }, 300);
+        nextRoute();
         enteredEmail.value = '';
         enteredPassword.value = '';
     } else {
         isError.value = true;
     }
+}
+
+const nextRoute = async () => {
+    const isProfileCompleted = JSON.parse(sessionStorage.userData).firstName
+    if (isProfileCompleted !== null) {
+        setTimeout(() => {
+            emit('goToHome');
+        }, 300);
+    } else {
+        const isEducation = await userStore.getEducation();
+        if (isEducation) {
+            emit('goToComplete');
+        }
+    }
+    isLoading.value = false;
 }
 
 const resetPass = async () => {
@@ -103,8 +110,8 @@ const resetPass = async () => {
                     to="/registration">{{ t('Invalid.account') }}</router-link>
                 <p>{{ t('Check_Pass') }} <span
                         class="reset-link text-primary font-medium underline hover:cursor-pointer" @click="resetPass">{{
-                    t('Reset_Pass')
-                }}</span>
+                            t('Reset_Pass')
+                        }}</span>
                 </p>
             </div>
             <div class="mt-10 text-green font-medium text-center" v-if="isAuth">

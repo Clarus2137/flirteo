@@ -1,19 +1,25 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
+import { Router } from 'vue-router';
 
 
 const apiUrl = process.env.API_SERVER;
 const regUser = `${apiUrl}/api/users`;
 const authUser = `${apiUrl}/auth`;
 const apiUser = `${apiUrl}/api/users/me`;
+const apiEducation = `${apiUrl}/api/education_levels`;
 // const apiHobbies = `${apiUrl}/api/interests`;
 const apiResetPass = `${apiUrl}/api/reset-password/request`;
+const apiSetNewPass = `${apiUrl}/api/reset-password/change`;
 
 
 export const useUserStore = defineStore('user', {
     state: () => ({
         user: {} as Partial<User>,
-        lang: ''
+        education: [] as Education[],
+        lang: '',
+        passToken: '',
+        importedRouter: '' as any
     }),
 
     actions: {
@@ -53,6 +59,25 @@ export const useUserStore = defineStore('user', {
                     console.error('An unexpected error occurred', error);
                 }
                 return false;
+            }
+        },
+
+        async getEducation() {
+            const userToken = sessionStorage.getItem('userToken');
+            if (userToken !== null) {
+                try {
+                    const response = await axios.get(apiEducation, {
+                        headers: {
+                            'Authorization': `Bearer ${userToken}`,
+                            'Accept-Language': this.lang
+                        }
+                    });
+                    this.education = response.data;
+                    return true;
+                } catch (error) {
+                    console.log(error);
+                    return false;
+                }
             }
         },
 
@@ -166,6 +191,39 @@ export const useUserStore = defineStore('user', {
             } catch (error) {
                 return false;
             }
+        },
+
+        async setNewPassword(newPassword: string) {
+            const userToken = sessionStorage.getItem('userToken');
+            try {
+                const response = await axios.post(apiSetNewPass, {
+                    token: userToken,
+                    plainPassword: newPassword,
+                });
+                console.log('Pasword Reseted', response.data);
+                return true;
+            } catch (error) {
+                console.log('Password reset failed', error);
+                return false;
+            }
+        },
+
+        handleOpenURL(url: string) {
+            setTimeout(() => {
+                if (url.startsWith('flirteo://reset-password')) {
+                    const token = url.split('/').pop() as string;
+                    // const router = useRouter();
+                    this.importedRouter.push({ name: 'reset', params: { token } });
+                }
+            }, 0);
+        },
+
+        setRouter(router: Router) {
+            this.importedRouter = router;
+        },
+
+        setPassToken(token: string) {
+            this.passToken = token;
         }
 
         // async isUserExists() {

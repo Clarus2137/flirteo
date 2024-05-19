@@ -84,7 +84,7 @@ const routes: RouteRecordRaw[] = [
 
     {
         path: '/settings',
-        component: () => import('layouts/BaseLayout.vue'),
+        component: () => import('layouts/InfoLayout.vue'),
         children: [{ path: '', component: () => import('pages/SettingsPage.vue') }]
     },
 
@@ -98,6 +98,18 @@ const routes: RouteRecordRaw[] = [
         path: '/privacy',
         component: () => import('layouts/InfoLayout.vue'),
         children: [{ path: '', component: () => import('pages/PrivacyPage.vue') }]
+    },
+
+    {
+        path: '/about',
+        component: () => import('layouts/InfoLayout.vue'),
+        children: [{ path: '', component: () => import('pages/AboutPage.vue') }]
+    },
+
+    {
+        path: '/reset-password/:token',
+        component: () => import('layouts/InfoLayout.vue'),
+        children: [{ path: '', name: 'reset', component: () => import('pages/ResetPage.vue') }]
     }
 ];
 

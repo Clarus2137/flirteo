@@ -8,7 +8,7 @@ const { locale } = useI18n();
 
 const userStore = useUserStore();
 
-const emit = defineEmits(['goToPass']);
+const emit = defineEmits(['goToPass', 'goToAuthorization']);
 
 const isLoading = ref(false);
 const isLoadingLang = ref(false);
@@ -16,6 +16,9 @@ const isLoadingLang = ref(false);
 const isActive = ref(false);
 
 const isLang = ref(false);
+
+const isRequested = ref(false);
+const isRequestOk = ref(false);
 
 const toggleLang = () => {
     isLang.value = !isLang.value;
@@ -52,12 +55,25 @@ const toggleTheme = () => {
 }
 
 const changePass = async () => {
+    if (isRequested.value) { isRequested.value = false }
+    if (isRequestOk.value) { isRequestOk.value = false }
     isLoading.value = true;
     const userEmail = JSON.parse(sessionStorage.userData).email;
     const isSuccess = await userStore.resetPassword(userEmail);
+    isLoading.value = false;
     if (isSuccess) {
-        isLoading.value = false;
-        emit('goToPass');
+        isRequested.value = true;
+    } else {
+        isRequestOk.value = true;
+    }
+}
+
+const deleteAcc = async () => {
+    isLoading.value = true;
+    const isSuccess = await userStore.removeUser();
+    isLoading.value = false;
+    if (isSuccess) {
+        emit('goToAuthorization');
     }
 }
 
@@ -79,7 +95,8 @@ onBeforeMount(() => {
 
 
 <template>
-    <div class="settings flex flex-col gap-[3vw]">
+    <BackBtn />
+    <div class="settings grow flex flex-col gap-[3vw]">
         <h1 class="lexend-bold leading-normal text-center capitalize">{{ $t('Settings') }}</h1>
         <div class="grow flex flex-col justify-center gap-[30px]">
             <div class="flex items-center gap-[10px] settings__item">
@@ -110,9 +127,16 @@ onBeforeMount(() => {
                 </div>
             </div>
             <div class="flex items-center gap-[10px] settings__item">
-                <p class="settings__item-title">{{ $t('Pass') }}:</p>
-                <CustomBtn type="button" @click="changePass">{{ $t('Change') }}</CustomBtn>
+                <!-- <p class="settings__item-title">{{ $t('Pass') }}:</p> -->
+                <CustomBtn type="button" @click="changePass">{{ $t('Change_Pass') }}</CustomBtn>
+                <CustomBtn @click="deleteAcc">{{ $t('Delete_Acc') }}</CustomBtn>
                 <FormLoader v-if="isLoading" />
+                <p v-if="isRequested" class="text-center text-green">Your request has been sent successfully. Please,
+                    check
+                    your E-mail.</p>
+                <p v-if="isRequestOk" class="text-center text-red">Something goes wrong. Please, contact with us:
+                    <span class="text-gradient-primary lexend-bold">support@flirteo.eu</span>
+                </p>
             </div>
         </div>
     </div>

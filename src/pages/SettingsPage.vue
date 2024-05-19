@@ -5,5 +5,5 @@ import UserSettings from 'src/components/UserSettings.vue';
 
 
 <template>
-    <UserSettings @goToPass="$router.push('edit-password')" />
+    <UserSettings @goToPass="$router.push('edit-password')" @goToAuthorization="$router.push('/authorization')" />
 </template>

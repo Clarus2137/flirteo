@@ -38,9 +38,7 @@ const userAge = calculateAge(userStore.user.dateOfBirth!);
             class="home__photo photo flex justify-center items-center h-[75vw] max-h-[320px] mt-[-1vw] mx-[-3vw] gradient-primary rounded-b-3xl">
             <img src="./../assets/user-male.png" alt="User Male" class="h-[80%] max-h-[200px]"
                 v-if="userStore.user.gender === 'male'">
-            <img src="./../assets/user-female.png" alt="User Female" class="h-[80%] max-h-[200px]"
-                v-else-if="userStore.user.gender === 'female'">
-            <img src="./../assets/user-neutral.png" alt="User Neutral" class="h-[80%] max-h-[200px]" v-else>
+            <img src="./../assets/user-female.png" alt="User Female" class="h-[80%] max-h-[200px]" v-else>
         </div>
         <div class="home__user user grid grid-rows-[min-content_min-content_min-content] gap-y-5 lexend-bold text-lg">
             <p><span class="user__firstname">{{ userStore.user.firstName }}</span> <span class="user__lastname">{{

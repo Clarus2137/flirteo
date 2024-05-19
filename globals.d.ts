@@ -6,11 +6,15 @@ declare global {
         lastName: string,
         dateOfBirth: string,
         location: string,
-        education: string,
+        educationLevel: string,
         gender: string,
         interests: string[],
         roles: string[],
         token: string
+    }
+
+    interface Education {
+        name: string
     }
 
     interface BaseInterests {

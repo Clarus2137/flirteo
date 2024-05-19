@@ -36,7 +36,7 @@ const updateUserData = async () => {
 
 const setGender = () => {
     const gender = activeGender.value ? activeGender.value : 'Not specified';
-    const interests = <[]>([]);
+    const interests = <string[]>(['']);
     const isAdded = userStore.addUserData({ gender, interests });
     if (isAdded) {
         updateUserData();
@@ -55,6 +55,7 @@ onMounted(() => {
         loadUserData(strSessionStorage);
     }
     emit('sendTitle', title);
+    console.log(userStore.user);
 })
 </script>
 
@@ -94,10 +95,6 @@ onMounted(() => {
                     </svg>
                     <p class="mt-4 text-xl" :class="{ 'text-primary': activeGender === 'female' }">{{ t('Female') }}</p>
                 </div>
-            </div>
-            <div class="gender__item gender__other w-full p-8 rounded-2xl border border-solid border-inactive text-center hover:cursor-pointer"
-                :class="{ 'border-primary active': activeGender === 'other' }" @click="chooseGender('other')">
-                <p class="text-xl" :class="{ 'text-primary': activeGender === 'other' }">{{ t('Other') }}</p>
             </div>
         </div>
         <FormLoader :class="{ 'opacity-0': !isLoading }" />

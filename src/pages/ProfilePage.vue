@@ -6,6 +6,6 @@ import ProfileView from 'src/components/ProfileView.vue';
 
 <template>
     <div class="profile grid gap-y-3">
-        <ProfileView @goToAuthorization="$router.push('/authorization')" />
+        <ProfileView />
     </div>
 </template>
