@@ -42,7 +42,11 @@ const addData = (e: Event) => {
     const lastName = userLastName.value;
     const dateOfBirth = userDateOfBirth.value;
     const location = userLocation.value;
-    const educationLevel = level.value;
+
+    const chosenLevel = userStore.educationLevels.filter(lvl => lvl.name === level.value);
+    const educationLevel = `/api/education_levels/${chosenLevel[0].id}`;
+
+    userStore.userEducation = level.value;
 
     const addingData: Partial<User> = {
         firstName,
@@ -53,6 +57,7 @@ const addData = (e: Event) => {
     }
     const isSuccess = userStore.addUserData(addingData);
     if (isSuccess) {
+        // userStore.setEducationLevel(level.value);
         emit('goToGender');
     }
 
@@ -67,23 +72,32 @@ const addData = (e: Event) => {
 const loadUserData = (strSessionStorage: string) => {
     const userData: Partial<User> = JSON.parse(strSessionStorage); // Assuming currentUser is the property holding user data. Adjust according to your store structure.
     userStore.user = userData;
+    userStore.userEducation = userStore.user.educationLevel;
     userFirstName.value = userData.firstName || '';
     userLastName.value = userData.lastName || '';
     userDateOfBirth.value = userData.dateOfBirth || '';
     userLocation.value = userData.location || '';
-    level.value = userData.educationLevel || '';
+
+    if (userStore.user.educationLevel !== null) {
+        level.value = userStore.userEducation.name;
+    } else {
+        level.value = '';
+    }
+    console.log(userData);
 }
 
 onMounted(async () => {
-    if (userStore.education[0]) {
-        userStore.education.forEach(level => {
+    if (options.value[0]) {
+        userStore.educationLevels.forEach(level => {
             options.value.push(level.name);
         });
     } else {
         await userStore.getEducation();
-        userStore.education.forEach(level => {
+        console.log(userStore.educationLevels);
+        userStore.educationLevels.forEach(level => {
             options.value.push(level.name);
         });
+        console.log(options);
     }
 });
 
@@ -103,10 +117,9 @@ onBeforeMount(() => {
     <div class="details__photo photo grid justify-center">
         <div class="photo__img inline-block p-1.5 rounded-[50%] w-[100px] h-[100px]">
             <img src="./../assets/user-male.png" class="h-full mx-auto" alt="User Male"
-                v-if="userStore.user.gender === 'male'">
-            <img src="./../assets/user-female.png" class="h-full mx-auto" alt="User Female"
-                v-else-if="userStore.user.gender === 'female'">
-            <img src="./../assets/user-neutral.png" class="h-full mx-auto" alt="User Neutral" v-else>
+                v-if="userStore.user.gender !== 'female'">
+            <img src="./../assets/user-female.png" class="h-full mx-auto" alt="User Female" v-else>
+            <!-- <img src="./../assets/user-neutral.png" class="h-full mx-auto" alt="User Neutral" v-else> -->
         </div>
     </div>
     <form class="details__personal-data grow flex flex-col gap-y-[1.25vh]" @submit="addData">

@@ -42,7 +42,7 @@ onMounted(() => {
         </div>
         <div class="user__name lexend-bold text-lg">
             <p><span class="user__firstname">{{ userStore.user.firstName }}</span> <span class="user__lastname">{{
-                userStore.user.lastName }}</span>
+        userStore.user.lastName }}</span>
             </p>
         </div>
         <div class="user__email lexend-light text-secondary text-sm">

@@ -1,13 +1,16 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue';
 import { useUserStore } from 'src/stores/userStore';
 
 
 const userStore = useUserStore();
+const userEducation = ref('');
 
 const strUserData = sessionStorage.getItem('userData');
 if (strUserData !== null) {
     const userData: Partial<User> = JSON.parse(sessionStorage.userData);
     userStore.getStoreUserData(userData);
+    userStore.userEducation = userStore.user.educationLevel;
 } else {
     throw new Error('Item \'userData\' doesn\'t exist in sessionStorage');
 }
@@ -28,6 +31,11 @@ const calculateAge = (birthDateString: string): number => {
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const userAge = calculateAge(userStore.user.dateOfBirth!);
+
+onMounted(() => {
+    console.log(userStore.userEducation.name);
+    userEducation.value = userStore.userEducation.name;
+});
 </script>
 
 
@@ -37,19 +45,19 @@ const userAge = calculateAge(userStore.user.dateOfBirth!);
         <div
             class="home__photo photo flex justify-center items-center h-[75vw] max-h-[320px] mt-[-1vw] mx-[-3vw] gradient-primary rounded-b-3xl">
             <img src="./../assets/user-male.png" alt="User Male" class="h-[80%] max-h-[200px]"
-                v-if="userStore.user.gender === 'male'">
+                v-if="userStore.user.gender !== 'female'">
             <img src="./../assets/user-female.png" alt="User Female" class="h-[80%] max-h-[200px]" v-else>
         </div>
         <div class="home__user user grid grid-rows-[min-content_min-content_min-content] gap-y-5 lexend-bold text-lg">
             <p><span class="user__firstname">{{ userStore.user.firstName }}</span> <span class="user__lastname">{{
-                userStore.user.lastName }}</span>, {{ userAge }} {{ $t('Years') }}</p>
+                    userStore.user.lastName }}</span>, {{ userAge }} {{ $t('Years') }}</p>
             <div class="user__location">
                 <p class="lexend-bold">{{ $t('Location') }}</p>
                 <p class="lexend text-secondary text-sm">{{ userStore.user.location }}</p>
             </div>
             <div class="user__education">
                 <p class="lexend-bold">{{ $t('Education') }}</p>
-                <p class="lexend text-secondary text-sm">{{ userStore.user.education }}</p>
+                <p class="lexend text-secondary text-sm">{{ userEducation }}</p>
             </div>
             <!-- <div class="user__ihobbies hobbies" v-if="userStore.user.interests!.length > 0">
                 <p class="lexend-bold mb-2">{{ $t('Hobbies') }}</p>

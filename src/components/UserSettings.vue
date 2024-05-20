@@ -27,7 +27,8 @@ const toggleLang = () => {
     } else {
         locale.value = 'en';
     }
-
+    userStore.lang = locale.value;
+    userStore.getUserData();
     if (localStorage.getItem('flirteoLang') !== null) {
         localStorage.flirteoLang = locale.value;
     } else {

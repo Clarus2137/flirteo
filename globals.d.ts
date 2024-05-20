@@ -14,6 +14,8 @@ declare global {
     }
 
     interface Education {
+        id: number,
+        icon: string,
         name: string
     }
 

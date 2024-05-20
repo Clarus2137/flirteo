@@ -117,5 +117,9 @@ export default {
     },
     Yes: 'Yes',
     No: 'No',
-    No_I_will_continue: 'No, I will continue'
+    No_I_will_continue: 'No, I will continue',
+    Name: 'Name',
+    Version: 'Version',
+    Web_Site: 'Web Site',
+    Created: 'Created by'
 };

@@ -6,12 +6,13 @@ import { author, productName, version } from 'app/package.json';
 
 <template>
     <BackBtn />
-    <div class="aboutr">
-        <h1 class="text-center">About us</h1>
-        <p>Name: {{ productName }}</p>
-        <p>Version: {{ version }}</p>
-        <p>Web Site: <a href="https://flirteo.eu" class="lexend-bold text-gradient-primary">flirteo.eu</a></p>
-        <p>Created by: <a class="text-gradient-primary lexend-bold" href="https://web-systems.pl">{{ author }}</a></p>
+    <div class="about">
+        <h1 class="text-center">{{ $t('About') }}</h1>
+        <p>{{ $t('Name') }}: {{ productName }}</p>
+        <p>{{ $t('Version') }}: {{ version }}</p>
+        <p>{{ $t('Web_Site') }}: <a href="https://flirteo.eu" class="lexend-bold text-gradient-primary">flirteo.eu</a></p>
+        <p>{{ $t('Created') }}: <a class="text-gradient-primary lexend-bold" href="https://web-systems.pl">{{ author
+                }}</a></p>
     </div>
 </template>
 

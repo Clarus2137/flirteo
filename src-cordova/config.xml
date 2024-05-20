@@ -13,7 +13,7 @@
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     <preference name="AndroidInsecureFileModeEnabled" value="true" />
     <plugin name="cordova-plugin-customurlscheme" spec="^5.0.1">
-        <variable name="URL_SCHEME" value="myapp" />
+        <variable name="URL_SCHEME" value="flirteo" />
     </plugin>
     <platform name="android">
         <preference name="AndroidWindowSplashScreenAnimatedIcon" value="res/screen/android/splash.xml" />

@@ -16,7 +16,8 @@ const apiSetNewPass = `${apiUrl}/api/reset-password/change`;
 export const useUserStore = defineStore('user', {
     state: () => ({
         user: {} as Partial<User>,
-        education: [] as Education[],
+        educationLevels: [] as Education[],
+        userEducation: '' as any,
         lang: '',
         passToken: '',
         importedRouter: '' as any
@@ -28,7 +29,7 @@ export const useUserStore = defineStore('user', {
                 const response = await axios.post(regUser, newUser);
 
                 // With Axios, checking response.ok is not needed, axios will throw an error if the status is not 2xx
-                console.log('Registration successful', response.data); // Logging the response data
+                // console.log('Registration successful', response.data); // Logging the response data
                 return true;
             } catch (error) {
                 if (axios.isAxiosError(error)) {
@@ -44,11 +45,19 @@ export const useUserStore = defineStore('user', {
 
         async authoriseUser(userAccount: Partial<User>): Promise<boolean> {
             try {
-                const response = await axios.post(authUser, userAccount);
-                console.log('Authorization successful', response.data);
+                const response = await axios.post(authUser, userAccount, {
+                    headers: {
+                        'Accept-Language': this.lang
+                    }
+                });
                 sessionStorage.setItem('userToken', response.data.token);
                 sessionStorage.setItem('userData', JSON.stringify(response.data.user));
                 this.user = response.data.user;
+                console.log(this.user);
+                if (response.data.user.educationLevel !== null) {
+                    sessionStorage.setItem('userData', JSON.stringify(this.user));
+                    this.userEducation = this.user.educationLevel;
+                }
                 return true;
             } catch (error) {
                 if (axios.isAxiosError(error)) {
@@ -72,7 +81,7 @@ export const useUserStore = defineStore('user', {
                             'Accept-Language': this.lang
                         }
                     });
-                    this.education = response.data;
+                    this.educationLevels = response.data;
                     return true;
                 } catch (error) {
                     console.log(error);
@@ -80,6 +89,20 @@ export const useUserStore = defineStore('user', {
                 }
             }
         },
+
+        // async setEducationLevel(userEducation: string) {
+        //     try {
+        //         const strUserData = sessionStorage.getItem('userData');
+        //         if (strUserData === null) {
+        //             throw new Error('User\'s data doesn\'t exist');
+        //         } else {
+        //             this.userEducation = userEducation;
+        //         }
+        //         return true;
+        //     } catch (error) {
+        //         return false;
+        //     }
+        // },
 
         // async getHobbies() {
         //     const userToken = sessionStorage.getItem('userToken');
@@ -143,24 +166,45 @@ export const useUserStore = defineStore('user', {
                 const userToken = sessionStorage.getItem('userToken');
                 const response = await axios.patch(apiUser, updatedUser, {
                     headers: {
-                        'Authorization': `Bearer ${userToken}`
+                        'Authorization': `Bearer ${userToken}`,
+                        'Accept-Language': this.lang
                     }
                 });
                 console.log('User updating successful', response.data);
+                this.user = { ...this.user, ...response.data };
+                sessionStorage.setItem('userData', JSON.stringify(this.user));
+                this.userEducation = this.user.educationLevel;
                 return true;
             } catch (error) {
-                // if (axios.isAxiosError(error)) {
-                //     console.error('User updating failed', error);
-                // } else {
-                //     console.error('An unexpected error occurred', error);
-                // }
+                if (axios.isAxiosError(error)) {
+                    console.error('User updating failed', error);
+                } else {
+                    console.error('An unexpected error occurred', error);
+                }
                 return false;
             }
         },
 
-        async removeUser() {
+        async getUserData() {
+            const userToken = sessionStorage.getItem('userToken');
             try {
-                const userToken = sessionStorage.getItem('userToken');
+                const response = await axios.get(apiUser, {
+                    headers: {
+                        'Authorization': `Bearer ${userToken}`,
+                        'Accept-Language': this.lang
+                    }
+                });
+                this.user = { ...this.user, ...response.data };
+                sessionStorage.setItem('userData', JSON.stringify(this.user));
+                this.userEducation = this.user.educationLevel;
+            } catch (error) {
+
+            }
+        },
+
+        async removeUser() {
+            const userToken = sessionStorage.getItem('userToken');
+            try {
                 const response = await axios.delete(apiUser, {
                     headers: {
                         'Authorization': `Bearer ${userToken}`
@@ -181,11 +225,17 @@ export const useUserStore = defineStore('user', {
         },
 
         async resetPassword(email: string) {
+            const userToken = sessionStorage.getItem('userToken');
             try {
                 const userEmail = {
                     email: email
                 }
-                const response = await axios.post(apiResetPass, userEmail);
+                const response = await axios.post(apiResetPass, userEmail, {
+                    headers: {
+                        'Authorization': `Bearer ${userToken}`,
+                        'Accept-Language': this.lang
+                    }
+                });
                 console.log(response.data);
                 return true;
             } catch (error) {
@@ -212,7 +262,6 @@ export const useUserStore = defineStore('user', {
             setTimeout(() => {
                 if (url.startsWith('flirteo://reset-password')) {
                     const token = url.split('/').pop() as string;
-                    // const router = useRouter();
                     this.importedRouter.push({ name: 'reset', params: { token } });
                 }
             }, 0);
