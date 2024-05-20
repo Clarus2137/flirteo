@@ -44,6 +44,7 @@ export const useUserStore = defineStore('user', {
         },
 
         async authoriseUser(userAccount: Partial<User>): Promise<boolean> {
+            console.log(this.lang);
             try {
                 const response = await axios.post(authUser, userAccount, {
                     headers: {
@@ -53,11 +54,11 @@ export const useUserStore = defineStore('user', {
                 sessionStorage.setItem('userToken', response.data.token);
                 sessionStorage.setItem('userData', JSON.stringify(response.data.user));
                 this.user = response.data.user;
-                console.log(this.user);
-                if (response.data.user.educationLevel !== null) {
-                    sessionStorage.setItem('userData', JSON.stringify(this.user));
-                    this.userEducation = this.user.educationLevel;
-                }
+                console.log(JSON.parse(sessionStorage.userData));
+                // if (response.data.user.educationLevel !== null) {
+                //     sessionStorage.setItem('userData', JSON.stringify(this.user));
+                //     this.userEducation = this.user.educationLevel;
+                // }
                 return true;
             } catch (error) {
                 if (axios.isAxiosError(error)) {

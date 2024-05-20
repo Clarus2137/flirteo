@@ -4,7 +4,7 @@ import { useUserStore } from 'src/stores/userStore';
 
 
 const userStore = useUserStore();
-const userEducation = ref('');
+const userEducation = ref<string | undefined>('');
 
 const strUserData = sessionStorage.getItem('userData');
 if (strUserData !== null) {
@@ -33,8 +33,8 @@ const calculateAge = (birthDateString: string): number => {
 const userAge = calculateAge(userStore.user.dateOfBirth!);
 
 onMounted(() => {
-    console.log(userStore.userEducation.name);
-    userEducation.value = userStore.userEducation.name;
+    userEducation.value = userStore.user.educationLevel;
+    console.log(userStore.user.firstName);
 });
 </script>
 
@@ -50,7 +50,7 @@ onMounted(() => {
         </div>
         <div class="home__user user grid grid-rows-[min-content_min-content_min-content] gap-y-5 lexend-bold text-lg">
             <p><span class="user__firstname">{{ userStore.user.firstName }}</span> <span class="user__lastname">{{
-                    userStore.user.lastName }}</span>, {{ userAge }} {{ $t('Years') }}</p>
+                userStore.user.lastName }}</span>, {{ userAge }} {{ $t('Years') }}</p>
             <div class="user__location">
                 <p class="lexend-bold">{{ $t('Location') }}</p>
                 <p class="lexend text-secondary text-sm">{{ userStore.user.location }}</p>
