@@ -3,6 +3,7 @@ import { ref, onBeforeMount, onMounted, onBeforeUnmount } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useUserStore } from 'src/stores/userStore';
 import { useChatStore } from 'src/stores/chatStore';
+import SplashScreen from 'src/components/SplashScreen.vue';
 
 
 interface CordovaNavigator extends Navigator {
@@ -11,6 +12,8 @@ interface CordovaNavigator extends Navigator {
     };
 }
 
+
+const appLoading = ref(true);
 
 const onBackButton = (e: Event) => {
     e.preventDefault();
@@ -36,6 +39,9 @@ onBeforeMount(() => {
 
 onMounted(() => {
     document.addEventListener('backbutton', onBackButton, false);
+    setTimeout(() => {
+        appLoading.value = false;
+    }, 3000);
 });
 
 onBeforeUnmount(() => {
@@ -46,5 +52,6 @@ onBeforeUnmount(() => {
 
 
 <template>
-    <router-view />
+    <router-view v-if="!appLoading" />
+    <SplashScreen v-else />
 </template>

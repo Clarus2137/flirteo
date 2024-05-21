@@ -29,12 +29,12 @@ const userStore = useUserStore();
 const handleSubmit = async (e: Event) => {
     e.preventDefault(); // Prevent form from submitting by default
     isLoading.value = true;
-
     const userAccount = {
         email: enteredEmail.value,
         password: enteredPassword.value
     }
     const isSuccess = await userStore.authoriseUser(userAccount);
+    isLoading.value = false;
     if (isSuccess) {
         if (localStorage.getItem('isAuthorised') === null) {
             localStorage.setItem('isAuthorised', 'true');
@@ -43,7 +43,9 @@ const handleSubmit = async (e: Event) => {
             isError.value = !isError.value;
         }
         isAuth.value = !isError.value;
-        nextRoute();
+        setTimeout(() => {
+            nextRoute();
+        }, 300);
         enteredEmail.value = '';
         enteredPassword.value = '';
     } else {
@@ -63,7 +65,6 @@ const nextRoute = async () => {
             emit('goToComplete');
         }
     }
-    isLoading.value = false;
 }
 
 const resetPass = async () => {
@@ -110,8 +111,8 @@ const resetPass = async () => {
                     to="/registration">{{ t('Invalid.account') }}</router-link>
                 <p>{{ t('Check_Pass') }} <span
                         class="reset-link text-primary font-medium underline hover:cursor-pointer" @click="resetPass">{{
-                            t('Reset_Pass')
-                        }}</span>
+                    t('Reset_Pass')
+                }}</span>
                 </p>
             </div>
             <div class="mt-10 text-green font-medium text-center" v-if="isAuth">

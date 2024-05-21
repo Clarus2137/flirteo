@@ -15,7 +15,7 @@ const title: PageTitle = {
 
 const userStore = useUserStore();
 
-const activeGender = ref<string | null>(null);
+const activeGender = ref('');
 
 const isLoading = ref(false);
 
@@ -35,7 +35,7 @@ const updateUserData = async () => {
 }
 
 const setGender = () => {
-    const gender = activeGender.value ? activeGender.value : 'Not specified';
+    const gender = activeGender.value;
     const interests = <string[]>(['']);
     const isAdded = userStore.addUserData({ gender, interests });
     if (isAdded) {
@@ -45,7 +45,6 @@ const setGender = () => {
 
 const loadUserData = (strSessionStorage: string) => {
     const userData: Partial<User> = JSON.parse(strSessionStorage); // Assuming currentUser is the property holding user data. Adjust according to your store structure.
-    userStore.user = userData;
     activeGender.value = userData.gender || '';
 }
 
@@ -55,7 +54,6 @@ onMounted(() => {
         loadUserData(strSessionStorage);
     }
     emit('sendTitle', title);
-    console.log(userStore.user);
 })
 </script>
 

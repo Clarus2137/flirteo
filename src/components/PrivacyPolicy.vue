@@ -8,40 +8,92 @@
     <BackBtn />
     <div class="privacy">
         <h1 class="lexend-bold text-lg text-center leading-normal mb-5">{{ $t('Terms_and_Privacy.Privacy') }}</h1>
-        <p class="lexend-bold text-lg mt-5 mb-3">1. Wprowadzenie</p>
-        <p class="lexend text-secondary text-base leading-normal mb-1.5">1.1. Polityka prywatności opisuje zasady
-            przetwarzania informacji o użytkownikach, w tym danych
-            osobowych, przez Serwis Flirteo dostępny pod adresem <a class="text-gradient-primary"
-                href="http://www.flirteo.eu/">www.flirteo.eu</a>.
+        <p class="lexend-bold text-lg mt-5 mb-3">1. Informacje ogólne</p>
+        <p class="lexend mb-1.5">Niniejsza Polityka Prywatności określa zasady
+            przetwarzania i ochrony danych osobowych użytkowników aplikacji mobilnej Flirteo, dostępnej pod adresem
+            <a href="https://www.flirteo.eu" class="text-gradient-primary lexend-bold">www.flirteo.eu</a> (dalej
+            "Aplikacja").
         </p>
-        <p class="lexend text-secondary text-base leading-normal mb-1.5">1.2. Administratorem danych jest [Nazwa Firmy],
-            zarejestrowana pod adresem [Adres Firmy].</p>
-        <p class="lexend-bold text-lg mt-5 mb-3">2. Zakres zbieranych danych</p>
-        <p class="lexend text-secondary text-base leading-normal mb-1.5">2.1. Serwis zbiera informacje dobrowolnie
-            podane przez użytkowników w procesie rejestracji oraz dane
-            zbierane automatycznie podczas ich korzystania z Serwisu, takie jak adres IP, rodzaj przeglądarki, czas
-            spędzony na stronie oraz strony, które odwiedzili.</p>
-        <p class="lexend-bold text-lg mt-5 mb-3">3. Cele przetwarzania danych</p>
-        <p class="lexend text-secondary text-base leading-normal mb-1.5">3.1. Dane zbierane podczas rejestracji
-            wykorzystywane są do umożliwienia użytkownikom korzystania z
-            pełnej funkcjonalności Serwisu.</p>
-        <p class="lexend text-secondary text-base leading-normal mb-1.5">3.2. Dane zbierane automatycznie służą do
-            analizy zachowań użytkowników, usprawnienia działania Serwisu
-            oraz lepszego dopasowania treści i reklam do ich preferencji.</p>
-        <p class="lexend-bold text-lg mt-5 mb-3">4. Bezpieczeństwo danych</p>
-        <p class="lexend text-secondary text-base leading-normal mb-1.5">4.1. Serwis stosuje różnorodne środki
-            techniczne i organizacyjne w celu zapewnienia bezpieczeństwa
-            przetwarzanych danych, zgodnie z obowiązującymi przepisami o ochronie danych osobowych.</p>
-        <p class="lexend-bold text-lg mt-5 mb-3">5. Prawa użytkowników</p>
-        <p class="lexend text-secondary text-base leading-normal mb-1.5">5.1. Użytkownik ma prawo do dostępu do swoich
-            danych, ich sprostowania, usunięcia, a także prawo do
-            żądania ograniczenia przetwarzania.</p>
-        <p class="lexend text-secondary text-base leading-normal mb-1.5">5.2. Użytkownik ma prawo do wniesienia
-            sprzeciwu przeciwko przetwarzaniu jego danych oraz prawo do
-            przenoszenia danych.</p>
-        <p class="lexend-bold text-lg mt-5 mb-3">6. Zmiany w polityce prywatności</p>
-        <p class="lexend text-secondary text-base leading-normal mb-1.5">6.1. [Nazwa Firmy] zastrzega sobie prawo do
-            dokonywania zmian w polityce prywatności. Każda zmiana będzie
-            publikowana na stronie Serwisu oraz użytkownicy zostaną o niej poinformowani.</p>
+        <p class="lexend-bold text-lg mt-5 mb-3">2. Administrator Danych Osobowych</p>
+        <p class="lexend mb-1.5">Administratorem Twoich danych osobowych jest
+            Web Systems, z siedzibą przy Ul. Gen. Jarosława Dąbrowskiego 249/lokal 23
+            95-020 Łódź, NIP: 7292462454 (dalej "Administrator").</p>
+        <p class="lexend-bold text-lg mt-5 mb-3">3. Zakres zbieranych danych</p>
+        <p class="lexend mb-1.5">W ramach korzystania z Aplikacji, możemy
+            zbierać następujące dane osobowe:</p>
+        <ul class="text-[#6b6466] text-base">
+            <li>Imię i nazwisko</li>
+            <li>Adres e-mail</li>
+            <li>Numer telefonu</li>
+            <li>Wiek</li>
+            <li>Płeć</li>
+            <li>Wyksztalcenie</li>
+            <li>Dane lokalizacyjne</li>
+            <li>Informacje o urządzeniu</li>
+            <li>Historia aktywności w Aplikacji</li>
+        </ul>
+        <p class="lexend-bold text-lg mt-5 mb-3">4. Cel przetwarzania danych</p>
+        <p class="lexend mb-1.5">Dane osobowe zbierane są w celu:</p>
+        <ul class="text-[#6b6466] text-base">
+            <li>Świadczenia usług oferowanych przez Aplikację</li>
+            <li>Umożliwienia kontaktu między użytkownikami</li>
+            <li>Personalizacji usług i dostosowania oferty do preferencji użytkowników</li>
+            <li>Prowadzenia działań marketingowych i promocyjnych</li>
+            <li>Prowadzenia analiz statystycznych</li>
+            <li>Zapewniania bezpieczeństwa usług</li>
+        </ul>
+        <p class="lexend-bold text-lg mt-5 mb-3">5. Podstawa prawna przetwarzania danych</p>
+        <p class="lexend mb-1.5">Podstawą prawną przetwarzania danych osobowych
+            jest:</p>
+        <ul class="text-[#6b6466] text-base">
+            <li>Zgoda użytkownika (art. 6 ust. 1 lit. a RODO)</li>
+            <li>Realizacja umowy (art. 6 ust. 1 lit. b RODO)</li>
+            <li>Prawnie uzasadniony interes Administratora (art. 6 ust. 1 lit. f RODO)</li>
+        </ul>
+        <p class="lexend-bold text-lg mt-5 mb-3">6. Odbiorcy danych</p>
+        <p class="lexend mb-1.5">Dane osobowe mogą być udostępniane następującym
+            odbiorcom:</p>
+        <ul class="text-[#6b6466] text-base">
+            <li>Podmiotom przetwarzającym dane na zlecenie Administratora (np. dostawcy usług IT)</li>
+            <li>Organom ścigania i innym organom państwowym, na mocy obowiązujących przepisów prawa</li>
+        </ul>
+        <p class="lexend-bold text-lg mt-5 mb-3">7. Prawa użytkowników</p>
+        <p class="lexend mb-1.5">Użytkownikom przysługują następujące prawa:</p>
+        <ul class="text-[#6b6466] text-base">
+            <li>Prawo dostępu do danych</li>
+            <li>Prawo do sprostowania danych</li>
+            <li>Prawo do usunięcia danych</li>
+            <li>Prawo do ograniczenia przetwarzania</li>
+            <li>Prawo do przenoszenia danych</li>
+            <li>Prawo do wniesienia sprzeciwu wobec przetwarzania danych</li>
+            <li>Prawo do wycofania zgody na przetwarzanie danych</li>
+        </ul>
+        <p class="lexend-bold text-lg mt-5 mb-3">8. Okres przechowywania danych</p>
+        <p class="lexend ">Dane osobowe będą przechowywane przez okres
+            niezbędny do realizacji celów, dla których zostały zebrane, a także zgodnie z obowiązującymi przepisami
+            prawa.</p>
+        <p class="lexend-bold text-lg mt-5 mb-3">9. Środki bezpieczeństwa</p>
+        <p class="lexend mb-1.5">Administrator stosuje odpowiednie środki
+            techniczne i organizacyjne w celu zapewnienia ochrony danych osobowych przed ich przypadkowym lub niezgodnym
+            z prawem zniszczeniem, utratą, zmianą, nieuprawnionym ujawnieniem lub dostępem.</p>
+        <p class="lexend-bold text-lg mt-5 mb-3">10. Zmiany w Polityce Prywatności</p>
+        <p class="lexend mb-1.5">Administrator zastrzega sobie prawo do
+            wprowadzania zmian w niniejszej Polityce Prywatności. Wszelkie zmiany będą publikowane na stronie
+            internetowej Aplikacji i wchodzą w życie z dniem ich publikacji.</p>
+        <p class="lexend-bold text-lg mt-5 mb-3">11. Kontakt</p>
+        <p class="lexend mb-1.5">W razie jakichkolwiek pytań lub wątpliwości
+            dotyczących niniejszej Polityki Prywatności, prosimy o kontakt pod adresem e-mail: [adres e-mail].</p>
+        <hr class="my-8">
+        <p class="lexend mb-1.5">Niniejsza Polityka Prywatności obowiązuje od
+            dnia [data].</p>
     </div>
 </template>
+
+
+
+<style scoped lang="scss">
+ul {
+    list-style: disc;
+    padding-left: 20px;
+}
+</style>

@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { ref, onBeforeMount } from 'vue';
 import { useUserStore } from 'src/stores/userStore';
+import { useChatStore } from 'src/stores/chatStore';
 import { useI18n } from 'vue-i18n';
 
 
 const { locale } = useI18n();
 
 const userStore = useUserStore();
+const chatStore = useChatStore();
 
 const emit = defineEmits(['goToPass', 'goToAuthorization']);
 
@@ -28,6 +30,7 @@ const toggleLang = () => {
         locale.value = 'en';
     }
     userStore.lang = locale.value;
+    chatStore.lang = locale.value;
     userStore.getUserData();
     if (localStorage.getItem('flirteoLang') !== null) {
         localStorage.flirteoLang = locale.value;

@@ -36,8 +36,7 @@ const dateLocale = {
 const userStore = useUserStore();
 const router = useRouter();
 
-const addData = (e: Event) => {
-    e.preventDefault();
+const addData = () => {
     const firstName = userFirstName.value;
     const lastName = userLastName.value;
     const dateOfBirth = userDateOfBirth.value;
@@ -45,7 +44,6 @@ const addData = (e: Event) => {
 
     const chosenLevel = userStore.educationLevels.filter(lvl => lvl.name === level.value);
     const educationLevel = `/api/education_levels/${chosenLevel[0].id}`;
-
     userStore.userEducation = level.value;
 
     const addingData: Partial<User> = {
@@ -83,22 +81,13 @@ const loadUserData = (strSessionStorage: string) => {
     } else {
         level.value = '';
     }
-    console.log(userData);
 }
 
 onMounted(async () => {
-    if (options.value[0]) {
-        userStore.educationLevels.forEach(level => {
-            options.value.push(level.name);
-        });
-    } else {
-        await userStore.getEducation();
-        console.log(userStore.educationLevels);
-        userStore.educationLevels.forEach(level => {
-            options.value.push(level.name);
-        });
-        console.log(options);
-    }
+    await userStore.getEducation();
+    userStore.educationLevels.forEach(level => {
+        options.value.push(level.name);
+    });
 });
 
 onBeforeMount(() => {
@@ -122,7 +111,7 @@ onBeforeMount(() => {
             <!-- <img src="./../assets/user-neutral.png" class="h-full mx-auto" alt="User Neutral" v-else> -->
         </div>
     </div>
-    <form class="details__personal-data grow flex flex-col gap-y-[1.25vh]" @submit="addData">
+    <form class="details__personal-data grow flex flex-col gap-y-[1.25vh]" @submit.prevent="addData">
         <div class="firstName">
             <CustomInput id="firstName" type="text" v-model="userFirstName" required />
             <label for="firstName">{{ t('First_Name') }}</label>
@@ -144,9 +133,9 @@ onBeforeMount(() => {
             <CustomInput id="education" type="text" v-model="userEducation" required />
             <label for="education">{{ t('Education') }}</label>
         </div> -->
-        <q-select v-model="level" :options="options" :label="t('Education')" class="education" />
+        <q-select v-model="level" :options="options" :label="t('Education')" required class="education" />
         <div class="grow flex content-end">
-            <CustomBtn type="submit">{{ t('Continue') }}</CustomBtn>
+            <CustomBtn :disabled="level === ''" type="submit">{{ t('Continue') }}</CustomBtn>
         </div>
     </form>
     <div class="w-full h-full absolute top-0 left-0 hover:cursor-pointer bg-black opacity-75"

@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { ref, onBeforeMount } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useUserStore } from 'src/stores/userStore';
+import { useChatStore } from 'src/stores/chatStore';
 
+
+const userStore = useUserStore();
+const chatStore = useChatStore();
 
 const { locale } = useI18n();
 
@@ -11,10 +16,12 @@ const isActive = ref(false);
 const toggleLang = () => {
     isLang.value = !isLang.value;
     if (isLang.value) {
-        locale.value = 'pl'
+        locale.value = 'pl';
     } else {
         locale.value = 'en';
     }
+    userStore.lang = locale.value;
+    chatStore.lang = locale.value;
 
     if (localStorage.getItem('flirteoLang') !== null) {
         localStorage.flirteoLang = locale.value;

@@ -42,6 +42,8 @@ export const useChatStore = defineStore('chat', {
             }
         },
 
+
+
         async getResponseTypes() {
             try {
                 const userToken = sessionStorage.getItem('userToken');
@@ -63,6 +65,8 @@ export const useChatStore = defineStore('chat', {
             }
         },
 
+
+
         getSessionOptions(options: Partial<Session>, image: string) {
             try {
                 this.session = { ...this.session, ...options };
@@ -78,6 +82,8 @@ export const useChatStore = defineStore('chat', {
             }
         },
 
+
+
         async createSession(message: string) {
             this.session = {
                 ...this.session,
@@ -86,6 +92,7 @@ export const useChatStore = defineStore('chat', {
                     attachment: this.image
                 }]
             }
+            console.log(this.session);
             const userToken = sessionStorage.getItem('userToken');
             try {
                 const response = await axios.post(apiSession, this.session, {
@@ -109,6 +116,8 @@ export const useChatStore = defineStore('chat', {
                 return false;
             }
         },
+
+
 
         async sendMessage(message: string) {
             const newMessage = {
@@ -146,6 +155,8 @@ export const useChatStore = defineStore('chat', {
                 return false;
             }
         },
+
+
 
         clearSession() {
             this.messages = [];
