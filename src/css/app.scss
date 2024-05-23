@@ -19,6 +19,7 @@ body {
 body {
     padding-top: env(safe-area-inset-top);
     color: $text_primary;
+    transition: 0.3s;
 
     &.dark-mode {
         background: $text_primary;

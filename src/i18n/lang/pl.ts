@@ -93,7 +93,7 @@ export default {
     Required_field: 'Pole wymagane',
     Style: 'Styl',
     Style_hint: 'Jakiego rodzaju rozmowy potrzebujesz?',
-    Finish: 'Zakończ',
+    Finish: 'Dalej',
     Me: 'Ja',
     Assistant: 'Asystent',
     Lang: 'Język',
@@ -121,5 +121,11 @@ export default {
     Name: 'Nazwa',
     Version: 'Wersja',
     Web_Site: 'Strona internetowa',
-    Created: 'Stworzono przez'
+    Created: 'Stworzono przez',
+    Request: {
+        success: 'Twoje zgłoszenie zostało wysłane pomyślnie. Proszę, sprawdź swoją pocztę e-mail.',
+        failed: 'Coś poszło nie tak. Proszę, skontaktuj się z nami:',
+        confirm: 'Jesteś pewny?'
+    },
+    Loading: 'Ładowanie danych'
 };

@@ -7,7 +7,7 @@ import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
-const emit = defineEmits(['goToGender', 'sendTitle']);
+const emit = defineEmits(['goToGender', 'sendTitle', 'showPage']);
 
 const title: PageTitle = {
     title: t('Your_Info.title'),
@@ -83,13 +83,6 @@ const loadUserData = (strSessionStorage: string) => {
     }
 }
 
-onMounted(async () => {
-    await userStore.getEducation();
-    userStore.educationLevels.forEach(level => {
-        options.value.push(level.name);
-    });
-});
-
 onBeforeMount(() => {
     const strSessionStorage = sessionStorage.getItem('userData');
     if (strSessionStorage !== null) {
@@ -97,6 +90,15 @@ onBeforeMount(() => {
     }
     emit('sendTitle', title);
     userStore.setRouter(router);
+});
+
+onMounted(async () => {
+    await userStore.getEducation();
+    userStore.educationLevels.forEach(level => {
+        options.value.push(level.name);
+    });
+
+    emit('showPage');
 });
 </script>
 

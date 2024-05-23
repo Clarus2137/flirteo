@@ -104,7 +104,6 @@ const endSession = () => {
 onBeforeMount(() => {
     if (chatStore.session.messages && chatStore.session.messages.length > 0 && !isSessionStarted.value) {
         isSessionStarted.value = true;
-        console.log(chatStore.session);
         pageMessages.value = [...chatStore.session.messages];
     }
 });
@@ -134,10 +133,10 @@ onMounted(() => {
             id="messages">
             <div class="messages__item" v-for="item in pageMessages" :key="item.id">
                 <q-chat-message :name="$t('Me')" :text="[item.content]" sent />
-                <q-chat-message :name="$t('Assistant')" bg-color="primary" text-color="white" v-if="!item.response">
+                <q-chat-message name="Flirteo AI" bg-color="primary" text-color="white" v-if="!item.response">
                     <q-spinner-dots size="2rem" />
                 </q-chat-message>
-                <q-chat-message :name="$t('Assistant')" :text="[item.response]" bg-color="primary" text-color="white"
+                <q-chat-message name="Flirteo AI" :text="[item.response]" bg-color="primary" text-color="white"
                     v-else />
             </div>
         </div>

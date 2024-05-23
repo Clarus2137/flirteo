@@ -1,5 +1,5 @@
 export default {
-    ChooseLang: 'Choose the language',
+    ChooseLang: 'Choose language',
     Next: 'Next',
     Get_started: 'Get started',
     Slide_first: {
@@ -121,5 +121,11 @@ export default {
     Name: 'Name',
     Version: 'Version',
     Web_Site: 'Web Site',
-    Created: 'Created by'
+    Created: 'Created by',
+    Request: {
+        success: 'Your request has been sent successfully. Please, check your E-mail.',
+        failed: 'Something goes wrong. Please, contact with us:',
+        confirm: 'Are you sure?'
+    },
+    Loading: 'Loading data'
 };

@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useUserStore } from 'src/stores/userStore';
 
 
 const userStore = useUserStore();
+const endings = ref(false);
 
 const strUserData = sessionStorage.getItem('userData');
 if (strUserData !== null) {
@@ -31,7 +32,18 @@ const calculateAge = (birthDateString: string): number => {
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const userAge = calculateAge(userStore.user.dateOfBirth!);
 
+const defineEnding = () => {
+    const lastChar = userAge.toString()[userAge.toString().length - 1];
+    if (lastChar === '2' || lastChar === '3' || lastChar === '4') {
+        endings.value = true;
+    }
+}
+
 onMounted(() => {
+    if (localStorage.getItem('flirteoLang') === 'pl') {
+        defineEnding();
+    }
+
     userStore.userEducation = userStore.user.educationLevel;
 });
 </script>
@@ -48,7 +60,8 @@ onMounted(() => {
         </div>
         <div class="home__user user grid grid-rows-[min-content_min-content_min-content] gap-y-5 lexend-bold text-lg">
             <p><span class="user__firstname">{{ userStore.user.firstName }}</span> <span class="user__lastname">{{
-                    userStore.user.lastName }}</span>, {{ userAge }} {{ $t('Years') }}</p>
+                    userStore.user.lastName }}</span>, {{ userAge }} {{ $t('Years') }}<span
+                    v-if="endings === true">a</span></p>
             <div class="user__location">
                 <p class="lexend-bold">{{ $t('Location') }}</p>
                 <p class="lexend text-secondary text-sm">{{ userStore.user.location }}</p>

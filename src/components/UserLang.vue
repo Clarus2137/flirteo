@@ -52,12 +52,12 @@ onBeforeMount(() => {
         <p class="text-h5 text-center">{{ $t('ChooseLang') }}</p>
 
         <div class="lang-switcher flex justify-center items-start gap-[5vw]">
-            <div class="p-3 rounded-[10px] hover:cursor-pointer"
+            <div class="w-[2.5rem] p-2 rounded-[10px] text-center hover:cursor-pointer"
                 :class="{ 'gradient-primary border-transparent text-white': !isLang, 'item-shadow': isLang }"
                 @click="toggleLang">
                 En
             </div>
-            <div class="p-3 rounded-[10px] hover:cursor-pointer"
+            <div class="w-[2.5rem] p-2 rounded-[10px] text-center hover:cursor-pointer"
                 :class="{ 'gradient-primary border-transparent text-white': isLang, 'item-shadow': !isLang }"
                 @click="toggleLang">
                 Pl

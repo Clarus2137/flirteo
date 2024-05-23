@@ -22,7 +22,11 @@ const isLang = ref(false);
 const isRequested = ref(false);
 const isRequestOk = ref(false);
 
-const toggleLang = () => {
+const removeUser = ref(false);
+const backdropFilter = ref('');
+
+const toggleLang = async () => {
+    isLoading.value = true;
     isLang.value = !isLang.value;
     if (isLang.value) {
         locale.value = 'pl'
@@ -31,11 +35,17 @@ const toggleLang = () => {
     }
     userStore.lang = locale.value;
     chatStore.lang = locale.value;
-    userStore.getUserData();
-    if (localStorage.getItem('flirteoLang') !== null) {
-        localStorage.flirteoLang = locale.value;
-    } else {
-        localStorage.setItem('flirteoLang', locale.value);
+    const isSuccess = await userStore.getUserData();
+    isLoading.value = false;
+    if (isSuccess === true) {
+        if (localStorage.getItem('flirteoLang') !== null) {
+            localStorage.flirteoLang = locale.value;
+        } else {
+            localStorage.setItem('flirteoLang', locale.value);
+        }
+    } else if (isSuccess === 401) {
+        emit('goToAuthorization');
+        sessionStorage.clear();
     }
 }
 
@@ -72,6 +82,11 @@ const changePass = async () => {
     }
 }
 
+const openDialogDelete = () => {
+    removeUser.value = true;
+    backdropFilter.value = 'blur(4px) saturate(150%)';
+}
+
 const deleteAcc = async () => {
     isLoading.value = true;
     const isSuccess = await userStore.removeUser();
@@ -105,12 +120,12 @@ onBeforeMount(() => {
         <div class="grow flex flex-col justify-center gap-[30px]">
             <div class="flex items-center gap-[10px] settings__item">
                 <p class="settings__item-title">{{ $t('Lang') }}:</p>
-                <div class="p-3 rounded-[10px] hover:cursor-pointer"
+                <div class="w-[2.5rem] p-2 rounded-[10px] text-center hover:cursor-pointer"
                     :class="{ 'gradient-primary border-transparent text-white': !isLang, 'item-shadow': isLang }"
                     @click="toggleLang">
                     En
                 </div>
-                <div class="p-3 rounded-[10px] hover:cursor-pointer"
+                <div class="w-[2.5rem] p-2 rounded-[10px] text-center hover:cursor-pointer"
                     :class="{ 'gradient-primary border-transparent text-white': isLang, 'item-shadow': !isLang }"
                     @click="toggleLang">
                     Pl
@@ -133,15 +148,26 @@ onBeforeMount(() => {
             <div class="flex items-center gap-[10px] settings__item">
                 <!-- <p class="settings__item-title">{{ $t('Pass') }}:</p> -->
                 <CustomBtn type="button" @click="changePass">{{ $t('Change_Pass') }}</CustomBtn>
-                <CustomBtn @click="deleteAcc">{{ $t('Delete_Acc') }}</CustomBtn>
+                <CustomBtn @click="openDialogDelete">{{ $t('Delete_Acc') }}</CustomBtn>
                 <FormLoader v-if="isLoading" />
-                <p v-if="isRequested" class="text-center text-green">Your request has been sent successfully. Please,
-                    check
-                    your E-mail.</p>
-                <p v-if="isRequestOk" class="text-center text-red">Something goes wrong. Please, contact with us:
-                    <span class="text-gradient-primary lexend-bold">support@flirteo.eu</span>
+                <p v-if="isRequested" class="text-center text-green">{{ $t('Request.success') }}</p>
+                <p v-if="isRequestOk" class="text-center text-red">{{ $t('Request.failed') }}
+                    <span class="text-gradient-primary lexend-bold">hello@flirteo.eu</span>
                 </p>
             </div>
         </div>
     </div>
+
+    <q-dialog v-model="removeUser" :backdrop-filter="backdropFilter" full-width>
+        <q-card>
+            <q-card-section class="row items-center justify-center q-pb-none text-h6">
+                {{ $t('Request.confirm') }}
+            </q-card-section>
+
+            <q-card-actions class="flex justify-between">
+                <q-btn flat :label="$t('Yes')" color="primary" v-close-popup @click="deleteAcc" />
+                <q-btn flat :label="$t('No')" color="primary" v-close-popup />
+            </q-card-actions>
+        </q-card>
+    </q-dialog>
 </template>

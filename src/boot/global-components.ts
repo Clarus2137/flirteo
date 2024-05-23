@@ -19,7 +19,7 @@ import SvgGradient from 'src/components/UI/SvgGradient.vue';
 import FormLoader from 'src/components/UI/FormLoader.vue';
 import CommonInfo from 'src/components/CommonInfo.vue';
 import UserGender from 'src/components/UserGender.vue';
-import UserHobbies from 'src/components/UserHobbies.vue';
+import LoadingScreen from 'src/components/LoadingScreen.vue';
 
 
 const components = [
@@ -43,7 +43,7 @@ const components = [
     { name: 'FormLoader', component: FormLoader },
     { name: 'CommonInfo', component: CommonInfo },
     { name: 'UserGender', component: UserGender },
-    { name: 'UserHobbies', component: UserHobbies }
+    { name: 'LoadingScreen', component: LoadingScreen }
 ];
 
 export default boot(({ app }) => {

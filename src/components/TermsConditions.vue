@@ -10,7 +10,7 @@
         <h1 class="lexend-bold text-xl text-center leading-normal">{{ $t('Terms_and_Privacy.Terms') }}</h1>
         <p class="lexend-bold text-lg mt-5 mb-3">1. Postanowienia ogólne</p>
         <p class="lexend mb-1.5">1.1. Niniejsze Warunki i Zasady określają zasady korzystania z aplikacji mobilnej
-            Flirteo, dostępnej pod adresem<a href="http://www.flirteo.eu"
+            Flirteo, dostępnej pod adresem <a href="http://www.flirteo.eu"
                 class="text-gradient-primary lexend-bold">www.flirteo.eu</a> (dalej "Aplikacja").</p>
         <p class="lexend mb-1.5">1.2. Aplikacja jest własnością Web Systems, z siedzibą przy Ul. Gen. Jarosława
             Dąbrowskiego 249/lokal 23
@@ -29,7 +29,7 @@
         <p class="lexend mb-1.5">3.1. Użytkownik zobowiązuje się do korzystania z Aplikacji zgodnie z jej
             przeznaczeniem, przepisami prawa oraz niniejszymi Warunkami i Zasadami.</p>
         <p class="lexend mb-1.5">3.2. Zabrania się:</p>
-        <ul class="text-[#6b6466] text-base">
+        <ul class="text-base">
             <li>Publikowania treści niezgodnych z prawem, wulgarnych, obraźliwych lub naruszających prawa osób trzecich.
             </li>
             <li>Używania Aplikacji do wysyłania niezamówionych informacji handlowych (spam).</li>
@@ -66,15 +66,21 @@
         <p class="lexend mb-1.5">8.2. Wszelkie spory wynikające z korzystania z Aplikacji będą rozstrzygane przez
             właściwe sądy powszechne.</p>
         <hr class="my-8">
-        <p class="lexend mb-1.5">Niniejsze Warunki i Zasady obowiązują od dnia [data].</p>
+        <p class="lexend mb-1.5">Niniejsza Polityka Prywatności obowiązuje od
+            dnia <span class="text-gradient-primary lexend-bold">23.05.2024</span>.</p>
     </div>
 </template>
 
 
 
 <style scoped lang="scss">
+.dark-mode ul {
+    color: #a3999c;
+}
+
 ul {
     list-style: disc;
     padding-left: 20px;
+    color: #6b6466;
 }
 </style>

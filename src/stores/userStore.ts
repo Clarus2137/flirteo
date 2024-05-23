@@ -8,7 +8,6 @@ const regUser = `${apiUrl}/api/users`;
 const authUser = `${apiUrl}/auth`;
 const apiUser = `${apiUrl}/api/users/me`;
 const apiEducation = `${apiUrl}/api/education_levels`;
-// const apiHobbies = `${apiUrl}/api/interests`;
 const apiResetPass = `${apiUrl}/api/reset-password/request`;
 const apiSetNewPass = `${apiUrl}/api/reset-password/change`;
 
@@ -53,13 +52,13 @@ export const useUserStore = defineStore('user', {
                 sessionStorage.setItem('userToken', response.data.token);
                 sessionStorage.setItem('userData', JSON.stringify(response.data.user));
                 this.user = response.data.user;
-                // if (response.data.user.educationLevel !== null) {
-                //     sessionStorage.setItem('userData', JSON.stringify(this.user));
-                //     this.userEducation = this.user.educationLevel;
-                // }
                 return true;
             } catch (error) {
                 if (axios.isAxiosError(error)) {
+                    if (error.response?.data.code === 401) {
+                        console.log(error.response.data.code);
+                        return error.response.data.code;
+                    }
                     // Handling Axios errors specifically
                     console.error('Authorization failed', error.response?.data);
                 } else {
@@ -88,61 +87,6 @@ export const useUserStore = defineStore('user', {
                 }
             }
         },
-
-        // async setEducationLevel(userEducation: string) {
-        //     try {
-        //         const strUserData = sessionStorage.getItem('userData');
-        //         if (strUserData === null) {
-        //             throw new Error('User\'s data doesn\'t exist');
-        //         } else {
-        //             this.userEducation = userEducation;
-        //         }
-        //         return true;
-        //     } catch (error) {
-        //         return false;
-        //     }
-        // },
-
-        // async getHobbies() {
-        //     const userToken = sessionStorage.getItem('userToken');
-        //     if (userToken !== null) {
-        //         try {
-        //             const response = await axios.get(apiHobbies, {
-        //                 headers: {
-        //                     'Authorization': `Bearer ${userToken}`,
-        //                     'Accept-Language': this.lang
-        //                 }
-        //             });
-        //             console.log(response.data);
-        //             const defaultHobbies = response.data;
-        //             if (this.user.interests?.length) {
-        //                 const activatedHobbies = defaultHobbies.map((item: { name: string }) => ({
-        //                     name: item.name,
-        //                     checked: this.user.interests?.includes(item.name) ? true : false
-        //                 }));
-        //                 this.hobbies = activatedHobbies;
-        //             } else {
-        //                 defaultHobbies.forEach((item: { name: string; }) => {
-        //                     const hobby = {
-        //                         name: item.name,
-        //                         checked: false
-        //                     }
-        //                     this.hobbies.push(hobby);
-        //                 });
-        //             }
-        //         } catch (error) {
-        //             if (axios.isAxiosError(error)) {
-        //                 // Handling Axios errors specifically
-        //                 console.error('Authorization failed', error.response?.data);
-        //             } else {
-        //                 // Handling unexpected errors
-        //                 console.error('An unexpected error occurred', error);
-        //             }
-        //         }
-        //     } else {
-        //         console.log('User\'s data doesn\'t exist');
-        //     }
-        // },
 
         addUserData(newUserData: Partial<User>) {
             try {
@@ -195,8 +139,20 @@ export const useUserStore = defineStore('user', {
                 this.user = { ...this.user, ...response.data };
                 sessionStorage.setItem('userData', JSON.stringify(this.user));
                 this.userEducation = this.user.educationLevel;
+                return true;
             } catch (error) {
-
+                if (axios.isAxiosError(error)) {
+                    if (error.response?.data.code === 401) {
+                        console.log(error.response.data.code);
+                        return error.response.data.code;
+                    }
+                    // Handling Axios errors specifically
+                    console.error('Authorization failed', error.response?.data);
+                } else {
+                    // Handling unexpected errors
+                    console.error('An unexpected error occurred', error);
+                }
+                return false;
             }
         },
 

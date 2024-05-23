@@ -21,7 +21,7 @@
         <p class="lexend-bold text-lg mt-5 mb-3">3. Zakres zbieranych danych</p>
         <p class="lexend mb-1.5">W ramach korzystania z Aplikacji, możemy
             zbierać następujące dane osobowe:</p>
-        <ul class="text-[#6b6466] text-base">
+        <ul class="text-base">
             <li>Imię i nazwisko</li>
             <li>Adres e-mail</li>
             <li>Numer telefonu</li>
@@ -34,7 +34,7 @@
         </ul>
         <p class="lexend-bold text-lg mt-5 mb-3">4. Cel przetwarzania danych</p>
         <p class="lexend mb-1.5">Dane osobowe zbierane są w celu:</p>
-        <ul class="text-[#6b6466] text-base">
+        <ul class="text-base">
             <li>Świadczenia usług oferowanych przez Aplikację</li>
             <li>Umożliwienia kontaktu między użytkownikami</li>
             <li>Personalizacji usług i dostosowania oferty do preferencji użytkowników</li>
@@ -45,7 +45,7 @@
         <p class="lexend-bold text-lg mt-5 mb-3">5. Podstawa prawna przetwarzania danych</p>
         <p class="lexend mb-1.5">Podstawą prawną przetwarzania danych osobowych
             jest:</p>
-        <ul class="text-[#6b6466] text-base">
+        <ul class="text-base">
             <li>Zgoda użytkownika (art. 6 ust. 1 lit. a RODO)</li>
             <li>Realizacja umowy (art. 6 ust. 1 lit. b RODO)</li>
             <li>Prawnie uzasadniony interes Administratora (art. 6 ust. 1 lit. f RODO)</li>
@@ -53,13 +53,13 @@
         <p class="lexend-bold text-lg mt-5 mb-3">6. Odbiorcy danych</p>
         <p class="lexend mb-1.5">Dane osobowe mogą być udostępniane następującym
             odbiorcom:</p>
-        <ul class="text-[#6b6466] text-base">
+        <ul class="text-base">
             <li>Podmiotom przetwarzającym dane na zlecenie Administratora (np. dostawcy usług IT)</li>
             <li>Organom ścigania i innym organom państwowym, na mocy obowiązujących przepisów prawa</li>
         </ul>
         <p class="lexend-bold text-lg mt-5 mb-3">7. Prawa użytkowników</p>
         <p class="lexend mb-1.5">Użytkownikom przysługują następujące prawa:</p>
-        <ul class="text-[#6b6466] text-base">
+        <ul class="text-base">
             <li>Prawo dostępu do danych</li>
             <li>Prawo do sprostowania danych</li>
             <li>Prawo do usunięcia danych</li>
@@ -82,18 +82,24 @@
             internetowej Aplikacji i wchodzą w życie z dniem ich publikacji.</p>
         <p class="lexend-bold text-lg mt-5 mb-3">11. Kontakt</p>
         <p class="lexend mb-1.5">W razie jakichkolwiek pytań lub wątpliwości
-            dotyczących niniejszej Polityki Prywatności, prosimy o kontakt pod adresem e-mail: [adres e-mail].</p>
+            dotyczących niniejszej Polityki Prywatności, prosimy o kontakt pod adresem e-mail: <span
+                class="text-gradient-primary lexend-bold">hello@flirteo.eu</span></p>
         <hr class="my-8">
         <p class="lexend mb-1.5">Niniejsza Polityka Prywatności obowiązuje od
-            dnia [data].</p>
+            dnia <span class="text-gradient-primary lexend-bold">23.05.2024</span>.</p>
     </div>
 </template>
 
 
 
 <style scoped lang="scss">
+.dark-mode ul {
+    color: #a3999c;
+}
+
 ul {
     list-style: disc;
     padding-left: 20px;
+    color: #6b6466;
 }
 </style>

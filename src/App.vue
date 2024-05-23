@@ -3,7 +3,6 @@ import { ref, onBeforeMount, onMounted, onBeforeUnmount } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useUserStore } from 'src/stores/userStore';
 import { useChatStore } from 'src/stores/chatStore';
-// import SplashScreen from 'src/components/SplashScreen.vue';
 
 
 interface CordovaNavigator extends Navigator {
@@ -25,7 +24,7 @@ const isDark = ref(false);
 // const loadingScreen = ref<HTMLElement | null>(null);
 // const appScreen = ref<HTMLElement | null>(null);
 
-// const disappearSplash = () => {
+// const disappearLoadingScreen = () => {
 //     if (loadingScreen.value) {
 //         loadingScreen.value.animate([
 //             { opacity: '1' },
@@ -73,7 +72,7 @@ onMounted(() => {
     }, 3000);
 
     // setTimeout(() => {
-    //     disappearSplash();
+    //     disappearLoadingScreen();
     // }, 2000);
 
     // setTimeout(() => {
@@ -90,7 +89,7 @@ onBeforeUnmount(() => {
 
 <template>
     <!-- <div ref="loadingScreen" v-if="appLoading">
-        <SplashScreen class="loading-screen" />
+        <LoadingScreen class="loading-screen" />
     </div>
     <div ref="appScreen" v-else>
         <router-view class="app-screen" />
