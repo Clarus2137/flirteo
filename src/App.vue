@@ -5,21 +5,21 @@ import { useUserStore } from 'src/stores/userStore';
 import { useChatStore } from 'src/stores/chatStore';
 
 
-// interface CordovaNavigator extends Navigator {
-//     app: {
-//         exitApp: () => void;
-//     };
-// }
+interface CordovaNavigator extends Navigator {
+    app: {
+        exitApp: () => void;
+    };
+}
 
-// const onBackButton = (e: Event) => {
-//     e.preventDefault();
-//     (navigator as CordovaNavigator).app.exitApp();
-// }
+const onBackButton = (e: Event) => {
+    e.preventDefault();
+    e.stopPropagation();
+    (navigator as CordovaNavigator).app.exitApp();
+}
 
-// const appLoading = ref(true);
+const appLoading = ref(true);
 
 const isDark = ref(false);
-
 
 onBeforeMount(() => {
     if (localStorage.getItem('darkMode') !== null) {
@@ -36,17 +36,14 @@ onBeforeMount(() => {
     chatStore.lang = locale.value;
 });
 
-// onMounted(() => {
-//     document.addEventListener('backbutton', onBackButton, false);
-//     setTimeout(() => {
-//         appLoading.value = false;
-//     }, 3000);
-// });
+onMounted(() => {
+    document.addEventListener('backbutton', onBackButton, false);
+    appLoading.value = false;
+});
 
-// onBeforeUnmount(() => {
-//     document.removeEventListener('backbutton', onBackButton, false);
-
-// });
+onBeforeUnmount(() => {
+    document.removeEventListener('backbutton', onBackButton, false);
+});
 </script>
 
 

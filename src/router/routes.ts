@@ -9,10 +9,14 @@ const routes: RouteRecordRaw[] = [
         beforeEnter: (to, from, next) => {
             if (localStorage.getItem('isAuthorised') !== null) {
                 if (localStorage.getItem('userToken') !== null) {
-                    if (JSON.parse(sessionStorage.userData).firstname) {
-                        next({ name: 'home' });
+                    if (sessionStorage.getItem('userData') !== null) {
+                        if (JSON.parse(sessionStorage.userData).firstname) {
+                            next({ name: 'home' });
+                        } else {
+                            next({ name: 'complete' });
+                        }
                     } else {
-                        next({ name: 'complete' });
+                        next({ name: 'home' });
                     }
                 } else {
                     next({ name: 'auth' });
