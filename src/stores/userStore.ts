@@ -49,7 +49,7 @@ export const useUserStore = defineStore('user', {
                         'Accept-Language': this.lang
                     }
                 });
-                sessionStorage.setItem('userToken', response.data.token);
+                localStorage.setItem('userToken', response.data.token);
                 sessionStorage.setItem('userData', JSON.stringify(response.data.user));
                 this.user = response.data.user;
                 return true;
@@ -70,7 +70,7 @@ export const useUserStore = defineStore('user', {
         },
 
         async getEducation() {
-            const userToken = sessionStorage.getItem('userToken');
+            const userToken = localStorage.getItem('userToken');
             if (userToken !== null) {
                 try {
                     const response = await axios.get(apiEducation, {
@@ -105,7 +105,7 @@ export const useUserStore = defineStore('user', {
         async updateUser(updatedUser: Partial<User>) {
             console.log('Sending Data is: ', updatedUser);
             try {
-                const userToken = sessionStorage.getItem('userToken');
+                const userToken = localStorage.getItem('userToken');
                 const response = await axios.patch(apiUser, updatedUser, {
                     headers: {
                         'Authorization': `Bearer ${userToken}`,
@@ -128,7 +128,7 @@ export const useUserStore = defineStore('user', {
         },
 
         async getUserData() {
-            const userToken = sessionStorage.getItem('userToken');
+            const userToken = localStorage.getItem('userToken');
             try {
                 const response = await axios.get(apiUser, {
                     headers: {
@@ -136,10 +136,14 @@ export const useUserStore = defineStore('user', {
                         'Accept-Language': this.lang
                     }
                 });
-                this.user = { ...this.user, ...response.data };
-                sessionStorage.setItem('userData', JSON.stringify(this.user));
-                this.userEducation = this.user.educationLevel;
-                return true;
+                if (response.data.firstName !== null) {
+                    this.user = { ...this.user, ...response.data };
+                    sessionStorage.setItem('userData', JSON.stringify(this.user));
+                    this.userEducation = this.user.educationLevel;
+                    return true;
+                } else {
+                    return 'Not complete';
+                }
             } catch (error) {
                 if (axios.isAxiosError(error)) {
                     if (error.response?.data.code === 401) {
@@ -157,7 +161,7 @@ export const useUserStore = defineStore('user', {
         },
 
         async removeUser() {
-            const userToken = sessionStorage.getItem('userToken');
+            const userToken = localStorage.getItem('userToken');
             try {
                 const response = await axios.delete(apiUser, {
                     headers: {
@@ -168,6 +172,7 @@ export const useUserStore = defineStore('user', {
                 this.user = {};
                 // this.hobbies = [];
                 sessionStorage.clear();
+                localStorage.removeItem('userToken');
                 return true;
             } catch (error) {
                 return false;
@@ -179,7 +184,7 @@ export const useUserStore = defineStore('user', {
         },
 
         async resetPassword(email: string) {
-            const userToken = sessionStorage.getItem('userToken');
+            const userToken = localStorage.getItem('userToken');
             try {
                 const userEmail = {
                     email: email
@@ -198,7 +203,7 @@ export const useUserStore = defineStore('user', {
         },
 
         async setNewPassword(newPassword: string) {
-            const userToken = sessionStorage.getItem('userToken');
+            const userToken = localStorage.getItem('userToken');
             try {
                 const response = await axios.post(apiSetNewPass, {
                     token: userToken,
@@ -228,28 +233,5 @@ export const useUserStore = defineStore('user', {
         setPassToken(token: string) {
             this.passToken = token;
         }
-
-        // async isUserExists() {
-        //     try {
-        //         const userToken = sessionStorage.getItem('userToken');
-        //         const response = await axios.get(apiUser, {
-        //             headers: {
-        //                 'Authorization': `Bearer ${userToken}`
-        //             }
-        //         });
-        //         console.log('User exists', response.data);
-        //         return true;
-        //     } catch (error) {
-        //         if (axios.isAxiosError(error)) {
-        //             // console.error('Axios failed to get Users\'s data', error.response?.status);
-        //             if (error.response?.status === 401) {
-        //                 return 401;
-        //             }
-        //         } else {
-        //             console.error('An unexpected error occurred', error);
-        //         }
-        //         return false;
-        //     }
-        // }
     },
 });

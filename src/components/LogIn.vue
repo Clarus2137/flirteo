@@ -35,7 +35,7 @@ const handleSubmit = async (e: Event) => {
     }
     const isSuccess = await userStore.authoriseUser(userAccount);
     isLoading.value = false;
-    if (isSuccess) {
+    if (isSuccess === true) {
         if (localStorage.getItem('isAuthorised') === null) {
             localStorage.setItem('isAuthorised', 'true');
         }

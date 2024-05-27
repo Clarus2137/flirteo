@@ -127,5 +127,6 @@ export default {
         failed: 'Coś poszło nie tak. Proszę, skontaktuj się z nami:',
         confirm: 'Jesteś pewny?'
     },
-    Loading: 'Ładowanie danych'
+    Loading: 'Ładowanie danych',
+    Complete: 'Twój profil nie jest kompletny. Na początek musisz wypełnić wszystkie pola.'
 };

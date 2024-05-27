@@ -5,5 +5,5 @@ import UserView from 'src/components/UserView.vue';
 
 
 <template>
-    <UserView />
+    <UserView @goToComplete="$router.push('/complete')" />
 </template>

@@ -234,6 +234,10 @@ button.gradient-primary {
     }
 }
 
+.q-page-container:has(.complete-message)+.q-tabs {
+    display: none;
+}
+
 
 
 .dark-mode {

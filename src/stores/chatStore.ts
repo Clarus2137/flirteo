@@ -22,7 +22,7 @@ export const useChatStore = defineStore('chat', {
     actions: {
         async getPrompts() {
             try {
-                const userToken = sessionStorage.getItem('userToken');
+                const userToken = localStorage.getItem('userToken');
                 const response = await axios.get(apiPrompts, {
                     headers: {
                         'Authorization': `Bearer ${userToken}`,
@@ -30,7 +30,6 @@ export const useChatStore = defineStore('chat', {
                     }
                 });
                 this.prompts = response.data;
-                console.log(this.prompts);
                 return true;
             } catch (error) {
                 if (axios.isAxiosError(error)) {
@@ -46,7 +45,7 @@ export const useChatStore = defineStore('chat', {
 
         async getResponseTypes() {
             try {
-                const userToken = sessionStorage.getItem('userToken');
+                const userToken = localStorage.getItem('userToken');
                 const response = await axios.get(apiRespTypes, {
                     headers: {
                         'Authorization': `Bearer ${userToken}`,
@@ -93,7 +92,7 @@ export const useChatStore = defineStore('chat', {
                 }]
             }
             console.log(this.session);
-            const userToken = sessionStorage.getItem('userToken');
+            const userToken = localStorage.getItem('userToken');
             try {
                 const response = await axios.post(apiSession, this.session, {
                     headers: {
@@ -125,7 +124,7 @@ export const useChatStore = defineStore('chat', {
                 content: message
             }
             try {
-                const userToken = sessionStorage.getItem('userToken');
+                const userToken = localStorage.getItem('userToken');
                 const response = await axios.post(apiMessages, newMessage, {
                     headers: {
                         'Authorization': `Bearer ${userToken}`,

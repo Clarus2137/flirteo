@@ -127,5 +127,6 @@ export default {
         failed: 'Something goes wrong. Please, contact with us:',
         confirm: 'Are you sure?'
     },
-    Loading: 'Loading data'
+    Loading: 'Loading data',
+    Complete: 'Your profile is not complete. For start you have to fill all the fields.'
 };

@@ -8,7 +8,15 @@ const routes: RouteRecordRaw[] = [
         children: [{ path: '', component: () => import('pages/LangPage.vue') }],
         beforeEnter: (to, from, next) => {
             if (localStorage.getItem('isAuthorised') !== null) {
-                next({ name: 'auth' });
+                if (localStorage.getItem('userToken') !== null) {
+                    if (JSON.parse(sessionStorage.userData).firstname) {
+                        next({ name: 'home' });
+                    } else {
+                        next({ name: 'complete' });
+                    }
+                } else {
+                    next({ name: 'auth' });
+                }
             } else {
                 next();
             }

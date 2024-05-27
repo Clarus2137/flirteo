@@ -125,10 +125,8 @@ onMounted(async () => {
         chatStore.getResponseTypes()
     ];
 
-    // Используем Promise.all для одновременного выполнения всех промисов
     const [isPrompts, isTypes] = await Promise.all(promises);
 
-    // После выполнения всех промисов, проверяем результаты и обновляем состояния
     if (isPrompts) {
         prompts.value = chatStore.prompts;
     }
