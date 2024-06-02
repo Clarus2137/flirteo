@@ -36,7 +36,8 @@ const dateLocale = {
 const userStore = useUserStore();
 const router = useRouter();
 
-const addData = () => {
+const addData = (e: Event) => {
+    e.preventDefault();
     const firstName = userFirstName.value;
     const lastName = userLastName.value;
     const dateOfBirth = userDateOfBirth.value;
@@ -113,7 +114,7 @@ onMounted(async () => {
             <!-- <img src="./../assets/user-neutral.png" class="h-full mx-auto" alt="User Neutral" v-else> -->
         </div>
     </div>
-    <form class="details__personal-data grow flex flex-col gap-y-[1.25vh]" @submit.prevent="addData">
+    <form class="details__personal-data grow flex flex-col gap-y-[1.25vh]" @submit="addData($event)">
         <div class="firstName">
             <CustomInput id="firstName" type="text" v-model="userFirstName" required />
             <label for="firstName">{{ t('First_Name') }}</label>

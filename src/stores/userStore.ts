@@ -90,12 +90,7 @@ export const useUserStore = defineStore('user', {
 
         addUserData(newUserData: Partial<User>) {
             try {
-                const strUserData = sessionStorage.getItem('userData');
-                if (strUserData === null) {
-                    throw new Error('User\'s data doesn\'t exist');
-                } else {
-                    this.user = { ...this.user, ...newUserData };
-                }
+                this.user = { ...this.user, ...newUserData };
                 return true;
             } catch (error) {
                 return false;
@@ -103,7 +98,6 @@ export const useUserStore = defineStore('user', {
         },
 
         async updateUser(updatedUser: Partial<User>) {
-            console.log('Sending Data is: ', updatedUser);
             try {
                 const userToken = localStorage.getItem('userToken');
                 const response = await axios.patch(apiUser, updatedUser, {
@@ -112,7 +106,6 @@ export const useUserStore = defineStore('user', {
                         'Accept-Language': this.lang
                     }
                 });
-                console.log('User updating successful', response.data);
                 this.user = { ...this.user, ...response.data };
                 sessionStorage.setItem('userData', JSON.stringify(this.user));
                 this.userEducation = this.user.educationLevel;
@@ -142,7 +135,7 @@ export const useUserStore = defineStore('user', {
                     this.userEducation = this.user.educationLevel;
                     return true;
                 } else {
-                    return 'Not complete';
+                    return 'Not completed';
                 }
             } catch (error) {
                 if (axios.isAxiosError(error)) {

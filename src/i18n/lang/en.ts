@@ -128,5 +128,5 @@ export default {
         confirm: 'Are you sure?'
     },
     Loading: 'Loading data',
-    Complete: 'Your profile is not complete. For start you have to fill all the fields.'
+    Empty: 'Your profile is not complete. For start you have to fill all the fields.'
 };
