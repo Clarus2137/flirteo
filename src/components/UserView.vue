@@ -7,6 +7,7 @@ const userStore = useUserStore();
 const endings = ref(false);
 const isDataLoading = ref(true);
 const userAge = ref(0);
+const isFullData = ref(true);
 
 const setUserData = () => {
     const strUserData = sessionStorage.getItem('userData');
@@ -71,13 +72,19 @@ const toggleScreen = () => {
     }
 }
 
-const loadUserData = async () => {
-    await userStore.getUserData();
-    setUserData();
-    toggleScreen();
-}
-
 const emit = defineEmits(['goToComplete']);
+
+const loadUserData = async () => {
+    const isCompleted = await userStore.getUserData();
+    // console.log('Loaded user data from the server: ', userStore.user);
+    if (isCompleted === true) {
+        setUserData();
+        toggleScreen();
+    } else if (isCompleted === 'Not completed') {
+        isFullData.value = false;
+        toggleScreen();
+    }
+}
 
 onBeforeMount(() => {
     if (sessionStorage.getItem('userData') !== null) {
@@ -103,27 +110,28 @@ onMounted(() => {
     <div v-if="isDataLoading" ref="animatedScreen">
         <LoadingScreen />
     </div>
-    <div class="home grid grid-rows-[min-content_auto] gap-y-8" ref="animatedPage" v-show="!isDataLoading">
-        <div
-            class="home__photo photo flex justify-center items-center h-[75vw] max-h-[320px] mt-[-1vw] mx-[-3vw] gradient-primary rounded-b-3xl">
-            <img src="./../assets/user-male.png" alt="User Male" class="h-[80%] max-h-[200px]"
-                v-if="userStore.user.gender === 'male'">
-            <img src="./../assets/user-female.png" alt="User Female" class="h-[80%] max-h-[200px]"
-                v-if="userStore.user.gender === 'female'">
-        </div>
-        <div class="home__user user grid grid-rows-[min-content_min-content_min-content] gap-y-5 lexend-bold text-lg">
-            <p><span class="user__firstname">{{ userStore.user.firstName }}</span> <span class="user__lastname">{{
-        userStore.user.lastName }}</span>, {{ userAge }} {{ $t('Years') }}<span
-                    v-if="endings === true">a</span></p>
-            <div class="user__location">
-                <p class="lexend-bold">{{ $t('Location') }}</p>
-                <p class="lexend text-secondary text-sm">{{ userStore.user.location }}</p>
+    <div class="flex flex-col" ref="animatedPage" v-show="!isDataLoading">
+        <div class="grow home flex flex-col gap-y-8" v-if="isFullData">
+            <div
+                class="home__photo photo flex justify-center items-center h-[75vw] max-h-[320px] mt-[-1vw] mx-[-3vw] gradient-primary rounded-b-3xl">
+                <img src="./../assets/user-male.png" alt="User Male" class="h-[80%] max-h-[200px]"
+                    v-if="userStore.user.gender === 'male'">
+                <img src="./../assets/user-female.png" alt="User Female" class="h-[80%] max-h-[200px]"
+                    v-if="userStore.user.gender === 'female'">
             </div>
-            <div class="user__education">
-                <p class="lexend-bold">{{ $t('Education') }}</p>
-                <p class="lexend text-secondary text-sm">{{ userStore.userEducation.name }}</p>
-            </div>
-            <!-- <div class="user__ihobbies hobbies" v-if="userStore.user.interests!.length > 0">
+            <div class=" grow home__user user flex flex-col gap-y-5 lexend-bold text-lg">
+                <p><span class="user__firstname">{{ userStore.user.firstName }}</span> <span class="user__lastname">{{
+                    userStore.user.lastName }}</span>, {{ userAge }} {{ $t('Years') }}<span
+                        v-if="endings === true">a</span></p>
+                <div class="user__location">
+                    <p class="lexend-bold">{{ $t('Location') }}</p>
+                    <p class="lexend text-secondary text-sm">{{ userStore.user.location }}</p>
+                </div>
+                <div class="user__education">
+                    <p class="lexend-bold">{{ $t('Education') }}</p>
+                    <p class="lexend text-secondary text-sm">{{ userStore.userEducation.name }}</p>
+                </div>
+                <!-- <div class="user__ihobbies hobbies" v-if="userStore.user.interests!.length > 0">
                 <p class="lexend-bold mb-2">{{ $t('Hobbies') }}</p>
                 <div class="hobbies__wrapper w-full flex justify-start gap-2.5">
                     <div class="hobbies__item hobby p-3 rounded-[10px] item-shadow"
@@ -132,6 +140,11 @@ onMounted(() => {
                     </div>
                 </div>
             </div> -->
+            </div>
+        </div>
+        <div class="grow flex flex-col justify-center items-center gap-y-5 complete-message" v-else>
+            <p class="lexend-bold text-center">{{ $t('Empty') }}</p>
+            <CustomBtn type="button" @click="$router.push('/complete')">OK</CustomBtn>
         </div>
     </div>
 </template>
