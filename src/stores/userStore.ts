@@ -26,16 +26,12 @@ export const useUserStore = defineStore('user', {
         async registerUser(newUser: Partial<User>) {
             try {
                 const response = await axios.post(regUser, newUser);
-
-                // With Axios, checking response.ok is not needed, axios will throw an error if the status is not 2xx
-                // console.log('Registration successful', response.data); // Logging the response data
+                console.log('Registration successful', response.data);
                 return true;
             } catch (error) {
                 if (axios.isAxiosError(error)) {
-                    // Handling Axios errors specifically
                     console.error('Registration failed: ', error.response?.data);
                 } else {
-                    // Handling unexpected errors
                     console.error('An unexpected error occurred', error);
                 }
                 return false;
@@ -177,14 +173,12 @@ export const useUserStore = defineStore('user', {
         },
 
         async resetPassword(email: string) {
-            const userToken = localStorage.getItem('userToken');
             try {
                 const userEmail = {
                     email: email
                 }
                 const response = await axios.post(apiResetPass, userEmail, {
                     headers: {
-                        'Authorization': `Bearer ${userToken}`,
                         'Accept-Language': this.lang
                     }
                 });
