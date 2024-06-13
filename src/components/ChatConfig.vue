@@ -74,11 +74,6 @@ const convertToString = (file: File) => {
     reader.readAsDataURL(file);
 }
 
-const setStyle = (style: number) => {
-    selectedStyle.value = style;
-    isFinished.value = true;
-}
-
 const buildOptions = () => {
     const options = {
         user: userSource,
@@ -90,6 +85,12 @@ const buildOptions = () => {
     const image = screenshot.value;
     chatStore.getSessionOptions(options, image);
     emit('goToChat');
+}
+
+const setStyle = (style: number) => {
+    selectedStyle.value = style;
+    isFinished.value = true;
+    buildOptions();
 }
 
 const animatedScreen = ref<HTMLElement | null>(null);
@@ -165,7 +166,7 @@ onMounted(async () => {
                 <p class="body-text lexend-light text-secondary">{{ $t('Mode_hint') }}</p>
                 <CustomBtn type="button" v-for="prompt in prompts" :key="prompt.id"
                     @click="setPrompt(prompt.places, prompt.id); nextStep(2)">{{
-        prompt.name }}</CustomBtn>
+                        prompt.name }}</CustomBtn>
                 <q-stepper-navigation>
                     <q-btn flat @click="step = 1" color="primary" :label="$t('Back')" class="q-ml-sm" />
                 </q-stepper-navigation>
@@ -202,14 +203,14 @@ onMounted(async () => {
 
             <q-step :name="5" :title="$t('Style')" icon="settings" :done="step > 5">
                 <p class="body-text lexend-light text-secondary">{{ $t('Style_hint') }}</p>
-                <div class="w-full" v-if="!isFinished">
+                <div class="w-full flex flex-col gap-4">
                     <CustomBtn type="button" v-for="style in respTypes" :key="style.id" @click="setStyle(style.id)">
                         {{
-        style.name }}
+                            style.name }}
                     </CustomBtn>
                 </div>
                 <q-stepper-navigation>
-                    <q-btn color="primary" :label="$t('Finish')" @click="buildOptions" v-if="isFinished" />
+                    <!-- <q-btn color="primary" :label="$t('Finish')" @click="buildOptions" v-if="isFinished" /> -->
                     <q-btn flat @click="stepBack" color="primary" :label="$t('Back')" class="q-ml-sm" />
                 </q-stepper-navigation>
             </q-step>
@@ -242,7 +243,7 @@ onMounted(async () => {
     .q-stepper__step-inner {
         display: flex;
         flex-wrap: wrap;
-        row-gap: 15px;
+        row-gap: 1rem;
     }
 
     .q-stepper__step-content {

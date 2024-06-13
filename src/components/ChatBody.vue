@@ -215,7 +215,7 @@ onMounted(() => {
 
     .messages {
         max-height: calc(100vh - 110px);
-        overflow-y: scroll;
+        overflow-y: auto;
 
         &.auto-mes>.messages__item:first-child .q-message-sent {
             display: none;
