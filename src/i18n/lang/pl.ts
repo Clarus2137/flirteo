@@ -36,7 +36,7 @@ export default {
     },
     Used_email: 'Wygląda na to, że ten e-mail został już użyty.',
     Pass: 'Hasło',
-    Pass_hint: 'Twoje hasło musi zawierać co najmniej 8 liter a-z, w tym co najmniej 1 wielką literę, 1 cyfrę 0-9 i 1 znak specjalny z',
+    Pass_hint: 'Twoje hasło musi składać się z co najmniej 8 znaków',
     Check_Pass: 'Jeśli tak jest, sprawdź hasło i spróbuj ponownie lub',
     Reset_Pass: 'po prostu zresetuj swoje hasło',
     New_Pass: 'Nowe hasło',

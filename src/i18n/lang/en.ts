@@ -36,7 +36,7 @@ export default {
     },
     Used_email: 'It seems this E-mail has been already used.',
     Pass: 'Password',
-    Pass_hint: 'Your password must be at least 8 letters a-z, containing at least 1 capital letter, 1 number 0-9 and 1 special character from',
+    Pass_hint: 'Your password must be at least 8 symbols',
     Check_Pass: 'If you are, check the password and try again or',
     Reset_Pass: 'just reset your password',
     New_Pass: 'Your new password',

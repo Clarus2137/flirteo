@@ -41,11 +41,8 @@ const validateEmailAndPassword = (): boolean => {
     }
 
     const hasValidLength = enteredPassword.value.length >= 8;
-    const hasUpperCase = /[A-Z]/.test(enteredPassword.value);
-    const hasNumber = /[0-9]/.test(enteredPassword.value);
-    const hasSpecialSymbol = /[-_!?&$#@]/.test(enteredPassword.value);
 
-    if (!hasValidLength || !hasUpperCase || !hasNumber || !hasSpecialSymbol) {
+    if (!hasValidLength) {
         isVisiblePasswordAlarm.value = true;
         isValid = false;
     }
@@ -107,8 +104,7 @@ const toggleState = () => {
                 </div>
                 <div>
                     <CustomInput type="password" :placeholder="t('Pass')" v-model="enteredPassword" required />
-                    <p class="text-secondary text-[0.6rem] leading-[1.5]">{{ t('Pass_hint') }} "-, _, !, ?, &, $, #, @"
-                    </p>
+                    <p class="text-secondary text-[0.6rem] leading-[1.5] text-center">{{ t('Pass_hint') }}</p>
                     <p class="text-center text-xs text-alarm font-bold duration-300"
                         :class="{ 'opacity-100': isVisiblePasswordAlarm, 'opacity-0': !isVisiblePasswordAlarm }">
                         {{ t('Invalid.pass') }}
@@ -116,8 +112,8 @@ const toggleState = () => {
                 </div>
                 <CustomBtn type="submit"
                     :disabled="isAccepted === false || enteredEmail === '' || enteredPassword === ''" class="mb-5">{{
-                    t('Continue')
-                }}
+                        t('Continue')
+                    }}
                 </CustomBtn>
                 <FormLoader v-if="isLoading" />
                 <p class="agreement-alarm lexend-bold text-secondary text-center text-sm" v-if="agreementAlarm">{{
