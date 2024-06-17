@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.Flirteo.app" version="0.9.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.Flirteo.app" version="0.9.2" xmlns="http://www.w3.org/ns/widgets"
+    xmlns:cdv="http://cordova.apache.org/ns/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <name>Flirteo</name>
     <description>A Quasar Project</description>
     <author email="dev@cordova.apache.org" href="https://cordova.apache.org">
@@ -17,7 +19,8 @@
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     <preference name="AndroidInsecureFileModeEnabled" value="true" />
     <platform name="android">
-        <preference name="AndroidWindowSplashScreenAnimatedIcon" value="res/screens/android/logo.xml" />
+        <preference name="AndroidWindowSplashScreenAnimatedIcon"
+            value="res/screens/android/logo.xml" />
         <preference name="AndroidWindowSplashScreenBackground" value="#fcebf0" />
         <icon density="ldpi" src="res/android/logo-ldpi.png" />
         <icon density="mdpi" src="res/android/logo-mdpi.png" />
@@ -25,6 +28,11 @@
         <icon density="xhdpi" src="res/android/logo-xhdpi.png" />
         <icon density="xxhdpi" src="res/android/logo-xxhdpi.png" />
         <icon density="xxxhdpi" src="res/android/logo-xxxhdpi.png" />
+        <config-file parent="/manifest/application" target="AndroidManifest.xml">
+            <meta-data
+                android:name="com.google.android.gms.wallet.api.enabled"
+                android:value="true" />
+        </config-file>
     </platform>
     <platform name="ios">
         <preference name="scheme" value="app" />

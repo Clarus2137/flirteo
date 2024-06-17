@@ -122,6 +122,12 @@ const routes: RouteRecordRaw[] = [
         path: '/reset-password/:token',
         component: () => import('layouts/InfoLayout.vue'),
         children: [{ path: '', name: 'reset', component: () => import('pages/ResetPage.vue') }]
+    },
+
+    {
+        path: '/catalog',
+        component: () => import('layouts/InfoLayout.vue'),
+        children: [{ path: '', name: 'reset', component: () => import('pages/CatalogPage.vue') }]
     }
 ];
 

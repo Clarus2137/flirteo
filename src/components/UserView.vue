@@ -41,6 +41,7 @@ const setUserData = () => {
 
 const defineEnding = () => {
     const lastChar = userAge.value.toString()[userAge.value.toString().length - 1];
+    console.log(lastChar);
     if (lastChar === '2' || lastChar === '3' || lastChar === '4') {
         endings.value = true;
     }
@@ -121,7 +122,7 @@ onMounted(() => {
             </div>
             <div class=" grow home__user user flex flex-col gap-y-5 lexend-bold text-lg">
                 <p><span class="user__firstname">{{ userStore.user.firstName }}</span> <span class="user__lastname">{{
-                    userStore.user.lastName }}</span>, {{ userAge }} {{ $t('Years') }}<span
+        userStore.user.lastName }}</span>, {{ userAge }} {{ $t('Years') }}<span
                         v-if="endings === true">a</span></p>
                 <div class="user__location">
                     <p class="lexend-bold">{{ $t('Location') }}</p>

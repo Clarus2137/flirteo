@@ -92,22 +92,21 @@ body {
     color: $text_light;
 }
 
-button.gradient-primary {
+.hover-reverse {
+    background: #fff;
+    border: 2px solid transparent;
+    transition: 0.3s;
 
-    @media (hover: hover) and (pointer: fine) {
-        .button:hover {
-            background-color: $bg_gradient_reverse;
-        }
+    &:hover {
+        box-shadow: inset 0 0 0 2px $middle_color;
+        background: #fff;
     }
 
-    &:active:not(:disabled) {
-        background: transparent;
-        color: $middle_color !important;
-        box-shadow: inset 0 0 0 2px $middle_color;
-
-        path {
-            fill: url(#gradient_primary);
-        }
+    >span {
+        background: $bg_gradient;
+        background-clip: text !important;
+        color: transparent;
+        transition: 0.3s;
     }
 }
 

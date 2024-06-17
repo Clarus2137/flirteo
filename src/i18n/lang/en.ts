@@ -128,5 +128,15 @@ export default {
         confirm: 'Are you sure?'
     },
     Loading: 'Loading data',
-    Empty: 'Your profile is not complete. For start you have to fill all the fields.'
+    Empty: 'Your profile is not complete. For start you have to fill all the fields.',
+    Catalog: 'Catalog',
+    Order: 'Order',
+    Packages: {
+        base: {
+            title: 'Standart',
+            size: '50 tokens'
+        }
+    },
+    Support: 'Free support',
+    Set: 'Full list of prompts is available'
 };

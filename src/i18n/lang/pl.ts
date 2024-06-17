@@ -128,5 +128,15 @@ export default {
         confirm: 'Jesteś pewny?'
     },
     Loading: 'Ładowanie danych',
-    Empty: 'Twój profil nie jest kompletny. Na początek musisz wypełnić wszystkie pola.'
+    Empty: 'Twój profil nie jest kompletny. Na początek musisz wypełnić wszystkie pola.',
+    Catalog: 'Katalog',
+    Order: 'Zamów',
+    Packages: {
+        base: {
+            title: 'Standard',
+            size: '50 tokenów'
+        }
+    },
+    Support: 'Darmowe wsparcie',
+    Set: 'Pełny zestaw promptów'
 };

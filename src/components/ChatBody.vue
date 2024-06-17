@@ -3,7 +3,7 @@ import { ref, onBeforeMount, onMounted, watch, nextTick } from 'vue';
 import { useChatStore } from 'src/stores/chatStore';
 
 
-const emit = defineEmits(['goToHome', 'goToChatConfig']);
+const emit = defineEmits(['goToHome', 'goToChatConfig', 'goToCatalog']);
 
 const chatStore = useChatStore();
 const isSessionStarted = ref(false);
@@ -173,7 +173,7 @@ onMounted(() => {
 
                 <q-card-actions class="flex justify-between">
                     <q-btn flat :label="$t('Purchase')" color="primary" v-close-popup
-                        @click="endSession; emit('goToHome')" />
+                        @click="endSession; emit('goToCatalog')" />
                     <q-btn flat :label="$t('Later')" color="primary" v-close-popup
                         @click="endSession; emit('goToHome')" />
                 </q-card-actions>
