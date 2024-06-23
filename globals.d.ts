@@ -85,6 +85,29 @@ declare global {
             exitApp: () => void; // Добавьте другие методы по мере необходимости
         }
     }
+
+    interface Package {
+        id: number,
+        name: string,
+        size: number,
+        features: string[],
+        price: number
+    }
+
+    interface OrderedItem {
+        item: Package,
+        itemsQty: number,
+        itemsPrice: number
+    }
+
+    interface Order {
+        id: number,
+        userId: number,
+        userFirstName: string,
+        userLastName: string
+        items: OrderedItem[],
+        orderPrice: number
+    }
 }
 
 export { };

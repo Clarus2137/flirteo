@@ -130,13 +130,25 @@ export default {
     Loading: 'Ładowanie danych',
     Empty: 'Twój profil nie jest kompletny. Na początek musisz wypełnić wszystkie pola.',
     Catalog: 'Katalog',
+    Store: 'Sklep',
     Order: 'Zamów',
     Packages: {
         base: {
-            title: 'Standard',
-            size: '50 tokenów'
+            name: 'Standard',
+            features: {
+                size: ' tokenów',
+                support: 'Darmowe wsparcie',
+                prompts: 'Pełny zestaw promptów'
+            },
+            price: 'zł'
         }
     },
-    Support: 'Darmowe wsparcie',
-    Set: 'Pełny zestaw promptów'
+    Order_item_hint: 'Wybierz produkt',
+    Cart: {
+        title: 'Twoje zamówienie',
+        item: 'Nazawa produktu',
+        quantity: 'Ilość',
+        price: 'Cena produktu',
+        sum: 'Cena zamówienia'
+    }
 };

@@ -130,13 +130,25 @@ export default {
     Loading: 'Loading data',
     Empty: 'Your profile is not complete. For start you have to fill all the fields.',
     Catalog: 'Catalog',
+    Store: 'Store',
     Order: 'Order',
     Packages: {
         base: {
             title: 'Standart',
-            size: '50 tokens'
+            features: {
+                size: ' tokens',
+                support: 'Free support',
+                prompts: 'Full list of prompts is available'
+            },
+            price: 'zł'
         }
     },
-    Support: 'Free support',
-    Set: 'Full list of prompts is available'
+    Order_item_hint: 'Chose the product',
+    Cart: {
+        title: 'Your order',
+        item: 'Name of product',
+        quantity: 'Quantity',
+        price: 'Product price',
+        sum: 'Order price'
+    }
 };
