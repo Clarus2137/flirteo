@@ -132,9 +132,10 @@ export default {
     Catalog: 'Catalog',
     Store: 'Store',
     Order: 'Order',
+    Tokens: 'tokens',
     Packages: {
         base: {
-            title: 'Standart',
+            name: 'Standard',
             features: {
                 size: ' tokens',
                 support: 'Free support',

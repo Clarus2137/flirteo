@@ -3,6 +3,7 @@ import { ref, onBeforeMount, onMounted, onBeforeUnmount } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useUserStore } from 'src/stores/userStore';
 import { useChatStore } from 'src/stores/chatStore';
+import { useOrderStore } from './stores/orderStore';
 
 
 interface CordovaNavigator extends Navigator {
@@ -31,9 +32,11 @@ onBeforeMount(() => {
     }
     const userStore = useUserStore();
     const chatStore = useChatStore();
+    const orderStore = useOrderStore();
     const { locale } = useI18n();
     userStore.lang = locale.value;
     chatStore.lang = locale.value;
+    orderStore.lang = locale.value;
 });
 
 onMounted(() => {

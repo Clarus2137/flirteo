@@ -41,7 +41,6 @@ const setUserData = () => {
 
 const defineEnding = () => {
     const lastChar = userAge.value.toString()[userAge.value.toString().length - 1];
-    console.log(lastChar);
     if (lastChar === '2' || lastChar === '3' || lastChar === '4') {
         endings.value = true;
     }

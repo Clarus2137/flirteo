@@ -17,16 +17,16 @@ const step = ref(1);
             <ProductItems @itemSelected="step = 2" />
         </q-step>
 
-        <q-step :name="2" title="Create an ad group" caption="Optional" icon="create_new_folder" :done="step > 2">
+        <q-step :name="2" :title="$t('Cart.title')" icon="create_new_folder" :done="step > 2">
             <UserOrder />
 
             <q-stepper-navigation>
-                <q-btn @click="step = 4" color="primary" label="Continue" />
+                <q-btn @click="step = 3" color="primary" :label="$t('Continue')" />
                 <q-btn flat @click="step = 1" color="primary" label="Back" class="q-ml-sm" />
             </q-stepper-navigation>
         </q-step>
 
-        <q-step :name="3" title="Ad template" icon="assignment" disable>
+        <q-step :name="3" title="Ad template" icon="assignment" :done="step > 3">
             This step won't show up because it is disabled.
         </q-step>
 

@@ -1,48 +1,52 @@
 <script setup lang="ts">
+import { ref, onBeforeMount } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useUserStore } from 'src/stores/userStore';
+import { useOrderStore } from 'src/stores/orderStore';
 
 
 const { t } = useI18n();
 
-const userStore = useUserStore();
+const orderStore = useOrderStore();
 
 const emit = defineEmits(['itemSelected']);
 
-const products = [
-    {
-        id: 1,
-        name: t('Packages.base.name'),
-        size: 50,
-        features: [
-            50 + t('Packages.base.features.size'),
-            t('Packages.base.features.support'),
-            t('Packages.base.features.prompts')
-        ],
-        price: 10
-    }
-]
+const products = ref<Product[]>([]);
 
-const selectPack = (pack: Package) => {
-    const selectedProduct = {
-        name: pack.name,
-        size: pack.size,
-        price: pack.price
-    }
-    userStore.createOrder(selectedProduct)
+const handlePlan = (item: Product) => {
+    orderStore.createOrder(item);
     emit('itemSelected');
 }
+
+const getFromStore = () => {
+    orderStore.products.forEach((product) => {
+        products.value.push(product);
+    });
+}
+
+const loadProducts = async () => {
+    const isSuccess = await orderStore.getPlans();
+    if (isSuccess) {
+        getFromStore();
+    }
+}
+
+onBeforeMount(() => {
+    if (orderStore.products.length) {
+        getFromStore();
+    } else {
+        loadProducts();
+    }
+});
 </script>
 
 
 
 <template>
-    <div class="catalog flex flex-col justify-center items-center gap-5">
-        <p class="catalog__title lexend-bold text-xl text-center">{{ $t('Catalog') }}</p>
-        <div class="catalog__item pack flex flex-col gap-3 lexend" v-for="pack in products" :key="pack.id">
-            <p class="pack__title text-lg">{{ pack.name }}</p>
-            <ul class="pack__features">
-                <li class="flex items-center gap-3" v-for="feature in pack.features" :key="feature">
+    <div class="catalog flex justify-center items-center gap-5">
+        <div class="catalog__item pack flex flex-col gap-3 lexend" v-for="item in products" :key="item.id">
+            <p class="pack__title text-lg">{{ item.name }}</p>
+            <!-- <ul class="pack__features">
+                <li class="flex items-center gap-3" v-for="feature in item.features" :key="feature">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_78_7)">
                             <path
@@ -60,9 +64,10 @@ const selectPack = (pack: Package) => {
                     </svg>
                     {{ feature }}
                 </li>
-            </ul>
-            <p class="pack__price text-center lexend-bold text-xl">{{ pack.price }} {{ t('Packages.base.price') }}</p>
-            <CustomBtn class="order-btn" @click="selectPack(pack)"><span>{{ $t('Order') }}</span></CustomBtn>
+            </ul> -->
+            <p class="pack__size text-center lexend text-lg">{{ item.tokens }} {{ t('Tokens') }}</p>
+            <p class="pack__price text-center lexend-bold text-xl">{{ item.price }} {{ t('Packages.base.price') }}</p>
+            <CustomBtn class="order-btn" @click="handlePlan(item)"><span>{{ t('Select') }}</span></CustomBtn>
         </div>
     </div>
 </template>

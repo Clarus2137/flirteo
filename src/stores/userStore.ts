@@ -19,8 +19,7 @@ export const useUserStore = defineStore('user', {
         userEducation: '' as any,
         lang: '',
         passToken: '',
-        importedRouter: '' as any,
-        order: {} as Partial<Order>
+        importedRouter: '' as any
     }),
 
     actions: {
@@ -220,10 +219,6 @@ export const useUserStore = defineStore('user', {
 
         setPassToken(token: string) {
             this.passToken = token;
-        },
-
-        createOrder(product: Partial<Package>) {
-            this.order = product;
         }
     },
 });

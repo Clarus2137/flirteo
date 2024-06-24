@@ -86,16 +86,15 @@ declare global {
         }
     }
 
-    interface Package {
+    interface Product {
         id: number,
         name: string,
-        size: number,
-        features: string[],
+        tokens: number,
         price: number
     }
 
     interface OrderedItem {
-        item: Package,
+        item: Partial<Product>,
         itemsQty: number,
         itemsPrice: number
     }

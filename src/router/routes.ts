@@ -10,7 +10,7 @@ const routes: RouteRecordRaw[] = [
             if (localStorage.getItem('isAuthorised') !== null) {
                 if (localStorage.getItem('userToken') !== null) {
                     if (sessionStorage.getItem('userData') !== null) {
-                        if (JSON.parse(sessionStorage.userData).firstname) {
+                        if (JSON.parse(sessionStorage.userData).firstName) {
                             next({ name: 'home' });
                         } else {
                             next({ name: 'complete' });
