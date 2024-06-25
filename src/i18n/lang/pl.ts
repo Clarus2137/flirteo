@@ -133,17 +133,7 @@ export default {
     Store: 'Sklep',
     Order: 'Zamów',
     Tokens: 'tokenów',
-    Packages: {
-        base: {
-            name: 'Standard',
-            features: {
-                size: ' tokenów',
-                support: 'Darmowe wsparcie',
-                prompts: 'Pełny zestaw promptów'
-            },
-            price: 'zł'
-        }
-    },
+    Pack: 'Paket',
     Order_item_hint: 'Wybierz produkt',
     Cart: {
         title: 'Twoje zamówienie',

@@ -133,17 +133,7 @@ export default {
     Store: 'Store',
     Order: 'Order',
     Tokens: 'tokens',
-    Packages: {
-        base: {
-            name: 'Standard',
-            features: {
-                size: ' tokens',
-                support: 'Free support',
-                prompts: 'Full list of prompts is available'
-            },
-            price: 'zł'
-        }
-    },
+    Pack: 'Package',
     Order_item_hint: 'Chose the product',
     Cart: {
         title: 'Your order',

@@ -44,7 +44,7 @@ export const useOrderStore = defineStore('order', {
             this.order = {
                 items: [
                     {
-                        item: selectedProduct,
+                        product: selectedProduct,
                         itemsQty: 1,
                         itemsPrice: selectedProduct.price
                     }

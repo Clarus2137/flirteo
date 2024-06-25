@@ -44,7 +44,7 @@ onBeforeMount(() => {
 <template>
     <div class="catalog flex justify-center items-center gap-5">
         <div class="catalog__item pack flex flex-col gap-3 lexend" v-for="item in products" :key="item.id">
-            <p class="pack__title text-lg">{{ item.name }}</p>
+            <p class="pack__title text-lg"> {{ $t('Pack') }}<br />{{ item.name }}</p>
             <!-- <ul class="pack__features">
                 <li class="flex items-center gap-3" v-for="feature in item.features" :key="feature">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -66,7 +66,7 @@ onBeforeMount(() => {
                 </li>
             </ul> -->
             <p class="pack__size text-center lexend text-lg">{{ item.tokens }} {{ t('Tokens') }}</p>
-            <p class="pack__price text-center lexend-bold text-xl">{{ item.price }} {{ t('Packages.base.price') }}</p>
+            <p class="pack__price text-center lexend-bold text-xl">{{ item.price }}</p>
             <CustomBtn class="order-btn" @click="handlePlan(item)"><span>{{ t('Select') }}</span></CustomBtn>
         </div>
     </div>

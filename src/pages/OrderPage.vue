@@ -10,7 +10,6 @@ const step = ref(1);
 
 
 <template>
-
     <h1 class="lexend-bold text-2xl text-center mb-5">{{ $t('Store') }}</h1>
     <q-stepper v-model="step" vertical color="primary" animated class="store">
         <q-step :name="1" :title="$t('Order_item_hint')" icon="settings" :done="step > 1">

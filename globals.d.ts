@@ -94,7 +94,7 @@ declare global {
     }
 
     interface OrderedItem {
-        item: Partial<Product>,
+        product: Product,
         itemsQty: number,
         itemsPrice: number
     }
