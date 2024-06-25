@@ -93,19 +93,14 @@ declare global {
         price: number
     }
 
-    interface OrderedItem {
-        product: Product,
-        itemsQty: number,
-        itemsPrice: number
-    }
-
     interface Order {
         id: number,
         userId: number,
         userFirstName: string,
         userLastName: string
-        items: OrderedItem[],
-        orderPrice: number
+        item: Product,
+        itemsQty: number,
+        orderPrice?: number
     }
 }
 

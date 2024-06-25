@@ -8,7 +8,7 @@ const apiPlans = `${apiUrl}/api/plans`;
 
 export const useOrderStore = defineStore('order', {
     state: () => ({
-        order: {} as Partial<Order>,
+        order: {} as Order,
         products: {} as Product[],
         lang: ''
     }),
@@ -41,15 +41,20 @@ export const useOrderStore = defineStore('order', {
         },
 
         createOrder(selectedProduct: Product) {
+            const userData = JSON.parse(sessionStorage.userData)
             this.order = {
-                items: [
-                    {
-                        product: selectedProduct,
-                        itemsQty: 1,
-                        itemsPrice: selectedProduct.price
-                    }
-                ]
+                id: 1,
+                userId: userData.id,
+                userFirstName: userData.firstName,
+                userLastName: userData.lastName,
+                item: selectedProduct,
+                itemsQty: 1
             }
+        },
+
+        addOrderData(orderData: Partial<Order>) {
+            this.order = { ...this.order, ...orderData }
+            console.log(this.order);
         }
     }
 });
