@@ -134,6 +134,21 @@ declare global {
             }, successCallback: (response: any) => void, errorCallback: (error: any) => void) => void;
         };
     }
+
+    interface Window {
+        paymentData?: PaymentData;
+    }
+
+    interface PaymentData {
+        totalPrice: string;
+        currencyCode: string;
+        merchantId: string;
+        merchantName: string;
+        allowedAuthMethods: string[];
+        allowedCardNetworks: string[];
+        gateway: string;
+        gatewayMerchantId: string;
+    }
 }
 
 export { };

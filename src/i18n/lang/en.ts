@@ -144,7 +144,7 @@ export default {
         price: 'Product price',
         sum: 'Order price'
     },
-    PaymentMethod: 'PaymentMethod',
+    PaymentMethod: 'Payment Method',
     Pay: 'Pay',
     OrderSuccess: 'Thank you for order!'
 };

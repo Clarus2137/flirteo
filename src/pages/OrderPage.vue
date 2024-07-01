@@ -4,7 +4,6 @@ import { useOrderStore } from 'src/stores/orderStore';
 import ProductItems from 'src/components/ProductItems.vue';
 import UserOrder from 'src/components/UserOrder.vue';
 import PaymentMethods from 'src/components/PaymentMethods.vue';
-import GooglePay from 'src/components/GooglePay.vue';
 import OrderSuccess from 'src/components/OrderSuccess.vue';
 
 
@@ -80,22 +79,8 @@ onMounted(() => {
             </q-stepper-navigation> -->
             </q-step>
 
-            <q-step :name="3" :title="$t('PaymentMethod')" icon="assignment" :done="step > 3">
-                <PaymentMethods />
-
-                <q-stepper-navigation class="mt-4">
-                    <q-btn @click="step = 4" color="primary" :label="$t('Continue')" />
-                    <q-btn flat @click="step = 2" color="primary" :label="$t('Back')" class="q-ml-sm" />
-                </q-stepper-navigation>
-            </q-step>
-
-            <q-step :name="4" :title="$t('Pay')" icon="add_comment">
-                <GooglePay @paymentSuccess="isOrdered = !isOrdered" />
-
-                <q-stepper-navigation class="mt-4">
-                    <!-- <q-btn color="primary" label="Finish" /> -->
-                    <q-btn flat @click="step = 3" color="primary" :label="$t('Back')" class="q-ml-sm" />
-                </q-stepper-navigation>
+            <q-step :name="3" :title="$t('PaymentMethod')" icon="assignment">
+                <PaymentMethods @stepBack="step = 2" />
             </q-step>
         </q-stepper>
 

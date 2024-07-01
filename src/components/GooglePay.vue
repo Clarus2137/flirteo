@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div id="container"></div>
 </template>
 
@@ -123,7 +123,7 @@ onUnmounted(() => {
     }
     document.removeEventListener('deviceready', onDeviceReady);
 });
-</script>
+</script> -->
 
 
 
@@ -182,3 +182,44 @@ const openPaymentPage = () => {
     window.open(url.toString(), '_blank');
 };
 </script> -->
+
+
+
+<template>
+    <div>
+        <h2>Оплата</h2>
+        <button @click="openGooglePay">Оплатить с Google Pay</button>
+        <div v-if="paymentStatus">
+            <p>{{ paymentStatus }}</p>
+        </div>
+    </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const paymentStatus = ref<string | null>(null);
+const paymentUrl = 'https://flirteo.eu/payments'; // Укажите ваш URL для оплаты
+
+const openGooglePay = () => {
+    if (window.cordova) {
+        if (window.cordova.InAppBrowser) {
+            const target = "_system"; // Открыть в системном браузере
+            const options = "location=yes";
+
+            window.cordova.InAppBrowser.open(paymentUrl, target, options);
+            paymentStatus.value = 'Ссылка открыта в системном браузере';
+        } else {
+            paymentStatus.value = 'InAppBrowser не поддерживается';
+        }
+    } else {
+        paymentStatus.value = 'Cordova не поддерживается';
+    }
+};
+</script>
+
+<style scoped>
+button {
+    margin-top: 1em;
+}
+</style>
