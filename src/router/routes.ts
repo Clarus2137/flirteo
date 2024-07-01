@@ -126,7 +126,7 @@ const routes: RouteRecordRaw[] = [
 
     {
         path: '/order',
-        component: () => import('layouts/InfoLayout.vue'),
+        component: () => import('layouts/BaseLayout.vue'),
         children: [{ path: '', component: () => import('pages/OrderPage.vue') }]
     }
 ];

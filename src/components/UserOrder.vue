@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue';
-import { useUserStore } from 'src/stores/userStore';
 import { useOrderStore } from 'src/stores/orderStore';
-import SvgGradient from './UI/SvgGradient.vue';
 
 
-const userStore = useUserStore();
 const orderStore = useOrderStore();
 
+const emit = defineEmits(['goToPaymentMethods', 'backToItems']);
 
 const order = orderStore.order;
 const qty = ref(1);
@@ -60,9 +58,15 @@ const confirmOrder = () => {
         orderPrice: orderPrice.value
     }
     orderStore.addOrderData(orderData);
+    emit('goToPaymentMethods');
+}
+
+const stepBack = () => {
+    emit('backToItems');
 }
 
 onMounted(() => {
+    qty.value = orderStore.order.itemsQty;
     orderPrice.value = orderStore.order.item.price * qty.value;
 });
 </script>
@@ -70,8 +74,9 @@ onMounted(() => {
 
 
 <template>
-    <div class="cart">
-        <div class="cart__item">{{ $t('Cart.item') }}: {{ order.item.name }}</div>
+    <div class="cart flex flex-col gap-2 mb-4 lexend">
+        <div class="cart__item">{{ $t('Name') }}: <span class="text-gradient-primary">{{ $t('Pack') }} "{{
+            order.item.name }}"</span></div>
         <div class="cart__qty qty flex justify-start items-center gap-2">{{ $t('Cart.quantity') }}:
             <div class="qty__inner ml-2 flex justify-start items-center gap-2">
                 <button type="button" @click="decreaseQty" :disabled="minQty">
@@ -101,10 +106,13 @@ onMounted(() => {
                 </button>
             </div>
         </div>
-        <div class="cart__price">{{ $t('Cart.price') }}: {{ order.item.price }}</div>
-        <div class="cart__sum">{{ $t('Cart.sum') }}: {{ orderPrice }}</div>
+        <div class="cart__price">{{ $t('Cart.price') }}: <span class="text-gradient-primary">{{ order.item.price }} {{
+            $t('PLN') }}</span></div>
+        <div class="cart__sum">{{ $t('Cart.sum') }}: <span class="text-gradient-primary">{{ orderPrice }} {{ $t('PLN')
+                }}</span></div>
     </div>
     <q-btn @click="confirmOrder" color="primary" :label="$t('Continue')" />
+    <q-btn flat @click="stepBack" color="primary" :label="$t('Back')" class="q-ml-sm" />
 </template>
 
 

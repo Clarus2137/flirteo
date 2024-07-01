@@ -1,6 +1,6 @@
 {
     "name": "package",
-    "version": "0.9.2",
+    "version": "0.9.3",
     "description": "A Quasar Project",
     "productName": "Flirteo",
     "author": "Web Systems",
@@ -13,6 +13,7 @@
         "build": "quasar build"
     },
     "dependencies": {
+        "@google-pay/button-element": "^3.1.0",
         "@quasar/extras": "^1.16.4",
         "axios": "^1.6.8",
         "pinia": "^2.0.11",
@@ -25,6 +26,7 @@
     "devDependencies": {
         "@intlify/vite-plugin-vue-i18n": "^3.3.1",
         "@quasar/app-vite": "^1.7.4",
+        "@types/googlepay": "^0.7.6",
         "@types/node": "^12.20.21",
         "@typescript-eslint/eslint-plugin": "^5.10.0",
         "@typescript-eslint/parser": "^5.10.0",

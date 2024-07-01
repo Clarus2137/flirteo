@@ -1,4 +1,5 @@
 export default {
+    PLN: 'PLN',
     ChooseLang: 'Choose language',
     Next: 'Next',
     Get_started: 'Get started',
@@ -62,6 +63,7 @@ export default {
     Date_of_birth: 'Date of birth',
     Location: 'Location',
     Education: 'Education',
+    UserTokens: 'Tokens left',
     Select: 'Select',
     Gender: {
         title: 'Gender',
@@ -141,5 +143,8 @@ export default {
         quantity: 'Quantity',
         price: 'Product price',
         sum: 'Order price'
-    }
+    },
+    PaymentMethod: 'PaymentMethod',
+    Pay: 'Pay',
+    OrderSuccess: 'Thank you for order!'
 };

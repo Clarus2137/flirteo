@@ -1,49 +1,29 @@
 <script setup lang="ts">
-import { ref, onBeforeMount } from 'vue';
-import { useI18n } from 'vue-i18n';
+import { ref } from 'vue';
 import { useOrderStore } from 'src/stores/orderStore';
-
-
-const { t } = useI18n();
 
 const orderStore = useOrderStore();
 
 const emit = defineEmits(['itemSelected']);
 
-const products = ref<Product[]>([]);
+const props = defineProps({
+    products: {
+        type: Array as () => Product[],
+        required: true
+    }
+});
 
 const handlePlan = (item: Product) => {
     orderStore.createOrder(item);
     emit('itemSelected');
 }
-
-const getFromStore = () => {
-    orderStore.products.forEach((product) => {
-        products.value.push(product);
-    });
-}
-
-const loadProducts = async () => {
-    const isSuccess = await orderStore.getPlans();
-    if (isSuccess) {
-        getFromStore();
-    }
-}
-
-onBeforeMount(() => {
-    if (orderStore.products.length) {
-        getFromStore();
-    } else {
-        loadProducts();
-    }
-});
 </script>
 
 
 
 <template>
     <div class="catalog flex justify-center items-center gap-5">
-        <div class="catalog__item pack flex flex-col gap-3 lexend" v-for="item in products" :key="item.id">
+        <div class="catalog__item pack flex flex-col gap-3 lexend" v-for="item in props.products" :key="item.id">
             <p class="pack__title text-lg"> {{ $t('Pack') }}<br />{{ item.name }}</p>
             <!-- <ul class="pack__features">
                 <li class="flex items-center gap-3" v-for="feature in item.features" :key="feature">
@@ -65,9 +45,9 @@ onBeforeMount(() => {
                     {{ feature }}
                 </li>
             </ul> -->
-            <p class="pack__size text-center lexend text-lg">{{ item.tokens }} {{ t('Tokens') }}</p>
-            <p class="pack__price text-center lexend-bold text-xl">{{ item.price }}</p>
-            <CustomBtn class="order-btn" @click="handlePlan(item)"><span>{{ t('Select') }}</span></CustomBtn>
+            <p class="pack__size text-center lexend text-lg">{{ item.tokens }} {{ $t('Tokens') }}</p>
+            <p class="pack__price text-center lexend-bold text-xl">{{ item.price }} {{ $t('PLN') }}</p>
+            <CustomBtn class="order-btn" @click="handlePlan(item)"><span>{{ $t('Select') }}</span></CustomBtn>
         </div>
     </div>
 </template>

@@ -26,6 +26,9 @@ export const useOrderStore = defineStore('order', {
                     });
                     console.log('Getting plans successful', response.data);
                     this.products = response.data;
+                    this.products.forEach((item) => {
+                        item.price /= 100;
+                    });
                     return true;
                 } catch (error) {
                     if (axios.isAxiosError(error)) {

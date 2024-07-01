@@ -10,6 +10,7 @@ declare global {
         gender: string,
         interests: string[],
         roles: string[],
+        tokens: number,
         token: string
     }
 
@@ -83,7 +84,8 @@ declare global {
     interface Navigator {
         app: {
             exitApp: () => void; // Добавьте другие методы по мере необходимости
-        }
+        },
+        standalone?: boolean;
     }
 
     interface Product {
@@ -101,6 +103,36 @@ declare global {
         item: Product,
         itemsQty: number,
         orderPrice?: number
+    }
+
+    interface Cordova {
+        InAppBrowser: InAppBrowser;
+    }
+
+    interface InAppBrowser {
+        open: (url: string, target: string, options?: string) => InAppBrowserRef;
+    }
+
+    interface InAppBrowserRef {
+        addEventListener: (type: string, callback: (event: any) => void) => void;
+        removeEventListener: (type: string, callback: (event: any) => void) => void;
+        close: () => void;
+    }
+
+    interface CordovaPlugins {
+        ApplePayGooglePay: {
+            canMakePayments: () => Promise<boolean>;
+            makePaymentRequest: (request: {
+                gateway: string;
+                merchantId: string;
+                gpMerchantName: string;
+                gpMerchantId: string;
+                purpose: string;
+                amount: number;
+                countryCode: string;
+                currencyCode: string;
+            }, successCallback: (response: any) => void, errorCallback: (error: any) => void) => void;
+        };
     }
 }
 

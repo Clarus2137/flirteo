@@ -1,4 +1,5 @@
 export default {
+    PLN: 'zł',
     ChooseLang: 'Wybierz język',
     Next: 'Dalej',
     Get_started: 'Zacząć',
@@ -62,6 +63,7 @@ export default {
     Date_of_birth: 'Data urodzenia',
     Location: 'Lokalizacja',
     Education: 'Wyksztalcenie',
+    UserTokens: 'Zostało tokenów',
     Select: 'Wybierz',
     Gender: {
         title: 'Płeć',
@@ -137,9 +139,12 @@ export default {
     Order_item_hint: 'Wybierz produkt',
     Cart: {
         title: 'Twoje zamówienie',
-        item: 'Nazawa produktu',
+        item: 'Nazwa produktu',
         quantity: 'Ilość',
         price: 'Cena produktu',
         sum: 'Cena zamówienia'
-    }
+    },
+    PaymentMethod: 'Sposób płatności',
+    Pay: 'Zapłać',
+    OrderSuccess: 'Dziękujemy za zakup!'
 };

@@ -121,7 +121,7 @@ onMounted(() => {
             </div>
             <div class=" grow home__user user flex flex-col gap-y-5 lexend-bold text-lg">
                 <p><span class="user__firstname">{{ userStore.user.firstName }}</span> <span class="user__lastname">{{
-        userStore.user.lastName }}</span>, {{ userAge }} {{ $t('Years') }}<span
+                    userStore.user.lastName }}</span>, {{ userAge }} {{ $t('Years') }}<span
                         v-if="endings === true">a</span></p>
                 <div class="user__location">
                     <p class="lexend-bold">{{ $t('Location') }}</p>
@@ -130,6 +130,10 @@ onMounted(() => {
                 <div class="user__education">
                     <p class="lexend-bold">{{ $t('Education') }}</p>
                     <p class="lexend text-secondary text-sm">{{ userStore.userEducation.name }}</p>
+                </div>
+                <div class="user__tokens">
+                    <p class="lexend-bold">{{ $t('UserTokens') }}: <span class="lexend">{{
+                        userStore.user.tokens }}</span></p>
                 </div>
                 <!-- <div class="user__ihobbies hobbies" v-if="userStore.user.interests!.length > 0">
                 <p class="lexend-bold mb-2">{{ $t('Hobbies') }}</p>
