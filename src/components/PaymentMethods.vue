@@ -15,15 +15,10 @@ const openGooglePay = () => {
             const options = 'location=yes';
 
             window.cordova.InAppBrowser.open(paymentUrl, target, options);
-            paymentStatus.value = 'Ссылка открыта в системном браузере';
-            alert('InAppBrowser открыт');
         } else {
-            paymentStatus.value = 'InAppBrowser не поддерживается';
-            alert('InAppBrowser не поддерживается');
+            paymentStatus.value = 'InAppBrowser is unsupported';
+            alert('InAppBrowser is unsupported');
         }
-    } else {
-        paymentStatus.value = 'Cordova не поддерживается';
-        alert('Cordova не поддерживается');
     }
 };
 
