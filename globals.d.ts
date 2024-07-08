@@ -105,6 +105,51 @@ declare global {
         orderPrice?: number
     }
 
+    interface GoogleProduct {
+        id: string;
+        title: string;
+        price: string;
+        description: string;
+    }
+
+    interface StoreProduct {
+        id: string;
+        alias: string;
+        type: string;
+        title: string;
+        price: string;
+        description: string;
+    }
+
+    interface StoreOrder {
+        productId: string;
+        finish: () => void;
+    }
+
+    interface Store {
+        verbosity: number;
+        DEBUG: number;
+        CONSUMABLE: string;
+        products: StoreProduct[];
+        register: (product: { id: string; alias: string; type: string }) => void;
+        ready: (callback: () => void) => void;
+        refresh: () => void;
+        order: (productId: string) => void;
+        when: (productId: string) => {
+            approved: (callback: (order: StoreOrder) => void) => void;
+            updated: (callback: (product: StoreProduct) => void) => void;
+            error: (callback: (error: any) => void) => void;
+        };
+    }
+
+    interface Window {
+        store: Store;
+    }
+
+
+
+
+
     interface Cordova {
         InAppBrowser: InAppBrowser;
     }
