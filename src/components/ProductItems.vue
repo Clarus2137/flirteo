@@ -20,6 +20,7 @@ const handlePlan = (item: Product) => {
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import 'cordova-plugin-purchase';
 
 interface GoogleProduct {
     id: string;

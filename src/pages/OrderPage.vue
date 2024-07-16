@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { useOrderStore } from 'src/stores/orderStore';
 import ProductItems from 'src/components/ProductItems.vue';
+import TestProd from 'src/components/TestProd.vue';
 import UserOrder from 'src/components/UserOrder.vue';
 import PaymentMethods from 'src/components/PaymentMethods.vue';
 import OrderSuccess from 'src/components/OrderSuccess.vue';
@@ -67,7 +68,9 @@ onMounted(() => {
         <h1 class="lexend-bold text-2xl text-center mb-5">{{ $t('Store') }}</h1>
         <q-stepper v-model="step" vertical color="primary" animated class="store" v-if="!isOrdered">
             <q-step :name="1" :title="$t('Order_item_hint')" icon="settings" :done="step > 1">
-                <ProductItems :products="products" @itemSelected="step = 2" />
+                <!-- <ProductItems :products="products" @itemSelected="step = 2" /> -->
+                <TestProd />
+
             </q-step>
 
             <q-step :name="2" :title="$t('Cart.title')" icon="create_new_folder" :done="step > 2">
