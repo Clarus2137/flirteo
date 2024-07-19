@@ -20,6 +20,6 @@ onBeforeMount(() => {
 
 <template>
     <ChatConfig @goToChat="isVisible = !isVisible" v-if="isVisible" />
-    <ChatBody @goToHome="$router.push('/profile')" @goToChatConfig="isVisible = !isVisible"
+    <ChatBody @goToHome="$router.push('/home')" @goToChatConfig="isVisible = !isVisible"
         @goToCatalog="$router.push('/order')" v-else />
 </template>

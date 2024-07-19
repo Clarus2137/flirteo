@@ -85,6 +85,7 @@ export const useChatStore = defineStore('chat', {
 
 
 
+
         async createSession(message: string) {
             this.session = {
                 ...this.session,

@@ -91,14 +91,24 @@ const addMessage = () => {
     }
 };
 
-const startNewSession = () => {
-    endSession();
-    emit('goToChatConfig');
-}
-
 const endSession = () => {
     chatStore.clearSession();
     pageMessages.value = [];
+}
+
+const buyTokensNow = () => {
+    endSession();
+    emit('goToCatalog');
+}
+
+const buyTokensLater = () => {
+    endSession();
+    emit('goToHome');
+}
+
+const startNewSession = () => {
+    endSession();
+    emit('goToChatConfig');
 }
 
 onBeforeMount(() => {
@@ -109,6 +119,8 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
+    console.log('ChatStore session is: ', chatStore.session);
+    console.log('ChatStore messages are: ', chatStore.messages);
     if (!isSessionStarted.value) {
         isSessionStarted.value = true;
         const autoMessage = messageField.value;
@@ -172,10 +184,8 @@ onMounted(() => {
                 </q-card-section>
 
                 <q-card-actions class="flex justify-between">
-                    <q-btn flat :label="$t('Purchase')" color="primary" v-close-popup
-                        @click="endSession; emit('goToCatalog')" />
-                    <q-btn flat :label="$t('Later')" color="primary" v-close-popup
-                        @click="endSession; emit('goToHome')" />
+                    <q-btn flat :label="$t('Purchase')" color="primary" v-close-popup @click="buyTokensNow" />
+                    <q-btn flat :label="$t('Later')" color="primary" v-close-popup @click="buyTokensLater" />
                 </q-card-actions>
             </q-card>
         </q-dialog>

@@ -1,113 +1,92 @@
-<!-- <script setup lang="ts">
-import { useOrderStore } from 'src/stores/orderStore';
-
-const orderStore = useOrderStore();
-
-const emit = defineEmits(['itemSelected']);
-
-const props = defineProps({
-    products: {
-        type: Array as () => Product[],
-        required: true
-    }
-});
-
-const handlePlan = (item: Product) => {
-    orderStore.createOrder(item);
-    emit('itemSelected');
-}</script> -->
-
-
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted } from 'vue';
-import 'cordova-plugin-purchase';
 
-interface GoogleProduct {
-    id: string;
-    title: string;
-    price: string;
-    description: string;
+const emit = defineEmits(['orderComplete']);
+
+const products = ref([
+    {
+        id: 'test_pack_1',
+        title: '',
+        description: '',
+        price: ''
+    },
+    {
+        id: 'test_pack_2',
+        title: '',
+        description: '',
+        price: ''
+    }
+]);
+
+function onDeviceReady() {
+    if (typeof CdvPurchase === 'undefined') {
+        alert('CdvPurchase is not defined');
+        return;
+    }
+
+    const { store, ProductType, Platform } = CdvPurchase;
+
+    // Регистрация продуктов
+    store.register([
+        {
+            type: ProductType.CONSUMABLE,
+            id: 'test_pack_1',
+            platform: Platform.GOOGLE_PLAY,
+        },
+        {
+            type: ProductType.CONSUMABLE,
+            id: 'test_pack_2',
+            platform: Platform.GOOGLE_PLAY,
+        }
+    ]);
+
+    // Обработка обновлений продукта
+    store.when().productUpdated(onProductUpdated);
+
+    // Обработка одобренных транзакций
+    store.when().approved(onTransactionApproved);
+
+    // Инициализация магазина
+    store.ready(() => {
+        console.log('CdvPurchase is ready');
+    });
+    store.initialize([Platform.GOOGLE_PLAY]);
 }
 
-const products = ref<GoogleProduct[]>([]);
-const purchasedProducts = ref<string[]>([]);
-
-const loadProducts = () => {
-    alert('LoadProducts called');
-    if (window.store) {
-        window.store.verbosity = window.store.DEBUG;
-
-        // Регистрация продуктов
-        window.store.register({
-            id: 'your_test_product_id', // Замените на ваши реальные идентификаторы продуктов
-            alias: 'Test Product',
-            type: window.store.CONSUMABLE,
-        });
-
-        // Инициализация магазина
-        window.store.ready(() => {
-            alert('Store is ready');
-            products.value = window.store.products.map((product: any) => ({
-                id: product.id,
-                title: product.title,
-                price: product.price,
-                description: product.description,
-            }));
-            alert('Products: ' + products.value);
-        });
-
-        window.store.refresh();
-    } else {
-        console.error('Store plugin is not available');
+function onProductUpdated(product) {
+    const index = products.value.findIndex(p => p.id === product.id);
+    if (index !== -1) {
+        products.value[index].title = product.title;
+        products.value[index].description = product.description;
+        products.value[index].price = product.pricing.price;
     }
-};
+}
 
-const handlePurchase = (order: any) => {
-    console.log('Purchase approved: ', order);
-    purchasedProducts.value.push(order.productId);
-    localStorage.setItem('purchasedProducts', JSON.stringify(purchasedProducts.value));
-    order.finish();
-};
-
-const buyProduct = (productId: string) => {
-    if (window.store) {
-        window.store.order(productId);
-    } else {
-        console.error('Store is not initialized');
+function buy(productId) {
+    const product = CdvPurchase.store.get(productId, CdvPurchase.Platform.GOOGLE_PLAY);
+    const offer = product.getOffer();
+    if (offer) {
+        offer.order();
     }
-};
+}
+
+function onTransactionApproved(transaction) {
+    transaction.finish();
+    emit('orderComplete');
+}
 
 onMounted(() => {
-    document.addEventListener('deviceready', loadProducts);
-    alert('onMounted called');
-    // Загрузка данных о покупках из LocalStorage
-    const storedPurchases = localStorage.getItem('purchasedProducts');
-    if (storedPurchases) {
-        purchasedProducts.value = JSON.parse(storedPurchases);
-    }
-
-    if (window.store) {
-        // Обработчик покупки
-        window.store.when('your_test_product_id').approved(handlePurchase);
-
-        window.store.when('your_test_product_id').updated((product: any) => {
-            console.log('Product updated: ', product);
-        });
-
-        window.store.when('your_test_product_id').error((error: any) => {
-            console.error('Purchase error: ', error);
-        });
-    }
+    document.addEventListener('deviceready', onDeviceReady);
 });
 </script>
 
 <template>
     <div class="catalog flex justify-center items-center gap-5">
-        <div class="catalog__item pack flex flex-col gap-3 lexend" v-for="item in products" :key="item.id">
-            <p class="pack__title text-lg"> {{ $t('Pack') }}<br />{{ item.title }}</p>
-            <p class="pack__size text-center lexend text-lg">{{ item.description }} - 10 {{ $t('Tokens') }}</p>
-            <p class="pack__price text-center lexend-bold text-xl">{{ item.price }} {{ $t('PLN') }}</p>
-            <CustomBtn class="order-btn" @click="buyProduct(item.id)"><span>{{ $t('Select') }}</span></CustomBtn>
+        <div v-for="product in products" :key="product.id" class="catalog__item pack flex flex-col gap-3 lexend">
+            <p class="pack__title text-lg">{{ product.title }}</p>
+            <p class="pack__size text-center lexend text-lg">{{ product.description }}</p>
+            <p class="pack__price text-center lexend-bold text-xl">{{ product.price }}</p>
+            <CustomBtn class="order-btn" @click="buy(product.id)"><span>{{ $t('Order') }}</span></CustomBtn>
         </div>
     </div>
 </template>

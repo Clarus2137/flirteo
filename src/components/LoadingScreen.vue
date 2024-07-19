@@ -24,7 +24,7 @@ onMounted(() => {
 
 <template>
     <div class="flex flex-col justify-center gap-y-5 absolute left-0 right-0 top-0 bottom-0 loader-logo">
-        <svg width="50%" viewBox="0 0 849 784" class="loader-img" fill="none" xmlns="http://www.w3.org/2000/svg"
+        <svg width="180px" viewBox="0 0 849 784" class="loader-img" fill="none" xmlns="http://www.w3.org/2000/svg"
             ref="animated">
             <g clip-path="url(#clip0_36_27)">
                 <path
