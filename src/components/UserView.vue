@@ -113,7 +113,7 @@ onMounted(() => {
     <div class="flex flex-col" ref="animatedPage" v-show="!isDataLoading">
         <div class="grow home flex flex-col gap-y-8" v-if="isFullData">
             <div
-                class="home__photo photo flex justify-center items-center h-[75vw] max-h-[320px] mt-[-1.25rem] mx-[-3vw] pt-6 gradient-primary rounded-b-3xl">
+                class="home__photo photo flex justify-center items-center h-[75vw] max-h-[320px] mt[-1.5rem] mx-[-3vw] pt-6 gradient-primary rounded-b-3xl">
                 <img src="./../assets/user-male.png" alt="User Male" class="h-[80%] max-h-[200px]"
                     v-if="userStore.user.gender === 'male'">
                 <img src="./../assets/user-female.png" alt="User Female" class="h-[80%] max-h-[200px]"
@@ -161,7 +161,7 @@ onMounted(() => {
     padding-bottom: env(safe-area-inset-top);
 
     @media(min-width: calc(400px + 6vw)) {
-        margin: -1vw calc((100vw - 400px) / 2 * -1) 0;
+        margin: -1.5rem calc((100vw - 400px) / 2 * -1) 0;
     }
 }
 </style>
