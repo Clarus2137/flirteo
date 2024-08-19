@@ -104,6 +104,16 @@ declare global {
         itemsQty: number,
         orderPrice?: number
     }
+
+    interface StatusBar {
+        backgroundColorByHexString: (color: string) => void;
+        hide: () => void;
+        show: () => void;
+    }
+
+    interface Window {
+        StatusBar: StatusBar;
+    }
 }
 
 export { };

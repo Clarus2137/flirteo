@@ -14,12 +14,13 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "cordova-android": "^13.0.0",
-    "cordova-ios": "^7.1.0",
+    "cordova-ios": "^7.1.1",
     "cordova-plugin-advanced-http": "^3.3.1",
     "cordova-plugin-customurlscheme": "^5.0.2",
     "cordova-plugin-file": "^8.1.0",
     "cordova-plugin-network-information": "^3.0.0",
-    "cordova-plugin-purchase": "^13.11.1"
+    "cordova-plugin-purchase": "^13.11.1",
+    "cordova-plugin-statusbar": "^4.0.0"
   },
   "cordova": {
     "platforms": [
@@ -34,7 +35,8 @@
       "cordova-plugin-network-information": {},
       "cordova-plugin-advanced-http": {
         "ANDROIDBLACKLISTSECURESOCKETPROTOCOLS": "SSLv3,TLSv1"
-      }
+      },
+      "cordova-plugin-statusbar": {}
     }
   }
 }
