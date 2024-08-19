@@ -113,7 +113,7 @@ onMounted(() => {
     <div class="flex flex-col" ref="animatedPage" v-show="!isDataLoading">
         <div class="grow home flex flex-col gap-y-8" v-if="isFullData">
             <div
-                class="home__photo photo flex justify-center items-center h-[75vw] max-h-[320px] mt-[-1vw] mx-[-3vw] gradient-primary rounded-b-3xl">
+                class="home__photo photo flex justify-center items-center h-[75vw] max-h-[320px] mt-[-1.25rem] mx-[-3vw] pt-6 gradient-primary rounded-b-3xl">
                 <img src="./../assets/user-male.png" alt="User Male" class="h-[80%] max-h-[200px]"
                     v-if="userStore.user.gender === 'male'">
                 <img src="./../assets/user-female.png" alt="User Female" class="h-[80%] max-h-[200px]"
@@ -121,7 +121,7 @@ onMounted(() => {
             </div>
             <div class=" grow home__user user flex flex-col gap-y-5 lexend-bold text-lg">
                 <p><span class="user__firstname">{{ userStore.user.firstName }}</span> <span class="user__lastname">{{
-                    userStore.user.lastName }}</span>, {{ userAge }} {{ $t('Years') }}<span
+        userStore.user.lastName }}</span>, {{ userAge }} {{ $t('Years') }}<span
                         v-if="endings === true">a</span></p>
                 <div class="user__location">
                     <p class="lexend-bold">{{ $t('Location') }}</p>
@@ -133,7 +133,7 @@ onMounted(() => {
                 </div>
                 <div class="user__tokens">
                     <p class="lexend-bold">{{ $t('UserTokens') }}: <span class="lexend">{{
-                        userStore.user.tokens }}</span></p>
+        userStore.user.tokens }}</span></p>
                 </div>
                 <!-- <div class="user__ihobbies hobbies" v-if="userStore.user.interests!.length > 0">
                 <p class="lexend-bold mb-2">{{ $t('Hobbies') }}</p>

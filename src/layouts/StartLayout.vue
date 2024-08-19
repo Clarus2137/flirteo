@@ -5,7 +5,7 @@
 
 
 <template>
-    <q-layout class="grid p-[3vw] step-slider">
+    <q-layout class="grid p-[3vw] pt-6 step-slider">
         <q-page-container class="grid">
             <router-view></router-view>
         </q-page-container>
