@@ -21,7 +21,6 @@ export const useChatStore = defineStore('chat', {
 
     actions: {
         async getPrompts() {
-            console.log('Prompts lang is: ', this.lang);
             try {
                 const userToken = localStorage.getItem('userToken');
                 const response = await axios.get(apiPrompts, {
@@ -45,7 +44,6 @@ export const useChatStore = defineStore('chat', {
 
 
         async getResponseTypes() {
-            console.log('Responses lang is: ', this.lang);
             try {
                 const userToken = localStorage.getItem('userToken');
                 const response = await axios.get(apiRespTypes, {

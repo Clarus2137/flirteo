@@ -9,7 +9,7 @@ const tab = ref('home');
 
 <template>
     <q-tabs v-model="tab" switch-indicator narrow-indicator indicator-color="primary"
-        class="bg-white text-white fixed left-0 right-0 bottom-0">
+        class="fixed left-0 right-0 bottom-0">
         <q-route-tab name="home" to="/home" exact>
             <HomeTab />
         </q-route-tab>
@@ -21,3 +21,10 @@ const tab = ref('home');
         </q-route-tab>
     </q-tabs>
 </template>
+
+
+<style lang="scss">
+.q-tabs {
+    background: #fff;
+}
+</style>

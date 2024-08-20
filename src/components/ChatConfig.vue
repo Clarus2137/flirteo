@@ -1,19 +1,21 @@
 <script setup lang="ts">
-import { ref, Ref, onMounted } from 'vue';
+import { ref, Ref, onMounted, onBeforeMount } from 'vue';
+import { useUserStore } from 'src/stores/userStore';
 import { useChatStore } from 'src/stores/chatStore';
 
 
 const isDataLoading = ref(true);
 
+const userStore = useUserStore();
 const chatStore = useChatStore();
 
-const emit = defineEmits(['goToChat']);
+const emit = defineEmits(['goToChat', 'goToComplete']);
 
 const apiUrl = process.env.API_SERVER;
 const promptsSource = `${apiUrl}/api/prompts/`;
 const respTypesSource = `${apiUrl}/api/response_types/`;
-const userID = JSON.parse(sessionStorage.userData).id;
-const userSource = `${apiUrl}/api/users/${userID}`;
+const userID = ref(0);
+let userSource = '';
 
 const isOptions = ref(true);
 const isFinished = ref(false);
@@ -119,6 +121,20 @@ const toggleScreen = () => {
     }
 }
 
+onBeforeMount(async () => {
+    if (sessionStorage.getItem('userData') !== null) {
+        if (JSON.parse(sessionStorage.userData).firstName === null) {
+            emit('goToComplete');
+        } else {
+            await userStore.getUserData();
+        }
+    } else {
+        await userStore.getUserData();
+    }
+    userID.value = JSON.parse(sessionStorage.userData).id;
+    userSource = `${apiUrl}/api/users/${userID.value}`;
+});
+
 onMounted(async () => {
     const promises = [
         chatStore.getPrompts(),
@@ -165,7 +181,7 @@ onMounted(async () => {
                 <p class="body-text lexend-light text-secondary">{{ $t('Mode_hint') }}</p>
                 <CustomBtn type="button" v-for="prompt in prompts" :key="prompt.id"
                     @click="setPrompt(prompt.places, prompt.id); nextStep(2)">{{
-                        prompt.name }}</CustomBtn>
+        prompt.name }}</CustomBtn>
                 <q-stepper-navigation>
                     <q-btn flat @click="step = 1" color="primary" :label="$t('Back')" class="q-ml-sm" />
                 </q-stepper-navigation>
@@ -205,7 +221,7 @@ onMounted(async () => {
                 <div class="w-full flex flex-col gap-4">
                     <CustomBtn type="button" v-for="style in respTypes" :key="style.id" @click="setStyle(style.id)">
                         {{
-                            style.name }}
+        style.name }}
                     </CustomBtn>
                 </div>
                 <q-stepper-navigation>

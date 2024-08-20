@@ -11,12 +11,12 @@ const routes: RouteRecordRaw[] = [
                 if (localStorage.getItem('userToken') !== null) {
                     if (sessionStorage.getItem('userData') !== null) {
                         if (JSON.parse(sessionStorage.userData).firstName) {
-                            next({ name: 'home' });
+                            next({ name: 'chat' });
                         } else {
                             next({ name: 'complete' });
                         }
                     } else {
-                        next({ name: 'home' });
+                        next({ name: 'chat' });
                     }
                 } else {
                     next({ name: 'auth' });
@@ -82,7 +82,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/chat',
         component: () => import('layouts/BaseLayout.vue'),
-        children: [{ path: '', component: () => import('pages/ChatPage.vue') }]
+        children: [{ path: '', name: 'chat', component: () => import('pages/ChatPage.vue') }]
     },
 
     {

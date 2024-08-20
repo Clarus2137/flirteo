@@ -91,6 +91,11 @@ const addMessage = () => {
     }
 };
 
+const changeResponse = (responseOption: string) => {
+    messageField.value = responseOption;
+    addMessage();
+}
+
 const endSession = () => {
     chatStore.clearSession();
     pageMessages.value = [];
@@ -138,8 +143,29 @@ onMounted(() => {
 
 <template>
     <div class="chat__body flex flex-col">
-        <div class="restart py-2 text-center absolute left-0 right-0 z-10 shadow-md">
+        <div class="control-btns flex justify-around py-2 absolute left-0 right-0 z-10 shadow-md">
             <CustomBtn type="button" @click="openDialogSession">{{ $t('New_Session.title') }}</CustomBtn>
+            <q-btn-dropdown color="primary" label="Inna odpowiedź" class="rounded-[10px] px-3">
+                <q-list>
+                    <q-item clickable v-close-popup @click="changeResponse('Przygotuj inną wersję')">
+                        <q-item-section>
+                            <CustomBtn type="button">Inna</CustomBtn>
+                        </q-item-section>
+                    </q-item>
+
+                    <q-item clickable v-close-popup @click="changeResponse('Przygotuj podobną wersję')">
+                        <q-item-section>
+                            <CustomBtn type="button">Podobna</CustomBtn>
+                        </q-item-section>
+                    </q-item>
+
+                    <q-item clickable v-close-popup @click="changeResponse('Przygotuj krótszą wersję')">
+                        <q-item-section>
+                            <CustomBtn type="button">Krótsza</CustomBtn>
+                        </q-item-section>
+                    </q-item>
+                </q-list>
+            </q-btn-dropdown>
         </div>
         <div class="grow px-2 pt-[56px] chat__messages messages" :class="{ 'auto-mes': isSessionStarted }"
             id="messages">
@@ -155,7 +181,7 @@ onMounted(() => {
         <form @submit.prevent="addMessage" class="chat__form self-end flex no-wrap gap-x-3">
             <CustomInput type="text" v-model="messageField" class="chat__input" />
             <button type="submit" class="send w-auto" :disabled="messageField === ''">
-                <svg width="54px" height="54px" viewBox="2 2 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="42px" height="42px" viewBox="2 2 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="gradient_primary" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%" style="stop-color:#ff84a7;stop-opacity:1" />
@@ -213,18 +239,24 @@ onMounted(() => {
 
 <style lang="scss">
 .chat__body {
-    .restart {
+
+    .control-btns {
         background: #fff;
 
         button {
             width: auto;
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+            text-transform: none;
+
+            .q-icon {
+                display: none;
+            }
         }
     }
 
     .messages {
-        max-height: calc(100vh - 110px);
+        max-height: calc(100vh - 122px);
         overflow-y: auto;
 
         &.auto-mes>.messages__item:first-child .q-message-sent {
@@ -233,6 +265,7 @@ onMounted(() => {
     }
 
     .chat__input {
+        padding: 0.5rem;
         background: #eae9ea;
 
         &:focus {
@@ -265,6 +298,13 @@ onMounted(() => {
                 fill: url(#gradient_primary-hover);
             }
         }
+    }
+}
+
+.q-menu {
+    button {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
     }
 }
 </style>

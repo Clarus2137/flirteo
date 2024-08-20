@@ -113,7 +113,7 @@ export default {
     Months: 'January_February_March_April_May_June_July_August_September_October_November_December',
     Months_Short: 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec',
     New_Session: {
-        title: 'New conversation',
+        title: 'New chat',
         confirm: 'Do you want to start the new chat?',
         desc: 'All the current messages will be deleted'
     },

@@ -113,7 +113,7 @@ export default {
     Months: 'Styczeń_Luty_Marzec_Kwiecień_Maj_Czerwiec_Lipiec_Sierpień_Wrzesień_Październik_Listopad_Grudzień',
     Months_Short: 'Sty_Lut_Mar_Kwi_May_Cze_Lip_Sie_Wrz_Paź_Lis_Gru',
     New_Session: {
-        title: 'Nowa rozmowa',
+        title: 'Nowy czat',
         confirm: 'Czy chcesz rozpocząć nową rozmowę?',
         desc: 'Wszystkie bieżące wiadomości zostaną usunięte.'
     },

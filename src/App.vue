@@ -43,15 +43,15 @@ onMounted(() => {
     document.addEventListener('backbutton', onBackButton, false);
     appLoading.value = false;
 
-    document.addEventListener('deviceready', function() {
-    if (window.StatusBar) {
-        // Настройка цвета статус-бара
-        window.StatusBar.backgroundColorByHexString('#000000');
-        
-        // Вы можете также скрыть статус-бар, если это необходимо
-        // StatusBar.hide();
-    }
-}, false);
+    document.addEventListener('deviceready', function () {
+        if (window.StatusBar) {
+            // Настройка цвета статус-бара
+            window.StatusBar.backgroundColorByHexString('#000000');
+
+            // Вы можете также скрыть статус-бар, если это необходимо
+            // StatusBar.hide();
+        }
+    }, false);
 
 });
 

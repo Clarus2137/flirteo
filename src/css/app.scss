@@ -226,8 +226,15 @@ body {
         color: $text_primary;
     }
 
-    .chat__body .restart {
+    .chat__body .control-btns,
+    .chat__body .chat__form,
+    .q-tabs {
         background: $text_primary;
+    }
+
+    .chat__body .chat__input {
+        color: $text_light;
+        background: $text_light;
     }
 
     .q-stepper {
