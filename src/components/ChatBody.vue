@@ -56,6 +56,7 @@ const startSession = async (autoMessage: string) => {
                 response: chatStore.session.messages[0].response
             };
             pageMessages.value[pageMessages.value.length - 1] = { ...pageMessages.value[pageMessages.value.length - 1], ...answer };
+            console.log('Answer on the page is: ', pageMessages.value[pageMessages.value.length - 1].response);
             isSessionStarted.value = true;
         }
     } else if (isSuccess === 403) {
@@ -72,6 +73,7 @@ const sendNewMessage = async (newMessage: string) => {
                 response: chatStore.session.messages[chatStore.session.messages.length - 1].response
             };
             pageMessages.value[pageMessages.value.length - 1] = { ...pageMessages.value[pageMessages.value.length - 1], ...answer };
+            console.log('Answer on the page is: ', pageMessages.value[pageMessages.value.length - 1].response);
         }
     } else if (isSuccess === 403) {
         openDialogTokens();
@@ -143,9 +145,9 @@ onMounted(() => {
 
 <template>
     <div class="chat__body flex flex-col">
-        <div class="control-btns flex justify-around py-2 absolute left-0 right-0 z-10 shadow-md">
+        <div class="control-btns flex justify-between py-4 absolute left-0 right-0 z-10 shadow-md">
             <CustomBtn type="button" @click="openDialogSession">{{ $t('New_Session.title') }}</CustomBtn>
-            <q-btn-dropdown color="primary" label="Inna odpowiedź" class="rounded-[10px] px-3">
+            <q-btn-dropdown color="primary" label="Inna odpowiedź" class="rounded-[10px] px-3 lexend-bold">
                 <q-list>
                     <q-item clickable v-close-popup @click="changeResponse('Przygotuj inną wersję')">
                         <q-item-section>
@@ -167,15 +169,16 @@ onMounted(() => {
                 </q-list>
             </q-btn-dropdown>
         </div>
-        <div class="grow px-2 pt-[56px] chat__messages messages" :class="{ 'auto-mes': isSessionStarted }"
+        <div class="grow px-2 pt-[72px] chat__messages messages" :class="{ 'auto-mes': isSessionStarted }"
             id="messages">
             <div class="messages__item" v-for="item in pageMessages" :key="item.id">
                 <q-chat-message :name="$t('Me')" :text="[item.content]" sent />
                 <q-chat-message name="Flirteo AI" bg-color="primary" text-color="white" v-if="!item.response">
                     <q-spinner-dots size="2rem" />
                 </q-chat-message>
-                <q-chat-message name="Flirteo AI" :text="[item.response]" bg-color="primary" text-color="white"
-                    v-else />
+                <q-chat-message name="Flirteo AI" :text="[]" bg-color="primary" text-color="white" v-else>
+                    <div v-html="item.response.split('\n').join('<br>')"></div>
+                </q-chat-message>
             </div>
         </div>
         <form @submit.prevent="addMessage" class="chat__form self-end flex no-wrap gap-x-3">
@@ -241,13 +244,19 @@ onMounted(() => {
 .chat__body {
 
     .control-btns {
+        padding-left: calc(3vw + 0.5rem);
+        padding-right: calc(3vw + 0.5rem);
         background: #fff;
 
         button {
-            width: auto;
-            padding: 0.25rem 0.5rem;
+            width: calc((100% - 3vw - 0.5rem) / 2);
+            padding: 0.5rem;
             font-size: 0.875rem;
             text-transform: none;
+
+            &::before {
+                box-shadow: none;
+            }
 
             .q-icon {
                 display: none;
@@ -256,7 +265,7 @@ onMounted(() => {
     }
 
     .messages {
-        max-height: calc(100vh - 122px);
+        max-height: calc(100vh - 98px);
         overflow-y: auto;
 
         &.auto-mes>.messages__item:first-child .q-message-sent {

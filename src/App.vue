@@ -5,7 +5,6 @@ import { useUserStore } from 'src/stores/userStore';
 import { useChatStore } from 'src/stores/chatStore';
 import { useOrderStore } from './stores/orderStore';
 
-
 interface CordovaNavigator extends Navigator {
     app: {
         exitApp: () => void;
@@ -19,7 +18,6 @@ const onBackButton = (e: Event) => {
 }
 
 const appLoading = ref(true);
-
 const isDark = ref(false);
 
 onBeforeMount(() => {
@@ -45,22 +43,23 @@ onMounted(() => {
 
     document.addEventListener('deviceready', function () {
         if (window.StatusBar) {
-            // Настройка цвета статус-бара
-            window.StatusBar.backgroundColorByHexString('#000000');
+            window.StatusBar.hide();
+        }
 
-            // Вы можете также скрыть статус-бар, если это необходимо
-            // StatusBar.hide();
+        // Включение полноэкранного режима с помощью плагина
+        if (window.AndroidFullScreen) {
+            window.AndroidFullScreen.immersiveMode(
+                () => console.log('Immersive mode success'),
+                (error: any) => console.error('Immersive mode error', error)
+            );
         }
     }, false);
-
 });
 
 onBeforeUnmount(() => {
     document.removeEventListener('backbutton', onBackButton, false);
 });
 </script>
-
-
 
 <template>
     <router-view />

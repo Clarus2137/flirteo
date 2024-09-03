@@ -85,7 +85,7 @@ declare global {
         app: {
             exitApp: () => void; // Добавьте другие методы по мере необходимости
         },
-        standalone?: boolean;
+        standalone?: boolean
     }
 
     interface Product {
@@ -106,12 +106,21 @@ declare global {
     }
 
     interface StatusBar {
-        backgroundColorByHexString: (color: string) => void;
-        hide: () => void;
-        show: () => void;
+        backgroundColorByHexString: (color: string) => void,
+        hide: () => void,
+        show: () => void
+    }
+
+    interface AndroidFullScreen {
+        immersiveMode: (successCallback: () => void, errorCallback: (error: any) => void) => void;
+        leanMode: (successCallback: () => void, errorCallback: (error: any) => void) => void;
+        showSystemUI: (successCallback: () => void, errorCallback: (error: any) => void) => void;
+        showUnderStatusBar: (successCallback: () => void, errorCallback: (error: any) => void) => void;
+        showUnderSystemUI: (successCallback: () => void, errorCallback: (error: any) => void) => void;
     }
 
     interface Window {
+        AndroidFullScreen: AndroidFullScreen;
         StatusBar: StatusBar;
     }
 }

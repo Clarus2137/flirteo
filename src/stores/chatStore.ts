@@ -92,7 +92,7 @@ export const useChatStore = defineStore('chat', {
                     attachment: this.image
                 }]
             }
-            console.log(this.session);
+            console.log('Created session is: ', this.session);
             const userToken = localStorage.getItem('userToken');
             try {
                 const response = await axios.post(apiSession, this.session, {
@@ -102,6 +102,7 @@ export const useChatStore = defineStore('chat', {
                     }
                 });
                 this.session = response.data;
+                console.log('The answer is: ', this.session.messages);
                 return true;
             } catch (error) {
                 if (axios.isAxiosError(error)) {
