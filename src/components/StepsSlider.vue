@@ -54,9 +54,10 @@ const slideNext = () => {
         <q-carousel-slide :name="slide.name" class="grid p-0" v-for="slide in slides" :key="slide.id">
             <div class="start__item grid grid-rows-[auto_min-content]">
                 <component :is="slide.imgSrc" />
-                <div class="start__details grid gap-y-5 self-end bg-white p-[4%] rounded-[30px]">
+                <div class="start__details grid gap-y-5 self-end p-[4%] rounded-[30px]"
+                    :class="{ 'bg-white': !$q.dark.isActive }">
                     <div class="details__title">
-                        <h1 class="headline lexend-bold text-black text-center">
+                        <h1 class="headline lexend-bold text-center" :class="{ 'text-black': !$q.dark.isActive }">
                             {{ slide.headline }}
                         </h1>
                         <p class="self-end body-text text-secondary text-center">

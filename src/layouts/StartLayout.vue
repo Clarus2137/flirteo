@@ -14,7 +14,9 @@
 
 
 <style lang="scss">
-.step-slider {
-    background: #fcebf0;
+.body--dark {
+    .step-slider {
+        background: $dark;
+    }
 }
 </style>

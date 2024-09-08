@@ -2,10 +2,14 @@
 import { ref, onBeforeMount } from 'vue';
 import { useUserStore } from 'src/stores/userStore';
 import { useChatStore } from 'src/stores/chatStore';
+import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
 
 const { locale } = useI18n();
+
+const $q = useQuasar();
+
 
 const userStore = useUserStore();
 const chatStore = useChatStore();
@@ -14,8 +18,6 @@ const emit = defineEmits(['goToPass', 'goToAuthorization']);
 
 const isLoading = ref(false);
 const isLoadingLang = ref(false);
-
-const isActive = ref(false);
 
 const isLang = ref(false);
 
@@ -49,22 +51,31 @@ const toggleLang = async () => {
     }
 }
 
+// const toggleTheme = () => {
+//     isDarkMode.value = !isDarkMode.value;
+//     if (localStorage.getItem('darkMode') !== null) {
+//         localStorage.darkMode = `${isDarkMode.value}`;
+//         if (localStorage.darkMode === 'true') {
+//             document.body.classList.add('dark-mode');
+//         } else {
+//             document.body.classList.remove('dark-mode');
+//         }
+//     } else {
+//         localStorage.setItem('darkMode', `${isDarkMode.value}`);
+//         if (localStorage.darkMode === 'true') {
+//             document.body.classList.add('dark-mode');
+//         } else {
+//             document.body.classList.remove('dark-mode');
+//         }
+//     }
+// }
+
 const toggleTheme = () => {
-    isActive.value = !isActive.value;
+    $q.dark.toggle();
     if (localStorage.getItem('darkMode') !== null) {
-        localStorage.darkMode = `${isActive.value}`;
-        if (localStorage.darkMode === 'true') {
-            document.body.classList.add('dark-mode');
-        } else {
-            document.body.classList.remove('dark-mode');
-        }
+        localStorage.darkMode = `${$q.dark.isActive}`;
     } else {
-        localStorage.setItem('darkMode', `${isActive.value}`);
-        if (localStorage.darkMode === 'true') {
-            document.body.classList.add('dark-mode');
-        } else {
-            document.body.classList.remove('dark-mode');
-        }
+        localStorage.setItem('darkMode', `${$q.dark.isActive}`);
     }
 }
 
@@ -103,11 +114,11 @@ onBeforeMount(() => {
         isLang.value = false;
     }
 
-    if (localStorage.getItem('darkMode') !== null) {
-        if (localStorage.darkMode === 'true') {
-            isActive.value = true;
-        }
-    }
+    // if (localStorage.getItem('darkMode') !== null) {
+    //     if (localStorage.darkMode === 'true') {
+    //         isDarkMode.value = true;
+    //     }
+    // }
 });
 </script>
 
@@ -121,12 +132,12 @@ onBeforeMount(() => {
             <div class="flex items-center gap-[10px] settings__item">
                 <p class="settings__item-title">{{ $t('Lang') }}:</p>
                 <div class="w-[2.5rem] p-2 rounded-[10px] text-center hover:cursor-pointer"
-                    :class="{ 'gradient-primary border-transparent text-white': !isLang, 'item-shadow': isLang }"
+                    :class="{ 'gradient-primary border-transparent text-white': !isLang, 'bg-white text-[#121212]': $q.dark.isActive && isLang, 'item-shadow': isLang && !$q.dark.isActive }"
                     @click="toggleLang">
                     En
                 </div>
                 <div class="w-[2.5rem] p-2 rounded-[10px] text-center hover:cursor-pointer"
-                    :class="{ 'gradient-primary border-transparent text-white': isLang, 'item-shadow': !isLang }"
+                    :class="{ 'gradient-primary border-transparent text-white': isLang, 'bg-white text-[#121212]': $q.dark.isActive && !isLang, 'item-shadow': !isLang && !$q.dark.isActive }"
                     @click="toggleLang">
                     Pl
                 </div>
@@ -135,12 +146,12 @@ onBeforeMount(() => {
             <div class="flex items-center gap-[10px] settings__item">
                 <p class="settings__item-title">{{ $t('Theme') }}:</p>
                 <div class="p-3 rounded-[10px] hover:cursor-pointer"
-                    :class="{ 'gradient-primary border-transparent text-white': !isActive, 'item-shadow': isActive }"
+                    :class="{ 'gradient-primary border-transparent text-white': !$q.dark.isActive, 'bg-white text-[#121212]': $q.dark.isActive }"
                     @click="toggleTheme">
                     {{ $t('Light') }}
                 </div>
                 <div class="p-3 rounded-[10px] hover:cursor-pointer"
-                    :class="{ 'gradient-primary border-transparent text-white': isActive, 'item-shadow': !isActive }"
+                    :class="{ 'gradient-primary border-transparent text-white': $q.dark.isActive, 'bg-white text-[#121212] item-shadow': !$q.dark.isActive }"
                     @click="toggleTheme">
                     {{ $t('Dark') }}
                 </div>

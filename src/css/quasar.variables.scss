@@ -12,13 +12,14 @@
 // to match your app's branding.
 // Tip: Use the "Theme Builder" on Quasar's documentation website.
 
-$primary : #f24e80;
+$primary : #0057FC;
+$primary-dark: #ffd900;
 $secondary : #989394;
 $accent : #9C27B0;
 $light: #eee;
 
-$dark : #1D1D1D;
-$dark-page : #121212;
+$dark : #121212;
+$dark-page : $dark;
 
 $positive : #21BA45;
 $negative : #C10015;
@@ -27,13 +28,22 @@ $warning : #F2C037;
 
 $text_primary: #1F1216;
 $text_secondary: #989394;
+$text_secondary-dark: #c5c5c5;
 $text_light: #eee;
-$gradient_start: #FF84A7;
-$middle_color: #FF84A7;
-$gradient_end: #E03368;
+
+$gradient_start: #0057fc;
+$gradient_end: #003496;
 $bg_gradient: linear-gradient(to bottom right, $gradient_start, $gradient_end);
 $bg_gradient_reverse: linear-gradient(to top left, $gradient_start, $gradient_end);
-$bg_loading: #faccda;
+
+$gradient_start-dark: #ffdd0f;
+$gradient_end-dark: $primary-dark;
+$bg_gradient-dark: linear-gradient(to bottom right, $gradient_start-dark, $gradient_end-dark);
+$bg_gradient_reverse-dark: linear-gradient(to top left, $gradient_start-dark, $gradient_end-dark);
+
+$bg_loading: #85b0ff;
+$bg_loading-dark: $dark;
 
 $border_inactive: #989394;
-$border_active: #FF84A7;
+$border_active: $primary;
+$border_active-dark: $primary-dark;

@@ -108,7 +108,7 @@ onMounted(() => {
 
 <template>
     <div v-if="isDataLoading" ref="animatedScreen">
-        <LoadingScreen />
+        <LoaderScreen />
     </div>
     <div class="flex flex-col" ref="animatedPage" v-show="!isDataLoading">
         <div class="grow home flex flex-col gap-y-8" v-if="isFullData">
@@ -121,7 +121,7 @@ onMounted(() => {
             </div>
             <div class=" grow home__user user flex flex-col gap-y-5 lexend-bold text-lg">
                 <p><span class="user__firstname">{{ userStore.user.firstName }}</span> <span class="user__lastname">{{
-        userStore.user.lastName }}</span>, {{ userAge }} {{ $t('Years') }}<span
+                    userStore.user.lastName }}</span>, {{ userAge }} {{ $t('Years') }}<span
                         v-if="endings === true">a</span></p>
                 <div class="user__location">
                     <p class="lexend-bold">{{ $t('Location') }}</p>
@@ -133,17 +133,8 @@ onMounted(() => {
                 </div>
                 <div class="user__tokens">
                     <p class="lexend-bold">{{ $t('UserTokens') }}: <span class="lexend">{{
-        userStore.user.tokens }}</span></p>
+                        userStore.user.tokens }}</span></p>
                 </div>
-                <!-- <div class="user__ihobbies hobbies" v-if="userStore.user.interests!.length > 0">
-                <p class="lexend-bold mb-2">{{ $t('Hobbies') }}</p>
-                <div class="hobbies__wrapper w-full flex justify-start gap-2.5">
-                    <div class="hobbies__item hobby p-3 rounded-[10px] item-shadow"
-                        v-for="(item, index) in userStore.user.interests" :key="index">
-                        {{ $t(item) }}
-                    </div>
-                </div>
-            </div> -->
             </div>
         </div>
         <div class="grow flex flex-col justify-center items-center gap-y-5 complete-message" v-else>

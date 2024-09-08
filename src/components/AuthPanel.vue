@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import LogoBrand from './UI/LogoBrand.vue';
 import { useI18n } from 'vue-i18n';
+import { useQuasar } from 'quasar';
 
 
 const { t } = useI18n();
+const $q = useQuasar();
 
 const title = {
     title: t('Auth.title'),
     subtitle: t('Auth.subtitle')
 }
+
+$q.dark.set(false);
 </script>
 
 

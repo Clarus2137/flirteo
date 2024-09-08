@@ -117,7 +117,7 @@ body {
 }
 
 .item-shadow {
-    box-shadow: inset 0 0 0 2px $text_primary;
+    box-shadow: inset 0 0 0 2px var(--q-dark-page);
 }
 
 .q-stepper {
@@ -219,89 +219,6 @@ body {
     display: none;
 }
 
-
-
-.dark-mode {
-    .flrt-input {
-        color: $text_primary;
-    }
-
-    .chat__body .control-btns,
-    .chat__body .chat__form,
-    .q-tabs {
-        background: $text_primary;
-    }
-
-    .chat__body .chat__input {
-        color: $text_light;
-        background: $text_light;
-    }
-
-    .q-stepper {
-        background: none;
-
-        .q-stepper__tab--disabled {
-            .q-stepper__dot {
-                background: rgba(255, 255, 255, .25);
-            }
-
-            .q-stepper__label {
-                color: rgba(255, 255, 255, .25);
-            }
-        }
-
-        &.q-stepper--vertical .q-stepper__dot::after {
-            background: $text_light;
-        }
-    }
-
-    .q-icon,
-    .gender__item:not(.active) {
-        svg {
-            fill: $text_light;
-
-            path {
-                fill: $text_light;
-            }
-        }
-    }
-
-    .q-field__inner {
-        background: $text_light;
-    }
-
-    .q-field__bottom {
-        color: $text_light;
-    }
-
-    .item-shadow {
-        box-shadow: inset 0 0 0 2px $text_light;
-    }
-
-    .back-btn {
-        background: $text_light;
-    }
-
-    .step-slider {
-        background: $text_primary;
-    }
-
-    .details__personal-data>* label {
-        color: $text_primary;
-    }
-
-    .q-card {
-        background: #333;
-    }
-
-    .q-date {
-        .q-date__main {
-            background: #333;
-            color: $text_light;
-        }
-    }
-}
-
 .store {
     max-width: 400px;
     min-width: 300px;
@@ -326,4 +243,34 @@ input[type="number"]::-webkit-inner-spin-button {
 
 input[type="number"] {
     -moz-appearance: textfield;
+}
+
+
+
+.body--dark {
+    .gradient-primary {
+        background: $bg_gradient-dark;
+        color: $dark;
+    }
+
+    .text-gradient-primary {
+        background: $bg_gradient-dark;
+    }
+
+    .flrt-input,
+    .q-field__native {
+        color: $dark;
+    }
+
+    .q-item__label {
+        color: $light !important;
+    }
+
+    .gender__item:not(.active) {
+        svg {
+            path {
+                fill: $light;
+            }
+        }
+    }
 }

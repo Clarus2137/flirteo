@@ -75,7 +75,7 @@ a {
     border-bottom: 2px solid transparent;
 
     &:hover {
-        border-color: $middle_color;
+        // border-color: $middle_color;
     }
 }
 </style>

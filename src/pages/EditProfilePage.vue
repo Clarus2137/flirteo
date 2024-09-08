@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import { ref, Ref } from 'vue';
-// import { useUserStore } from 'src/stores/userStore';
 import CommonInfo from 'src/components/CommonInfo.vue';
 import UserGender from 'src/components/UserGender.vue';
-// import UserHobbies from 'src/components/UserHobbies.vue';
 
 
-// const userStore = useUserStore();
 
 const pageTitle = ref<PageTitle>({ title: '', subtitle: '' });
 
@@ -54,7 +51,7 @@ const toggleScreen = () => {
 
 <template>
     <div v-if="isDataLoading" ref="animatedScreen">
-        <LoadingScreen />
+        <LoaderScreen />
     </div>
     <div class="profile grow flex flex-col" v-show="!isDataLoading" ref="animatedPage">
         <div class="profile__details details grow flex flex-col gap-y-3">

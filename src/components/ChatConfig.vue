@@ -159,7 +159,7 @@ onMounted(async () => {
 
 <template>
     <div v-if="isDataLoading" ref="animatedScreen">
-        <LoadingScreen />
+        <LoaderScreen />
     </div>
     <div class="chat flex flex-col justify-center" v-show="!isDataLoading" ref="animatedPage">
         <!-- <h1 class="mb-8 lexend-bold text-2xl text-center">{{ $t('Chat_Config_Title') }}</h1> -->
@@ -181,7 +181,7 @@ onMounted(async () => {
                 <p class="body-text lexend-light text-secondary">{{ $t('Mode_hint') }}</p>
                 <CustomBtn type="button" v-for="prompt in prompts" :key="prompt.id"
                     @click="setPrompt(prompt.places, prompt.id); nextStep(2)">{{
-        prompt.name }}</CustomBtn>
+                        prompt.name }}</CustomBtn>
                 <q-stepper-navigation>
                     <q-btn flat @click="step = 1" color="primary" :label="$t('Back')" class="q-ml-sm" />
                 </q-stepper-navigation>
@@ -221,7 +221,7 @@ onMounted(async () => {
                 <div class="w-full flex flex-col gap-4">
                     <CustomBtn type="button" v-for="style in respTypes" :key="style.id" @click="setStyle(style.id)">
                         {{
-        style.name }}
+                            style.name }}
                     </CustomBtn>
                 </div>
                 <q-stepper-navigation>
@@ -283,5 +283,9 @@ onMounted(async () => {
     max-width: 60px;
     max-height: 80%;
     left: 5%;
+}
+
+.q-dark {
+    background: var(--q-dark-page);
 }
 </style>

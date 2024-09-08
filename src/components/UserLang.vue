@@ -53,12 +53,12 @@ onBeforeMount(() => {
 
         <div class="lang-switcher flex justify-center items-start gap-[5vw]">
             <div class="w-[2.5rem] p-2 rounded-[10px] text-center hover:cursor-pointer"
-                :class="{ 'gradient-primary border-transparent text-white': !isLang, 'item-shadow': isLang }"
+                :class="{ 'gradient-primary border-transparent': !isLang, 'text-white': !isLang && !$q.dark.isActive, 'text-[#121212]': $q.dark.isActive, 'item-shadow': isLang && !$q.dark.isActive, 'bg-white': isLang && $q.dark.isActive }"
                 @click="toggleLang">
                 En
             </div>
             <div class="w-[2.5rem] p-2 rounded-[10px] text-center hover:cursor-pointer"
-                :class="{ 'gradient-primary border-transparent text-white': isLang, 'item-shadow': !isLang }"
+                :class="{ 'gradient-primary border-transparent': isLang, 'text-white': isLang && !$q.dark.isActive, 'text-[#121212]': $q.dark.isActive, 'item-shadow': !isLang && !$q.dark.isActive, 'bg-white': !isLang && $q.dark.isActive }"
                 @click="toggleLang">
                 Pl
             </div>

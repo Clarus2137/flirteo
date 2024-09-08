@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onBeforeMount, onMounted, onBeforeUnmount } from 'vue';
+import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n';
 import { useUserStore } from 'src/stores/userStore';
 import { useChatStore } from 'src/stores/chatStore';
@@ -18,15 +19,18 @@ const onBackButton = (e: Event) => {
 }
 
 const appLoading = ref(true);
-const isDark = ref(false);
+
+const $q = useQuasar();
 
 onBeforeMount(() => {
     if (localStorage.getItem('darkMode') !== null) {
         if (localStorage.darkMode === 'true') {
-            document.body.classList.add('dark-mode');
+            $q.dark.set(true);
         } else {
-            isDark.value = false;
+            $q.dark.set(false);
         }
+    } else {
+        $q.dark.set('auto');
     }
     const userStore = useUserStore();
     const chatStore = useChatStore();

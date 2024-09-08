@@ -93,13 +93,13 @@
 
 
 <style scoped lang="scss">
-.dark-mode ul {
-    color: #a3999c;
-}
-
 ul {
     list-style: disc;
     padding-left: 20px;
-    color: #6b6466;
+    color: $text_secondary;
+}
+
+.body--dark ul {
+    color: $text_secondary-dark;
 }
 </style>

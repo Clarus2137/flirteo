@@ -83,6 +83,8 @@ const toggleState = () => {
         agreementAlarm.value = false;
     }
 }
+
+emit('goToVerification');
 </script>
 
 

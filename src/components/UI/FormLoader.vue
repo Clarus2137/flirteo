@@ -15,8 +15,8 @@
     width: 20px;
     height: 20px;
     margin: 0 auto;
-    border: 3px solid #FFDAE5;
-    border-top: 3px solid #E03368;
+    border: 3px solid #85b0ff;
+    border-top: 3px solid #0057fc;
     border-radius: 50%;
     animation: spin 2s linear infinite;
 }

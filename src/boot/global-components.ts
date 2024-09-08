@@ -5,8 +5,6 @@ import BackBtn from 'src/components/UI/BackBtn.vue';
 import CustomInput from 'src/components/UI/CustomInput.vue';
 import TitleRow from 'src/components/UI/TitleRow.vue';
 import HomeTab from 'src/components/UI/HomeTab.vue';
-import SearchTab from 'src/components/UI/SearchTab.vue';
-import FavoritesTab from 'src/components/UI/FavoritesTab.vue';
 import ChatTab from 'src/components/UI/ChatTab.vue';
 import ProfileTab from 'src/components/UI/ProfileTab.vue';
 import ArrowTriangle from 'src/components/UI/ArrowTriangle.vue';
@@ -16,10 +14,12 @@ import TermsIcon from 'src/components/UI/TermsIcon.vue';
 import PrivacyIcon from 'src/components/UI/PrivacyIcon.vue';
 import AboutIcon from 'src/components/UI/AboutIcon.vue';
 import SvgGradient from 'src/components/UI/SvgGradient.vue';
+import SvgGradientHover from 'src/components/UI/SvgGradientHover.vue';
 import FormLoader from 'src/components/UI/FormLoader.vue';
 import CommonInfo from 'src/components/CommonInfo.vue';
 import UserGender from 'src/components/UserGender.vue';
-import LoadingScreen from 'src/components/LoadingScreen.vue';
+// import LoadingScreen from 'src/components/LoadingScreen.vue';
+import LoaderScreen from 'src/components/LoaderScreen.vue';
 
 
 const components = [
@@ -29,8 +29,6 @@ const components = [
     { name: 'CustomInput', component: CustomInput },
     { name: 'TitleRow', component: TitleRow },
     { name: 'HomeTab', component: HomeTab },
-    { name: 'SearchTab', component: SearchTab },
-    { name: 'FavoritesTab', component: FavoritesTab },
     { name: 'ChatTab', component: ChatTab },
     { name: 'ProfileTab', component: ProfileTab },
     { name: 'ArrowTriangle', component: ArrowTriangle },
@@ -40,10 +38,12 @@ const components = [
     { name: 'PrivacyIcon', component: PrivacyIcon },
     { name: 'AboutIcon', component: AboutIcon },
     { name: 'SvgGradient', component: SvgGradient },
+    { name: 'SvgGradientHover', component: SvgGradientHover },
     { name: 'FormLoader', component: FormLoader },
     { name: 'CommonInfo', component: CommonInfo },
     { name: 'UserGender', component: UserGender },
-    { name: 'LoadingScreen', component: LoadingScreen }
+    // { name: 'LoadingScreen', component: LoadingScreen }
+    { name: 'LoaderScreen', component: LoaderScreen }
 ];
 
 export default boot(({ app }) => {

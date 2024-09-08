@@ -77,12 +77,14 @@ function onTransactionApproved(transaction) {
 
 onMounted(() => {
     document.addEventListener('deviceready', onDeviceReady);
+    console.log('Products are: ', products.value);
 });
 </script>
 
 <template>
     <div class="catalog flex justify-center items-center gap-5">
-        <div v-for="product in products" :key="product.id" class="catalog__item pack flex flex-col gap-3 lexend">
+        <div v-for="product in products" :key="product.id"
+            class="catalog__item pack gradient-primary flex flex-col gap-3 lexend">
             <p class="pack__title text-lg">{{ product.title }}</p>
             <p class="pack__size text-center lexend text-lg">{{ product.description }}</p>
             <p class="pack__price text-center lexend-bold text-xl">{{ product.price }}</p>
@@ -98,7 +100,6 @@ onMounted(() => {
     max-width: 300px;
     padding: 0.875rem;
     border-radius: 1rem;
-    background: $bg_gradient;
     color: #fff;
 
     .pack__title {
@@ -106,17 +107,32 @@ onMounted(() => {
     }
 
     .order-btn {
-        background: $text_primary;
+        background: $dark;
         transition: 0.3s;
 
         &:hover {
             background: #fff;
-            color: $text_primary;
+            color: $dark;
         }
     }
 
     .pack__features>li:not(:last-of-type) {
         margin-bottom: 0.5rem;
+    }
+}
+
+.body--dark {
+    .pack {
+        color: $dark;
+
+        .order-btn {
+            color: $light;
+
+            &:hover {
+                background: $light;
+                color: $dark;
+            }
+        }
     }
 }
 </style>

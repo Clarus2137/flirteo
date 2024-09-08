@@ -172,7 +172,7 @@ onMounted(async () => {
             &+label {
                 background: #fff;
                 border-radius: 5px;
-                color: #f24e80;
+                color: $primary;
                 top: -6px;
             }
         }

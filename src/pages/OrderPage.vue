@@ -57,7 +57,7 @@ onMounted(() => {
 
 <template>
     <div v-if="isDataLoading" ref="animatedScreen">
-        <LoadingScreen />
+        <LoaderScreen />
     </div>
     <div class="flex flex-col" ref="animatedPage" v-show="!isDataLoading">
         <h1 class="lexend-bold text-2xl text-center mb-5">{{ $t('Store') }}</h1>

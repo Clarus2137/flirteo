@@ -123,7 +123,7 @@ const deleteAccount = async () => {
     input:focus {
         &+label {
             background: #fff;
-            color: #f24e80;
+            color: $primary;
             top: -6px;
         }
     }

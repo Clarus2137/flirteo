@@ -44,7 +44,7 @@ onMounted(() => {
         </div>
         <div class="user__name lexend-bold text-lg">
             <p><span class="user__firstname">{{ userStore.user.firstName }}</span> <span class="user__lastname">{{
-        userStore.user.lastName }}</span>
+                userStore.user.lastName }}</span>
             </p>
         </div>
         <div class="user__email lexend-light text-secondary text-sm">
@@ -121,12 +121,7 @@ onMounted(() => {
     <div class="self-end">
         <CustomBtn class="flex justify-center items-center gap-x-2 mb-3" @click="logOut">
             <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <linearGradient id="gradient_primary" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#ff84a7;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#e03368;stop-opacity:1" />
-                    </linearGradient>
-                </defs>
+                <SvgGradient />
                 <path
                     d="M7.87828 12.07C7.87828 11.66 8.21828 11.32 8.62828 11.32H14.1083V2.86C14.0983 2.38 13.7183 2 13.2383 2C7.34828 2 3.23828 6.11 3.23828 12C3.23828 17.89 7.34828 22 13.2383 22C13.7083 22 14.0983 21.62 14.0983 21.14V12.81H8.62828C8.20828 12.82 7.87828 12.48 7.87828 12.07Z"
                     fill="#fff" />
@@ -138,3 +133,15 @@ onMounted(() => {
         </CustomBtn>
     </div>
 </template>
+
+
+
+<style lang="scss">
+.q-item--dark {
+    svg {
+        path {
+            fill: #fff;
+        }
+    }
+}
+</style>
