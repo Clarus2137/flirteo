@@ -39,6 +39,8 @@ onBeforeMount(() => {
     userStore.lang = locale.value;
     chatStore.lang = locale.value;
     orderStore.lang = locale.value;
+
+    document.removeEventListener('backbutton', onBackButton, false);
 });
 
 onMounted(() => {
@@ -58,10 +60,6 @@ onMounted(() => {
             );
         }
     }, false);
-});
-
-onBeforeUnmount(() => {
-    document.removeEventListener('backbutton', onBackButton, false);
 });
 </script>
 

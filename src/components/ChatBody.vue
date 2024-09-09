@@ -146,7 +146,7 @@ onMounted(() => {
 <template>
     <div class="chat__body flex flex-col">
         <div class="control-btns flex justify-center gap-x-4 py-4 absolute left-0 right-0 z-10 shadow-md">
-            <CustomBtn class="w-[130px] sm:w-[150px]" type="button" @click="openDialogSession">{{
+            <CustomBtn class="!w-[130px] sm:!w-[150px]" type="button" @click="openDialogSession">{{
                 $t('New_Session.title') }}
             </CustomBtn>
             <q-btn-dropdown label="Inna odpowiedź"
@@ -184,21 +184,22 @@ onMounted(() => {
                 </q-chat-message>
             </div>
         </div>
-        <form @submit.prevent="addMessage" class="chat__form self-end flex no-wrap gap-x-3">
-            <CustomInput type="text" v-model="messageField" class="chat__input" />
-            <button type="submit" class="send w-auto" :disabled="messageField === ''">
-                <svg width="42px" height="42px" viewBox="2 2 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <SvgGradient />
-                    <SvgGradientHover />
-                    <path
-                        d="M16.19 2H7.81C4.17 2 2 4.17 2 7.81V16.18C2 19.83 4.17 22 7.81 22H16.18C19.82 22 21.99 19.83 21.99 16.19V7.81C22 4.17 19.83 2 16.19 2ZM8.47 8.98L11.47 5.98C11.54 5.91 11.62 5.86 11.71 5.82C11.89 5.74 12.1 5.74 12.28 5.82C12.37 5.86 12.45 5.91 12.52 5.98L15.52 8.98C15.81 9.27 15.81 9.75 15.52 10.04C15.37 10.19 15.18 10.26 14.99 10.26C14.8 10.26 14.61 10.19 14.46 10.04L12.74 8.32V14.51C12.74 14.92 12.4 15.26 11.99 15.26C11.58 15.26 11.24 14.92 11.24 14.51V8.32L9.52 10.04C9.23 10.33 8.75 10.33 8.46 10.04C8.17 9.75 8.18 9.28 8.47 8.98ZM18.24 17.22C16.23 17.89 14.12 18.23 12 18.23C9.88 18.23 7.77 17.89 5.76 17.22C5.37 17.09 5.16 16.66 5.29 16.27C5.42 15.88 5.85 15.66 6.24 15.8C9.96 17.04 14.05 17.04 17.77 15.8C18.16 15.67 18.59 15.88 18.72 16.27C18.84 16.67 18.63 17.09 18.24 17.22Z" />
-                </svg>
-
-            </button>
+        <form @submit.prevent="addMessage" class="chat__form form self-end w-full">
+            <div class="form__wrapper flex no-wrap gap-x-3 max-w-[400px] mx-auto">
+                <CustomInput type="text" v-model="messageField" class="chat__input" />
+                <button type="submit" class="send w-auto" :disabled="messageField === ''">
+                    <svg width="42px" height="42px" viewBox="2 2 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <SvgGradient />
+                        <SvgGradientHover />
+                        <path
+                            d="M16.19 2H7.81C4.17 2 2 4.17 2 7.81V16.18C2 19.83 4.17 22 7.81 22H16.18C19.82 22 21.99 19.83 21.99 16.19V7.81C22 4.17 19.83 2 16.19 2ZM8.47 8.98L11.47 5.98C11.54 5.91 11.62 5.86 11.71 5.82C11.89 5.74 12.1 5.74 12.28 5.82C12.37 5.86 12.45 5.91 12.52 5.98L15.52 8.98C15.81 9.27 15.81 9.75 15.52 10.04C15.37 10.19 15.18 10.26 14.99 10.26C14.8 10.26 14.61 10.19 14.46 10.04L12.74 8.32V14.51C12.74 14.92 12.4 15.26 11.99 15.26C11.58 15.26 11.24 14.92 11.24 14.51V8.32L9.52 10.04C9.23 10.33 8.75 10.33 8.46 10.04C8.17 9.75 8.18 9.28 8.47 8.98ZM18.24 17.22C16.23 17.89 14.12 18.23 12 18.23C9.88 18.23 7.77 17.89 5.76 17.22C5.37 17.09 5.16 16.66 5.29 16.27C5.42 15.88 5.85 15.66 6.24 15.8C9.96 17.04 14.05 17.04 17.77 15.8C18.16 15.67 18.59 15.88 18.72 16.27C18.84 16.67 18.63 17.09 18.24 17.22Z" />
+                    </svg>
+                </button>
+            </div>
         </form>
 
-        <q-dialog v-model="dialogTokens" :backdrop-filter="backdropFilter" full-width>
-            <q-card>
+        <q-dialog v-model="dialogTokens" :backdrop-filter="backdropFilter">
+            <q-card class="max-w-[400px]">
                 <q-card-section class="row items-center justify-center q-pb-none text-h6">
                     {{ $t('TokensOut') }}
                 </q-card-section>
@@ -214,8 +215,8 @@ onMounted(() => {
             </q-card>
         </q-dialog>
 
-        <q-dialog v-model="dialogSession" :backdrop-filter="backdropFilter" full-width>
-            <q-card>
+        <q-dialog v-model="dialogSession" :backdrop-filter="backdropFilter">
+            <q-card class="max-w-[400px]">
                 <q-card-section class="row items-center justify-center q-pb-none text-h6">
                     {{ $t('New_Session.confirm') }}
                 </q-card-section>
@@ -259,7 +260,6 @@ onMounted(() => {
 }
 
 .chat__body {
-
     .control-btns {
         padding-left: calc(3vw + 0.5rem);
         padding-right: calc(3vw + 0.5rem);
@@ -306,8 +306,8 @@ onMounted(() => {
         background: #fff;
         box-shadow: 0 0 10px 3px rgba(0, 0, 0, .25);
         position: fixed;
-        left: 0;
-        right: 0;
+        left: 50%;
+        transform: translateX(-50%);
         bottom: 36px;
     }
 
@@ -322,16 +322,6 @@ onMounted(() => {
             &:hover path {
                 fill: url(#gradient_primary-hover);
             }
-        }
-    }
-}
-
-.body--dark {
-    .chat__body {
-        .chat__form {
-            left: 50%;
-            transform: translateX(-50%);
-            max-width: 400px;
         }
     }
 }

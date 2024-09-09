@@ -11,8 +11,6 @@ const title = {
     title: t('Auth.title'),
     subtitle: t('Auth.subtitle')
 }
-
-$q.dark.set(false);
 </script>
 
 

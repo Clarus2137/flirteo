@@ -11,7 +11,6 @@ const chatStore = useChatStore();
 const { locale } = useI18n();
 
 const isLang = ref<boolean | null>(null);
-const isActive = ref(false);
 
 const toggleLang = () => {
     isLang.value = !isLang.value;
@@ -35,12 +34,6 @@ onBeforeMount(() => {
         isLang.value = true;
     } else {
         isLang.value = false;
-    }
-
-    if (localStorage.getItem('darkMode') !== null) {
-        if (localStorage.darkMode === 'true') {
-            isActive.value = true;
-        }
     }
 });
 </script>

@@ -31,7 +31,7 @@ $text_secondary: #989394;
 $text_secondary-dark: #c5c5c5;
 $text_light: #eee;
 
-$gradient_start: #0057fc;
+$gradient_start: $primary;
 $gradient_end: #003496;
 $bg_gradient: linear-gradient(to bottom right, $gradient_start, $gradient_end);
 $bg_gradient_reverse: linear-gradient(to top left, $gradient_start, $gradient_end);
