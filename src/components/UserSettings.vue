@@ -132,12 +132,12 @@ onBeforeMount(() => {
             <div class="flex items-center gap-[10px] settings__item">
                 <p class="settings__item-title">{{ $t('Lang') }}:</p>
                 <div class="w-[2.5rem] p-2 rounded-[10px] text-center hover:cursor-pointer"
-                    :class="{ 'gradient-primary border-transparent text-white': !isLang, 'bg-white text-[#121212]': $q.dark.isActive && isLang, 'item-shadow': isLang && !$q.dark.isActive }"
+                    :class="{ 'gradient-primary border-transparent': !isLang, 'text-light': !isLang && !$q.dark.isActive, 'bg-white text-[#121212]': $q.dark.isActive && isLang, 'item-shadow': isLang && !$q.dark.isActive }"
                     @click="toggleLang">
                     En
                 </div>
                 <div class="w-[2.5rem] p-2 rounded-[10px] text-center hover:cursor-pointer"
-                    :class="{ 'gradient-primary border-transparent text-white': isLang, 'bg-white text-[#121212]': $q.dark.isActive && !isLang, 'item-shadow': !isLang && !$q.dark.isActive }"
+                    :class="{ 'gradient-primary border-transparent': isLang, 'text-light': isLang && !$q.dark.isActive, 'bg-white text-[#121212]': $q.dark.isActive && !isLang, 'item-shadow': !isLang && !$q.dark.isActive }"
                     @click="toggleLang">
                     Pl
                 </div>
@@ -146,12 +146,12 @@ onBeforeMount(() => {
             <div class="flex items-center gap-[10px] settings__item">
                 <p class="settings__item-title">{{ $t('Theme') }}:</p>
                 <div class="p-3 rounded-[10px] hover:cursor-pointer"
-                    :class="{ 'gradient-primary border-transparent text-white': !$q.dark.isActive, 'bg-white text-[#121212]': $q.dark.isActive }"
+                    :class="{ 'gradient-primary border-transparent active-theme': !$q.dark.isActive, 'bg-white text-[#121212]': $q.dark.isActive }"
                     @click="toggleTheme">
                     {{ $t('Light') }}
                 </div>
                 <div class="p-3 rounded-[10px] hover:cursor-pointer"
-                    :class="{ 'gradient-primary border-transparent text-white': $q.dark.isActive, 'bg-white text-[#121212] item-shadow': !$q.dark.isActive }"
+                    :class="{ 'gradient-primary border-transparent active-theme': $q.dark.isActive, 'bg-white text-[#121212] item-shadow': !$q.dark.isActive }"
                     @click="toggleTheme">
                     {{ $t('Dark') }}
                 </div>

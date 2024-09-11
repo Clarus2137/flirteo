@@ -21,6 +21,7 @@ const isOptions = ref(true);
 const isFinished = ref(false);
 
 const prompts = ref<Prompts[]>([]);
+const reversedPrompts = ref<Prompts[]>([]);
 const respTypes = ref<ResponseAI[]>([]);
 const places = ref<Places[]>([]);
 
@@ -145,6 +146,7 @@ onMounted(async () => {
 
     if (isPrompts) {
         prompts.value = chatStore.prompts;
+        reversedPrompts.value = prompts.value.slice().reverse();
     }
 
     if (isTypes) {
@@ -179,7 +181,7 @@ onMounted(async () => {
 
             <q-step :name="2" :title="$t('Mode')" icon="settings" :done="step > 2">
                 <p class="body-text lexend-light text-secondary">{{ $t('Mode_hint') }}</p>
-                <CustomBtn type="button" v-for="prompt in prompts" :key="prompt.id"
+                <CustomBtn type="button" v-for="prompt in reversedPrompts" :key="prompt.id"
                     @click="setPrompt(prompt.places, prompt.id); nextStep(2)">{{
                         prompt.name }}</CustomBtn>
                 <q-stepper-navigation>
@@ -202,7 +204,7 @@ onMounted(async () => {
             <q-step :name="4" :title="$t('Example')" icon="settings" :done="step > 4" :disable="selectedPrompt !== 1">
                 <p class="body-text lexend-light text-secondary">{{ $t('Example_hint') }}</p>
                 <q-file clearable color="primary" standout bottom-slots v-model="model" label=".jpg, .png" counter
-                    accept=".jpg, .png" @update:modelValue="convertToString">
+                    accept="image/*" @update:modelValue="convertToString">
                     <template v-slot:prepend>
                         <q-icon name="attach_file" />
                     </template>

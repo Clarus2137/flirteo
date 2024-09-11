@@ -145,32 +145,33 @@ onMounted(() => {
 
 <template>
     <div class="chat__body flex flex-col">
-        <div class="control-btns flex justify-center gap-x-4 py-4 absolute left-0 right-0 z-10 shadow-md">
-            <CustomBtn class="!w-[130px] sm:!w-[150px]" type="button" @click="openDialogSession">{{
-                $t('New_Session.title') }}
-            </CustomBtn>
-            <q-btn-dropdown label="Inna odpowiedź"
-                class="w-[130px] sm:w-[150px] rounded-[10px] px-3 lexend-bold gradient-primary">
-                <q-list>
-                    <q-item clickable v-close-popup @click="changeResponse('Przygotuj inną wersję')">
-                        <q-item-section>
-                            <CustomBtn type="button">Inna</CustomBtn>
-                        </q-item-section>
-                    </q-item>
+        <div class="control-btns px-[3vw] py-4 absolute left-0 right-0 z-10 shadow-md">
+            <div class="control-btns-wrapper flex justify-between w-full max-w-[400px] mx-auto px-2">
+                <CustomBtn class="!w-[48%]" type="button" @click="openDialogSession">{{
+                    $t('New_Session.title') }}
+                </CustomBtn>
+                <q-btn-dropdown label="Inna odpowiedź" class="w-[48%] rounded-[10px] px-3 lexend-bold gradient-primary">
+                    <q-list>
+                        <q-item clickable v-close-popup @click="changeResponse('Przygotuj inną wersję')">
+                            <q-item-section>
+                                <CustomBtn type="button">Inna</CustomBtn>
+                            </q-item-section>
+                        </q-item>
 
-                    <q-item clickable v-close-popup @click="changeResponse('Przygotuj podobną wersję')">
-                        <q-item-section>
-                            <CustomBtn type="button">Podobna</CustomBtn>
-                        </q-item-section>
-                    </q-item>
+                        <q-item clickable v-close-popup @click="changeResponse('Przygotuj podobną wersję')">
+                            <q-item-section>
+                                <CustomBtn type="button">Podobna</CustomBtn>
+                            </q-item-section>
+                        </q-item>
 
-                    <q-item clickable v-close-popup @click="changeResponse('Przygotuj krótszą wersję')">
-                        <q-item-section>
-                            <CustomBtn type="button">Krótsza</CustomBtn>
-                        </q-item-section>
-                    </q-item>
-                </q-list>
-            </q-btn-dropdown>
+                        <q-item clickable v-close-popup @click="changeResponse('Przygotuj krótszą wersję')">
+                            <q-item-section>
+                                <CustomBtn type="button">Krótsza</CustomBtn>
+                            </q-item-section>
+                        </q-item>
+                    </q-list>
+                </q-btn-dropdown>
+            </div>
         </div>
         <div class="grow px-2 pt-[72px] chat__messages messages" :class="{ 'auto-mes': isSessionStarted }"
             id="messages">
@@ -184,8 +185,8 @@ onMounted(() => {
                 </q-chat-message>
             </div>
         </div>
-        <form @submit.prevent="addMessage" class="chat__form form self-end w-full">
-            <div class="form__wrapper flex no-wrap gap-x-3 max-w-[400px] mx-auto">
+        <form @submit.prevent="addMessage" class="chat__form form self-end w-full px-[3vw] py-2.5">
+            <div class="form__wrapper flex no-wrap gap-x-3 max-w-[400px] mx-auto px-2">
                 <CustomInput type="text" v-model="messageField" class="chat__input" />
                 <button type="submit" class="send w-auto" :disabled="messageField === ''">
                     <svg width="42px" height="42px" viewBox="2 2 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -261,8 +262,6 @@ onMounted(() => {
 
 .chat__body {
     .control-btns {
-        padding-left: calc(3vw + 0.5rem);
-        padding-right: calc(3vw + 0.5rem);
         background: #fff;
 
         button {
@@ -302,7 +301,6 @@ onMounted(() => {
     }
 
     .chat__form {
-        padding: 10px 25px;
         background: #fff;
         box-shadow: 0 0 10px 3px rgba(0, 0, 0, .25);
         position: fixed;

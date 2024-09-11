@@ -245,6 +245,10 @@ input[type="number"] {
     -moz-appearance: textfield;
 }
 
+.active-theme {
+    color: $light;
+}
+
 
 
 .body--dark {
@@ -272,5 +276,31 @@ input[type="number"] {
                 fill: $light;
             }
         }
+    }
+
+    .details__personal-data>* label {
+        color: $dark;
+    }
+
+    .date-picker {
+        .q-date__header {
+            background: $bg_gradient-dark;
+            color: $dark;
+        }
+
+        .q-date__calendar {
+            color: $light;
+
+            .q-date__calendar-item {
+                &>button.bg-primary {
+                    background: $bg_gradient-dark !important;
+                    color: $dark !important;
+                }
+            }
+        }
+    }
+
+    .active-theme {
+        color: $dark;
     }
 }

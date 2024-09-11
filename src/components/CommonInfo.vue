@@ -132,10 +132,6 @@ onMounted(async () => {
             <CustomInput id="location" type="text" v-model="userLocation" required />
             <label for="location">{{ t('Location') }}</label>
         </div>
-        <!-- <div class="education">
-            <CustomInput id="education" type="text" v-model="userEducation" required />
-            <label for="education">{{ t('Education') }}</label>
-        </div> -->
         <q-select v-model="level" :options="options" :label="t('Education')" required class="education" />
         <div class="grow flex content-end">
             <CustomBtn :disabled="level === ''" type="submit">{{ t('Continue') }}</CustomBtn>
@@ -144,7 +140,7 @@ onMounted(async () => {
     <div class="w-full h-full absolute top-0 left-0 hover:cursor-pointer bg-black opacity-75"
         :class="{ 'hidden': !isVisible, 'block': isVisible }" @click="isVisible = !isVisible"></div>
     <div class="date-picker w-full text-center absolute duration-300" :class="{ 'visible': isVisible }">
-        <q-date v-model="userDateOfBirth" :locale="dateLocale" mask="YYYY-MM-DD" color="pink-4" class="w-full mb-3" />
+        <q-date v-model="userDateOfBirth" :locale="dateLocale" mask="YYYY-MM-DD" class="w-full mb-3" />
         <CustomBtn type="submit" class="max-w-[200px]" @click="isVisible = !isVisible">{{ t('Select') }}</CustomBtn>
     </div>
 </template>
@@ -218,6 +214,16 @@ onMounted(async () => {
         top: 50%;
         transform: translateY(-50%);
         opacity: 1;
+    }
+
+    .q-date__header {
+        background: $bg_gradient;
+    }
+
+    .q-date__calendar-item {
+        &>button.bg-primary {
+            background: $bg_gradient !important;
+        }
     }
 }
 
