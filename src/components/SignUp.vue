@@ -83,8 +83,6 @@ const toggleState = () => {
         agreementAlarm.value = false;
     }
 }
-
-emit('goToVerification');
 </script>
 
 
@@ -114,8 +112,8 @@ emit('goToVerification');
                 </div>
                 <CustomBtn type="submit"
                     :disabled="isAccepted === false || enteredEmail === '' || enteredPassword === ''" class="mb-5">{{
-                        t('Continue')
-                    }}
+                    t('Continue')
+                }}
                 </CustomBtn>
                 <FormLoader v-if="isLoading" />
                 <p class="agreement-alarm lexend-bold text-secondary text-center text-sm" v-if="agreementAlarm">{{
