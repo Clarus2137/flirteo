@@ -37,6 +37,16 @@ function onDeviceReady() {
             type: ProductType.CONSUMABLE,
             id: 'test_pack_2',
             platform: Platform.GOOGLE_PLAY, // Android
+        },
+        {
+            type: ProductType.CONSUMABLE,
+            id: 'test_pack_1',
+            platform: Platform.APPLE_APPSTORE, // iOS
+        },
+        {
+            type: ProductType.CONSUMABLE,
+            id: 'test_pack_2',
+            platform: Platform.APPLE_APPSTORE, // iOS
         }
     ]);
 
@@ -50,7 +60,7 @@ function onDeviceReady() {
     store.ready(() => {
         console.log('CdvPurchase is ready');
     });
-    store.initialize([Platform.GOOGLE_PLAY]);
+    store.initialize([Platform.GOOGLE_PLAY, Platform.APPLE_APPSTORE]);
 }
 
 function onProductUpdated(product) {
@@ -63,7 +73,8 @@ function onProductUpdated(product) {
 }
 
 function buy(productId) {
-    const product = CdvPurchase.store.get(productId, CdvPurchase.Platform.GOOGLE_PLAY);
+    const platform = device.platform === 'iOS' ? CdvPurchase.Platform.APPLE_APPSTORE : CdvPurchase.Platform.GOOGLE_PLAY;
+    const product = CdvPurchase.store.get(productId, platform);
     const offer = product.getOffer();
     if (offer) {
         offer.order();
@@ -77,7 +88,6 @@ function onTransactionApproved(transaction) {
 
 onMounted(() => {
     document.addEventListener('deviceready', onDeviceReady);
-    console.log('Products are: ', products.value);
 });
 </script>
 
