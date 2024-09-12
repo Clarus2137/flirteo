@@ -19,12 +19,15 @@ const products = ref([
 ]);
 
 function onDeviceReady() {
+    alert('Device platform is: ',device.platform);
     if (typeof CdvPurchase === 'undefined') {
         alert('CdvPurchase is not defined');
         return;
     }
 
     const { store, ProductType, Platform } = CdvPurchase;
+
+    alert('Registering products...');
 
     // Регистрация продуктов
     store.register([
@@ -58,12 +61,15 @@ function onDeviceReady() {
 
     // Инициализация магазина
     store.ready(() => {
-        console.log('CdvPurchase is ready');
+        alert('CdvPurchase is ready');
     });
+
+    alert('Initializing store...');
     store.initialize([Platform.GOOGLE_PLAY, Platform.APPLE_APPSTORE]);
 }
 
 function onProductUpdated(product) {
+    alert('Product updated: ' + JSON.stringify(product));
     const index = products.value.findIndex(p => p.id === product.id);
     if (index !== -1) {
         products.value[index].title = product.title;
@@ -102,8 +108,6 @@ onMounted(() => {
         </div>
     </div>
 </template>
-
-
 
 <style scoped lang="scss">
 .pack {
