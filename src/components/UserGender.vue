@@ -73,7 +73,7 @@ onMounted(() => {
                             :fill="activeGender === 'male' ? 'url(#gradient_primary)' : '#000'"
                             d="M42 0H60C61.1046 0 62 0.89543 62 2V20C62 21.1046 61.1046 22 60 22C58.8954 22 58 21.1046 58 20V6.82841L44.4886 20.3398C47.9365 24.6252 50 30.0716 50 36C50 49.8071 38.8071 61 25 61C11.1929 61 0 49.8071 0 36C0 22.1929 11.1929 11 25 11C31.4384 11 37.3083 13.4338 41.74 17.4316L55.1716 4H42C40.8954 4 40 3.10457 40 2C40 0.89543 40.8954 0 42 0Z" />
                     </svg>
-                    <p class="mt-4 text-xl" :class="{ 'text-primary': activeGender === 'male' }">{{ t('Male') }}</p>
+                    <p class="mt-4 text-lg" :class="{ 'text-primary': activeGender === 'male' }">{{ t('Male') }}</p>
                 </div>
                 <div class="gender__item gender__female p-[3vw] rounded-2xl border border-solid border-inactive text-center hover:cursor-pointer"
                     :class="{ 'border-primary active': activeGender === 'female' }" @click="chooseGender('female')">
@@ -83,7 +83,7 @@ onMounted(() => {
                             :fill="activeGender === 'female' ? 'url(#gradient_primary)' : '#000'"
                             d="M50 25C50 38.8071 38.8071 50 25 50C11.1929 50 0 38.8071 0 25C0 11.1929 11.1929 0 25 0C38.8071 0 50 11.1929 50 25ZM25 50H23V58H18V62H23V66H27V62H32V58H27V50H25Z" />
                     </svg>
-                    <p class="mt-4 text-xl" :class="{ 'text-primary': activeGender === 'female' }">{{ t('Female') }}</p>
+                    <p class="mt-4 text-lg" :class="{ 'text-primary': activeGender === 'female' }">{{ t('Female') }}</p>
                 </div>
             </div>
         </div>
