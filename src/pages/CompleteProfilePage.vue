@@ -23,6 +23,35 @@ const nextStep = (currentStep: number) => {
 
 }
 
+const isLoading = ref(false);
+
+const isDataLoading = ref(true);
+const animatedScreen = ref<HTMLElement | null>(null);
+const animatedPage = ref<HTMLElement | null>(null);
+
+const toggleScreen = () => {
+    if (animatedScreen.value) {
+        animatedScreen.value.animate([
+            { opacity: '1' },
+            { opacity: '0' }
+        ], {
+            duration: 400,
+            easing: 'linear'
+        }).onfinish = () => {
+            isDataLoading.value = false;
+            if (animatedPage.value) {
+                animatedPage.value.animate([
+                    { opacity: '0' },
+                    { opacity: '1' }
+                ], {
+                    duration: 400,
+                    easing: 'linear'
+                });
+            }
+        };
+    }
+}
+
 // onMounted(() => {
 //     if (!userStore.hobbies.length) {
 //         userStore.getHobbies();
@@ -33,7 +62,10 @@ const nextStep = (currentStep: number) => {
 
 
 <template>
-    <div class="profile grow flex flex-col">
+    <div v-if="isDataLoading" ref="animatedScreen">
+        <LoaderScreen />
+    </div>
+    <div class="profile grow flex flex-col" v-show="!isDataLoading" ref="animatedPage">
         <div class="profile__details details grow flex flex-col gap-y-3">
             <div class="details__title">
                 <TitleRow :title="pageTitle" />
@@ -43,18 +75,19 @@ const nextStep = (currentStep: number) => {
                 <q-step :name="1" :title="$t('Details')" icon="settings" :done="step > 1" :header-nav="step > 1"
                     class="step-common">
 
-                    <CommonInfo @goToGender="nextStep(1)" @sendTitle="getTitle" />
+                    <CommonInfo @showPage="toggleScreen" @goToGender="nextStep(1)" @sendTitle="getTitle" />
 
                 </q-step>
 
                 <q-step :name="2" :title="$t('Gender.title')" icon="check_box" :done="step > 2" :header-nav="step > 2"
                     class="step-gender">
 
-                    <UserGender @goToHome="$router.push('/home')" @sendTitle="getTitle" />
+                    <UserGender @goToHome="$router.push('/home')" @sendTitle="getTitle" @saveInfo="isLoading = true" />
 
                     <q-stepper-navigation>
                         <CustomBtn type="button" @click="() => step = 1">{{ $t('Back') }}</CustomBtn>
                     </q-stepper-navigation>
+                    <FormLoader :class="{ 'opacity-0': !isLoading }" />
                 </q-step>
 
                 <!-- <q-step :name="3" :title="$t('Hobbies')" icon="view_list" :header-nav="step > 3" class="step-hobbies">

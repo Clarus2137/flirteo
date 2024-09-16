@@ -146,5 +146,16 @@ export default {
     },
     PaymentMethod: 'Payment Method',
     Pay: 'Pay',
-    OrderSuccess: 'Thank you for order!'
+    OrderSuccess: 'Thank you for order!',
+    Response: {
+        title: 'Another response',
+        different: 'Different',
+        similar: 'Similar',
+        short: 'Shorter',
+        options: {
+            different: 'Present a completely different version of the response',
+            similar: 'Present a similar version of this response',
+            shorter: 'Present a shorter version of this response'
+        }
+    }
 };

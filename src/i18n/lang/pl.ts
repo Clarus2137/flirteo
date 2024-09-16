@@ -146,5 +146,16 @@ export default {
     },
     PaymentMethod: 'Sposób płatności',
     Pay: 'Zapłać',
-    OrderSuccess: 'Dziękujemy za zakup!'
+    OrderSuccess: 'Dziękujemy za zakup!',
+    Response: {
+        title: 'Inna odpowiedź',
+        different: 'Inna',
+        similar: 'Podobna',
+        short: 'Krótsza',
+        options: {
+            different: 'Przedstaw zupełnie inną wersję odpowiedzi',
+            similar: 'Przedstaw podobną wersję tej odpowiedzi',
+            shorter: 'Przedstaw krótszą wersję tej odpowiedzi'
+        }
+    }
 };

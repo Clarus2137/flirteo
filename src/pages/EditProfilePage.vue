@@ -19,6 +19,8 @@ const nextStep = (currentStep: number) => {
     step.value = currentStep + 1;
 }
 
+const isLoading = ref(false);
+
 const isDataLoading = ref(true);
 const animatedScreen = ref<HTMLElement | null>(null);
 const animatedPage = ref<HTMLElement | null>(null);
@@ -32,7 +34,7 @@ const toggleScreen = () => {
             duration: 400,
             easing: 'linear'
         }).onfinish = () => {
-            isDataLoading.value = false; // Переключаем состояние загрузки
+            isDataLoading.value = false;
             if (animatedPage.value) {
                 animatedPage.value.animate([
                     { opacity: '0' },
@@ -70,11 +72,12 @@ const toggleScreen = () => {
                 <q-step :name="2" :title="$t('Gender.title')" icon="check_box" :done="step > 2" :header-nav="step > 2"
                     class="step-gender">
 
-                    <UserGender @goToHome="$router.push('/home')" @sendTitle="getTitle" />
+                    <UserGender @goToHome="$router.push('/home')" @sendTitle="getTitle" @saveInfo="isLoading = true" />
 
                     <q-stepper-navigation>
                         <CustomBtn type="button" @click="() => step = 1">{{ $t('Back') }}</CustomBtn>
                     </q-stepper-navigation>
+                    <FormLoader :class="{ 'opacity-0': !isLoading }" />
                 </q-step>
 
                 <!-- <q-step :name="3" :title="$t('Hobbies')" icon="view_list" :header-nav="step > 3" class="step-hobbies">

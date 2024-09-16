@@ -177,10 +177,14 @@ body {
             flex-grow: 1;
 
             .q-stepper__step {
-                display: grid;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                flex-grow: 1;
 
                 .q-stepper__step-content {
-                    display: grid;
+                    display: flex;
+                    flex-direction: column;
 
                     .q-stepper__step-inner {
                         display: flex;

@@ -6,7 +6,7 @@ import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
-const emit = defineEmits(['goToHome', 'sendTitle']);
+const emit = defineEmits(['goToHome', 'sendTitle', 'saveInfo']);
 
 const title: PageTitle = {
     title: t('Gender.title'),
@@ -17,8 +17,6 @@ const userStore = useUserStore();
 
 const activeGender = ref('');
 
-const isLoading = ref(false);
-
 const chooseGender = (gender: string) => {
     if (activeGender.value !== gender) {
         activeGender.value = gender;
@@ -26,9 +24,8 @@ const chooseGender = (gender: string) => {
 }
 
 const updateUserData = async () => {
-    isLoading.value = true;
+    emit('saveInfo');
     const isSuccess = await userStore.updateUser(userStore.user);
-    isLoading.value = false;
     if (isSuccess) {
         emit('goToHome');
     }
@@ -85,7 +82,6 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-        <FormLoader :class="{ 'opacity-0': !isLoading }" />
         <CustomBtn type="button" @click="setGender">{{ t('Save') }}</CustomBtn>
     </div>
 </template>

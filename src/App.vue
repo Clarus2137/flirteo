@@ -29,8 +29,11 @@ onBeforeMount(() => {
         } else {
             $q.dark.set(false);
         }
+        // console.log('Dark mode is: ', $q.dark.isActive);
     } else {
+        // console.log('Dark mode before setting is active: ', $q.dark.isActive);
         $q.dark.set('auto');
+        // console.log('Dark mode after setting is active: ', $q.dark.isActive);
     }
     const userStore = useUserStore();
     const chatStore = useChatStore();

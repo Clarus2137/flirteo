@@ -150,23 +150,24 @@ onMounted(() => {
                 <CustomBtn class="!w-[48%]" type="button" @click="openDialogSession">{{
                     $t('New_Session.title') }}
                 </CustomBtn>
-                <q-btn-dropdown label="Inna odpowiedź" class="w-[48%] rounded-[10px] px-3 lexend-bold gradient-primary">
+                <q-btn-dropdown :label="$t('Response.title')"
+                    class="w-[48%] rounded-[10px] px-3 lexend-bold gradient-primary">
                     <q-list>
-                        <q-item clickable v-close-popup @click="changeResponse('Przygotuj inną wersję')">
+                        <q-item clickable v-close-popup @click="changeResponse($t('Response.options.different'))">
                             <q-item-section>
-                                <CustomBtn type="button">Inna</CustomBtn>
+                                <CustomBtn type="button">{{ $t('Response.different') }}</CustomBtn>
                             </q-item-section>
                         </q-item>
 
-                        <q-item clickable v-close-popup @click="changeResponse('Przygotuj podobną wersję')">
+                        <q-item clickable v-close-popup @click="changeResponse($t('Response.options.similar'))">
                             <q-item-section>
-                                <CustomBtn type="button">Podobna</CustomBtn>
+                                <CustomBtn type="button">{{ $t('Response.similar') }}</CustomBtn>
                             </q-item-section>
                         </q-item>
 
-                        <q-item clickable v-close-popup @click="changeResponse('Przygotuj krótszą wersję')">
+                        <q-item clickable v-close-popup @click="changeResponse($t('Response.options.shorter'))">
                             <q-item-section>
-                                <CustomBtn type="button">Krótsza</CustomBtn>
+                                <CustomBtn type="button">{{ $t('Response.short') }}</CustomBtn>
                             </q-item-section>
                         </q-item>
                     </q-list>
