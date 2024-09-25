@@ -112,16 +112,21 @@ declare global {
     }
 
     interface AndroidFullScreen {
-        immersiveMode: (successCallback: () => void, errorCallback: (error: any) => void) => void;
-        leanMode: (successCallback: () => void, errorCallback: (error: any) => void) => void;
-        showSystemUI: (successCallback: () => void, errorCallback: (error: any) => void) => void;
-        showUnderStatusBar: (successCallback: () => void, errorCallback: (error: any) => void) => void;
-        showUnderSystemUI: (successCallback: () => void, errorCallback: (error: any) => void) => void;
+        immersiveMode: (successCallback: () => void, errorCallback: (error: any) => void) => void,
+        leanMode: (successCallback: () => void, errorCallback: (error: any) => void) => void,
+        showSystemUI: (successCallback: () => void, errorCallback: (error: any) => void) => void,
+        showUnderStatusBar: (successCallback: () => void, errorCallback: (error: any) => void) => void,
+        showUnderSystemUI: (successCallback: () => void, errorCallback: (error: any) => void) => void
+    }
+
+    interface Device {
+        platform: string
     }
 
     interface Window {
-        AndroidFullScreen: AndroidFullScreen;
-        StatusBar: StatusBar;
+        device?: Device,
+        AndroidFullScreen: AndroidFullScreen,
+        StatusBar: StatusBar
     }
 }
 

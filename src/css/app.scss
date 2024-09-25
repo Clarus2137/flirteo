@@ -253,6 +253,10 @@ input[type="number"] {
     color: $light;
 }
 
+.safe-area-padding {
+    padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+}
+
 
 
 .body--dark {

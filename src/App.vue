@@ -19,6 +19,7 @@ const onBackButton = (e: Event) => {
 }
 
 const appLoading = ref(true);
+const isIOS = ref(false);
 
 const $q = useQuasar();
 
@@ -61,6 +62,11 @@ onMounted(() => {
                 () => console.log('Immersive mode success'),
                 (error: any) => console.error('Immersive mode error', error)
             );
+        }
+
+        // Проверка на платформу iOS
+        if (window.device && window.device.platform === 'iOS') {
+            isIOS.value = true;
         }
     }, false);
 });
