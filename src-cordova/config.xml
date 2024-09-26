@@ -20,14 +20,15 @@
     <preference name="AndroidInsecureFileModeEnabled" value="true" />
     <preference name="SafeArea" value="true" />
     <platform name="android">
-        <preference name="AndroidWindowSplashScreenAnimatedIcon" value="res/screens/android/logo.xml" />
+        <preference name="AndroidWindowSplashScreenAnimatedIcon" value="res/android/screen/logo.xml" />
         <preference name="AndroidWindowSplashScreenBackground" value="#ffdd0f" />
-        <icon density="ldpi" src="res/android/logo-ldpi.png" />
-        <icon density="mdpi" src="res/android/logo-mdpi.png" />
-        <icon density="hdpi" src="res/android/logo-hdpi.png" />
-        <icon density="xhdpi" src="res/android/logo-xhdpi.png" />
-        <icon density="xxhdpi" src="res/android/logo-xxhdpi.png" />
-        <icon density="xxxhdpi" src="res/android/logo-xxxhdpi.png" />
+
+        <icon density="ldpi" src="res/android/icon/logo-ldpi.png" />
+        <icon density="mdpi" src="res/android/icon/logo-mdpi.png" />
+        <icon density="hdpi" src="res/android/icon/logo-hdpi.png" />
+        <icon density="xhdpi" src="res/android/icon/logo-xhdpi.png" />
+        <icon density="xxhdpi" src="res/android/icon/logo-xxhdpi.png" />
+        <icon density="xxxhdpi" src="res/android/icon/logo-xxxhdpi.png" />
         <config-file parent="/manifest" target="AndroidManifest.xml">
             <uses-permission android:name="com.android.vending.BILLING" />
         </config-file>
@@ -47,6 +48,39 @@
         <preference name="StatusBarBackgroundColor" value="#000000" />
         <access origin="*" />
         <allow-intent href="*" />
+
+        <icon src="res/ios/icon/icon-20.png" width="20" height="20" />
+        <icon src="res/ios/icon/icon-29.png" width="29" height="29" />
+        <icon src="res/ios/icon/icon-40.png" width="40" height="40" />
+        <icon src="res/ios/icon/icon-50.png" width="50" height="50" />
+        <icon src="res/ios/icon/icon-57.png" width="57" height="57" />
+        <icon src="res/ios/icon/icon-58.png" width="58" height="58" />
+        <icon src="res/ios/icon/icon-60.png" width="60" height="60" />
+        <icon src="res/ios/icon/icon-72.png" width="72" height="72" />
+        <icon src="res/ios/icon/icon-76.png" width="76" height="76" />
+        <icon src="res/ios/icon/icon-80.png" width="80" height="80" />
+        <icon src="res/ios/icon/icon-87.png" width="87" height="87" />
+        <icon src="res/ios/icon/icon-100.png" width="100" height="100" />
+        <icon src="res/ios/icon/icon-114.png" width="114" height="114" />
+        <icon src="res/ios/icon/icon-120.png" width="120" height="120" />
+        <icon src="res/ios/icon/icon-144.png" width="144" height="144" />
+        <icon src="res/ios/icon/icon-152.png" width="152" height="152" />
+        <icon src="res/ios/icon/icon-167.png" width="167" height="167" />
+        <icon src="res/ios/icon/icon-180.png" width="180" height="180" />
+        <icon src="res/ios/icon/icon-1024.png" width="1024" height="1024" />
+
+        <splash src="res/ios/screen/Default-568h@2x~iphone.png" width="640" height="1136" />
+        <splash src="res/ios/screen/Default-667h.png" width="750" height="1334" />
+        <splash src="res/ios/screen/Default-736h.png" width="1242" height="2208" />
+        <splash src="res/ios/screen/Default-Landscape-736h.png" width="2208" height="1242" />
+        <splash src="res/ios/screen/Default-Landscape@2x~ipad.png" width="2048" height="1536" />
+        <splash src="res/ios/screen/Default-Landscape@~ipadpro.png" width="2732" height="2048" />
+        <splash src="res/ios/screen/Default-Landscape~ipad.png" width="1024" height="768" />
+        <splash src="res/ios/screen/Default-Portrait@2x~ipad.png" width="1536" height="2048" />
+        <splash src="res/ios/screen/Default-Portrait@~ipadpro.png" width="2048" height="2732" />
+        <splash src="res/ios/screen/Default-Portrait~ipad.png" width="768" height="1024" />
+        <splash src="res/ios/screen/Default@2x~iphone.png" width="640" height="960" />
+        <splash src="res/ios/screen/Default@2x~universal~anyany.png" width="2732" height="2732" />
     </platform>
     <allow-navigation href="about:*" />
 </widget>

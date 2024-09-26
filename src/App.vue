@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onBeforeMount, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onBeforeMount, onMounted } from 'vue';
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n';
 import { useUserStore } from 'src/stores/userStore';
