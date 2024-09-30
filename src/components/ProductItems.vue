@@ -5,13 +5,13 @@ const emit = defineEmits(['orderComplete']);
 
 const products = ref([
     {
-        id: 'test_pack_1',
+        id: 'standard',
         title: '',
         description: '',
         price: ''
     },
     {
-        id: 'test_pack_2',
+        id: 'economic',
         title: '',
         description: '',
         price: ''
@@ -19,7 +19,7 @@ const products = ref([
 ]);
 
 function onDeviceReady() {
-    alert('Device platform is: ',device.platform);
+    alert('Device platform is: ', device.platform);
     if (typeof CdvPurchase === 'undefined') {
         alert('CdvPurchase is not defined');
         return;
@@ -33,22 +33,22 @@ function onDeviceReady() {
     store.register([
         {
             type: ProductType.CONSUMABLE,
-            id: 'test_pack_1',
+            id: 'standard',
             platform: Platform.GOOGLE_PLAY, // Android
         },
         {
             type: ProductType.CONSUMABLE,
-            id: 'test_pack_2',
+            id: 'economic',
             platform: Platform.GOOGLE_PLAY, // Android
         },
         {
             type: ProductType.CONSUMABLE,
-            id: 'test_pack_1',
+            id: 'standard',
             platform: Platform.APPLE_APPSTORE, // iOS
         },
         {
             type: ProductType.CONSUMABLE,
-            id: 'test_pack_2',
+            id: 'economic',
             platform: Platform.APPLE_APPSTORE, // iOS
         }
     ]);

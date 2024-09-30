@@ -24,7 +24,7 @@ export const useOrderStore = defineStore('order', {
                             'Accept-Language': this.lang
                         }
                     });
-                    console.log('Getting plans successful', response.data);
+                    console.log('Getting plans successful: ', response.data);
                     this.products = response.data;
                     this.products.forEach((item) => {
                         item.price /= 100;
@@ -32,9 +32,9 @@ export const useOrderStore = defineStore('order', {
                     return true;
                 } catch (error) {
                     if (axios.isAxiosError(error)) {
-                        console.error('Getting plans failed: ', error.response?.data);
+                        console.log('Getting plans failed: ', error.response?.data);
                     } else {
-                        console.error('An unexpected error occurred', error);
+                        console.log('An unexpected error occurred', error);
                     }
                     return false;
                 }

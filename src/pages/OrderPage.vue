@@ -40,8 +40,9 @@ const toggleScreen = () => {
 
 const loadProducts = async () => {
     const isSuccess = await orderStore.getPlans();
-    if (isSuccess) {
+    if (isSuccess && isSuccess !== 'Unauthorized') {
         products.value = [...orderStore.products];
+        alert('Products set successful: ' + products.value);
         toggleScreen();
     }
 }
