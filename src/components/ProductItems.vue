@@ -19,7 +19,7 @@ const products = ref([
 ]);
 
 function onDeviceReady() {
-    alert('Device platform is: ', device.platform);
+    alert('Device platform is: ' + device.platform);
     if (typeof CdvPurchase === 'undefined') {
         alert('CdvPurchase is not defined');
         return;
@@ -75,6 +75,8 @@ function onProductUpdated(product) {
         products.value[index].title = product.title;
         products.value[index].description = product.description;
         products.value[index].price = product.pricing.price;
+    } else {
+        alert('Product not found in local list: ' + product.id);
     }
 }
 
@@ -84,6 +86,8 @@ function buy(productId) {
     const offer = product.getOffer();
     if (offer) {
         offer.order();
+    } else {
+        alert('Offer not found for product: ' + productId);
     }
 }
 
@@ -93,10 +97,17 @@ function onTransactionApproved(transaction) {
 }
 
 onMounted(() => {
-    document.addEventListener('deviceready', () => {
-        alert('deviceready event fired');
-        onDeviceReady();
-    });
+    alert('ProductItems is mounted');
+    document.addEventListener('deviceready', onDeviceReady, false);
+
+    // Дополнительная проверка для отладки
+    setTimeout(() => {
+        if (typeof device === 'undefined') {
+            alert('Device object is not defined');
+        } else {
+            alert('Device object is defined but deviceready event did not fire');
+        }
+    }, 5000);
 });
 </script>
 
