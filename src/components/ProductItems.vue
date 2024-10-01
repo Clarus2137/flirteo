@@ -19,6 +19,7 @@ const products = ref([
 ]);
 
 function onDeviceReady() {
+    alert('onDeviceReady is launched');
     alert('Device platform is: ' + device.platform);
     if (typeof CdvPurchase === 'undefined') {
         alert('CdvPurchase is not defined');
@@ -97,17 +98,17 @@ function onTransactionApproved(transaction) {
 }
 
 onMounted(() => {
-    alert('ProductItems is mounted');
+    // alert('ProductItems is mounted');
     document.addEventListener('deviceready', onDeviceReady, false);
 
     // Дополнительная проверка для отладки
-    setTimeout(() => {
-        if (typeof device === 'undefined') {
-            alert('Device object is not defined');
-        } else {
-            alert('Device object is defined but deviceready event did not fire');
-        }
-    }, 5000);
+    // setTimeout(() => {
+    //     if (typeof device === 'undefined') {
+    //         alert('Device object is not defined');
+    //     } else {
+    //         alert('Device object is defined but deviceready event did not fire');
+    //     }
+    // }, 5000);
 });
 </script>
 
