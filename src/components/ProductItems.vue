@@ -93,7 +93,10 @@ function onTransactionApproved(transaction) {
 }
 
 onMounted(() => {
-    document.addEventListener('deviceready', onDeviceReady);
+    document.addEventListener('deviceready', () => {
+        alert('deviceready event fired');
+        onDeviceReady();
+    });
 });
 </script>
 
