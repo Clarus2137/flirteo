@@ -4,18 +4,8 @@ import { ref, onMounted } from 'vue';
 const emit = defineEmits(['orderComplete']);
 
 const products = ref([
-    {
-        id: 'standard',
-        title: '',
-        description: '',
-        price: ''
-    },
-    {
-        id: 'economic',
-        title: '',
-        description: '',
-        price: ''
-    }
+    { id: 'standard', title: '', description: '', price: '' },
+    { id: 'economic', title: '', description: '', price: '' }
 ]);
 
 function onDeviceReady() {
@@ -54,30 +44,56 @@ function onDeviceReady() {
         }
     ]);
 
-    // Обработка обновлений продукта
-    store.when().productUpdated(onProductUpdated);
+    alert('Setting up event handlers...');
 
     // Обработка одобренных транзакций
     store.when().approved(onTransactionApproved);
 
+    // Обработка обновленных продуктов
+    store.when().updated(onProductUpdated);
+
+    alert('Event handlers set up. Initializing store...');
+
     // Инициализация магазина
     store.ready(() => {
         alert('CdvPurchase is ready');
+        checkRegisteredProducts();
     });
 
-    alert('Initializing store...');
+    store.error((err) => {
+        alert('Store error: ' + JSON.stringify(err));
+    });
+
     store.initialize([Platform.GOOGLE_PLAY, Platform.APPLE_APPSTORE]);
 }
 
+function checkRegisteredProducts() {
+    const registeredProducts = store.products.map(product => ({
+        id: product.id,
+        title: product.title,
+        description: product.description,
+        price: product.pricing ? product.pricing.price : 'N/A'
+    }));
+
+    alert('Registered products: ' + JSON.stringify(registeredProducts));
+}
+
 function onProductUpdated(product) {
-    alert('Product updated: ' + JSON.stringify(product));
-    const index = products.value.findIndex(p => p.id === product.id);
-    if (index !== -1) {
-        products.value[index].title = product.title;
-        products.value[index].description = product.description;
-        products.value[index].price = product.pricing.price;
+    // Проверяем, является ли объект продуктом
+    if (product.className === 'Product') {
+        alert('Product updated: ' + JSON.stringify(product));
+        const index = products.value.findIndex(p => p.id === product.id);
+        if (index !== -1) {
+            alert(`Updating product with id: ${product.id}`);
+            products.value[index].title = product.title;
+            products.value[index].description = product.description;
+            products.value[index].price = product.pricing.price;
+            alert(`Updated product: ${JSON.stringify(products.value[index])}`);
+        } else {
+            alert('Product not found in local list: ' + product.id);
+        }
     } else {
-        alert('Product not found in local list: ' + product.id);
+        alert('Received an update for a non-product object: ' + JSON.stringify(product));
     }
 }
 
@@ -93,22 +109,13 @@ function buy(productId) {
 }
 
 function onTransactionApproved(transaction) {
+    alert('Transaction approved: ' + JSON.stringify(transaction));
     transaction.finish();
     emit('orderComplete');
 }
 
 onMounted(() => {
-    // alert('ProductItems is mounted');
     document.addEventListener('deviceready', onDeviceReady, false);
-
-    // Дополнительная проверка для отладки
-    // setTimeout(() => {
-    //     if (typeof device === 'undefined') {
-    //         alert('Device object is not defined');
-    //     } else {
-    //         alert('Device object is defined but deviceready event did not fire');
-    //     }
-    // }, 5000);
 });
 </script>
 

@@ -4,9 +4,9 @@ import { onMounted } from 'vue';
 const emit = defineEmits(['goToHome']);
 
 onMounted(() => {
-    setTimeout(() => {
-        emit('goToHome');
-    }, 1500);
+    // setTimeout(() => {
+    //     emit('goToHome');
+    // }, 1500);
 });
 </script>
 
