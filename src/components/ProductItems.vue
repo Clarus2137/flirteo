@@ -57,6 +57,8 @@ function onDeviceReady() {
     // Инициализация магазина
     store.ready(() => {
         alert('CdvPurchase is ready');
+        alert(JSON.stringify(store.CdvPurchase));
+        alert('Launching checkRegisteredProducts');
         checkRegisteredProducts();
     });
 
