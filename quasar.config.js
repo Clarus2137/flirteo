@@ -93,6 +93,14 @@ module.exports = configure(function (/* ctx */) {
                     include: path.resolve(__dirname, './src/i18n/**')
                 }]
             ],
+
+            extendViteConf(viteConf) {
+                viteConf.build = viteConf.build || {};
+                viteConf.build.rollupOptions = viteConf.build.rollupOptions || {};
+                viteConf.build.rollupOptions.external = viteConf.build.rollupOptions.external || [];
+                viteConf.build.rollupOptions.external.push('cordova-plugin-purchase');
+            },
+
             extendWebpack(cfg) {
                 cfg.resolve.alias = {
                     ...cfg.resolve.alias,
