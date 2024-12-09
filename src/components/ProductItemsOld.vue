@@ -9,21 +9,21 @@ const products = ref([
 ]);
 
 function onDeviceReady() {
-    alert('onDeviceReady is launched');
-    alert('Device platform is: ' + device.platform);
+    console.log('flrt: onDeviceReady is launched');
+    console.log('flrt: Device platform is: ' + device.platform);
     if (typeof CdvPurchase === 'undefined') {
-        alert('CdvPurchase is not defined');
+        console.log('flrt: CdvPurchase is not defined');
         return;
     }
 
     const { store, ProductType, Platform } = CdvPurchase;
 
     if (!store) {
-        alert('Store is not initialized');
+        console.log('flrt: Store is not initialized');
         return;
     }
 
-    alert('Registering products...');
+    console.log('flrt: Registering products...');
 
     // Регистрация продуктов
     store.register([
@@ -49,7 +49,7 @@ function onDeviceReady() {
         // }
     ]);
 
-    alert('Setting up event handlers...');
+    console.log('flrt: Setting up event handlers...');
 
     // Обработка одобренных транзакций
     store.when().approved(onTransactionApproved);
@@ -57,71 +57,73 @@ function onDeviceReady() {
     // Обработка обновленных продуктов
     store.when().updated(onProductUpdated);
 
-    alert('Event handlers set up. Initializing store...');
+    console.log('flrt: Event handlers set up. Initializing store...');
 
     // Инициализация магазина
     // store.initialize([Platform.GOOGLE_PLAY, Platform.APPLE_APPSTORE]);
     store.initialize([Platform.GOOGLE_PLAY]).then(() => {
-        alert('Store initialized');
+        console.log('flrt: Store initialized');
         store.update().then(() => {
-            alert('Store updated');
-            checkRegisteredProducts();
+            console.log('flrt: Store updated');
+            // checkRegisteredProducts();
         }).catch((error) => {
-            alert('Store update error: ' + JSON.stringify(error));
+            console.log('flrt: Store update error: ' + JSON.stringify(error));
         });
     }).catch((error) => {
-        alert('Store initialization error: ' + JSON.stringify(error));
+        console.log('flrt: Store initialization error: ' + JSON.stringify(error));
     });
 
     store.error((err) => {
-        alert('Store error: ' + JSON.stringify(err));
+        console.log('flrt: Store error: ' + JSON.stringify(err));
     });
 
     store.ready(() => {
-        alert('CdvPurchase is ready');
-        checkRegisteredProducts();
+        // console.log('flrt: CdvPurchase is ready');
+        console.log('flrt: CdvPurchase is ready', JSON.stringify(store.products, null, 2));
+        // console.log('flrt: CdvPurchase is ready', JSON.stringify(store, null, 2));
+        // checkRegisteredProducts();
     });
 }
 
-function checkRegisteredProducts() {
-    alert('checkRegisteredProducts called');
-    alert(JSON.stringify(store));
+// function checkRegisteredProducts() {
+//     console.log('flrt: checkRegisteredProducts called');
+// alert(JSON.stringify(store));
 
-    // const productsList = store.products(); // Вызов как метода
+// const productsList = store.products(); // Вызов как метода
 
-    // if (!productsList || productsList.length === 0) {
-    //     alert('No products found');
-    //     return;
-    // } else {
-    //     alert('productsList is: ', productsList);
-    // }
+// if (!productsList || productsList.length === 0) {
+//     console.log('flrt: No products found');
+//     return;
+// } else {
+//     console.log('flrt: productsList is: ', productsList);
+// }
 
-    // const registeredProducts = productsList.map(product => ({
-    //     id: product.id,
-    //     title: product.title,
-    //     description: product.description,
-    //     price: product.pricing ? product.pricing.price : 'N/A'
-    // }));
+// const registeredProducts = productsList.map(product => ({
+//     id: product.id,
+//     title: product.title,
+//     description: product.description,
+//     price: product.pricing ? product.pricing.price : 'N/A'
+// }));
 
-    // alert('Registered products: ' + JSON.stringify(registeredProducts));
-}
+// console.log('flrt: Registered products: ' + JSON.stringify(registeredProducts));
+// }
 
 function onProductUpdated(product) {
     // Проверяем, является ли объект продуктом
     if (product.className === 'Product') {
-        alert('Product updated: ' + JSON.stringify(product));
+        console.log('flrt: Product updated: ' + JSON.stringify(product));
         const index = products.value.findIndex(p => p.id === product.id);
         if (index !== -1) {
-            alert(`Updating product with id: ${product.id}`);
+            // alert(`Updating product with id: ${product.id}`);
             products.value[index].title = product.title;
             products.value[index].description = product.description;
             products.value[index].price = product.pricing.price;
-            alert(`Updated product: ${JSON.stringify(products.value[index])}`);
+            // alert(`Updated product: ${JSON.stringify(products.value[index])}`);
         } else {
-            alert('Product not found in local list: ' + product.id);
+            console.log('flrt: Product not found in local list: ' + product.id);
         }
     } else {
-        alert('Received an update for a non-product object: ' + JSON.stringify(product));
+        console.log('flrt: Received an update for a non-product object: ' + JSON.stringify(product));
     }
 }
 
@@ -132,12 +134,12 @@ function buy(productId) {
     if (offer) {
         offer.order();
     } else {
-        alert('Offer not found for product: ' + productId);
+        console.log('flrt: Offer not found for product: ' + productId);
     }
 }
 
 function onTransactionApproved(transaction) {
-    alert('Transaction approved: ' + JSON.stringify(transaction));
+    console.log('flrt: Transaction approved: ' + JSON.stringify(transaction));
     transaction.finish();
     emit('orderComplete');
 }
