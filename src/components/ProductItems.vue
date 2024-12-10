@@ -47,14 +47,25 @@ function onDeviceReady() {
     // Инициализация магазина
     store.ready(() => {
         console.log('CdvPurchase is ready');
-        checkRegisteredProducts();
     });
 
     store.error((err) => {
         console.log('Store error: ', JSON.stringify(err));
     });
 
-    store.initialize([Platform.APPLE_APPSTORE]);
+    store.initialize([CdvPurchase.Platform.APPLE_APPSTORE]).then(errors => {
+                if (errors.length) {
+                    console.log('flrt: Ошибка инициализации:', errors);
+                    return;
+                }
+                console.log('flrt: Инициализация прошла успешно');
+
+                // Проверка готовности магазина
+                // store.ready(() => {
+                //     products.value = store.products;
+                //     console.log('flrt: Products:', JSON.stringify(products.value));
+                // });
+            });
 }
 
 function onProductUpdated(product) {
