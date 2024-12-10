@@ -9,29 +9,29 @@ const products = ref([
 ]);
 
 function onDeviceReady() {
-    alert('onDeviceReady is launched');
-    alert('Device platform is: ' + device.platform);
+    console.log('onDeviceReady is launched');
+    console.log('Device platform is: ' + device.platform);
     if (typeof CdvPurchase === 'undefined') {
-        alert('CdvPurchase is not defined');
+        console.log('CdvPurchase is not defined');
         return;
     }
 
     const { store, ProductType, Platform } = CdvPurchase;
 
-    alert('Registering products...');
+    console.log('Registering products...');
 
     // Регистрация продуктов
     store.register([
-        {
-            type: ProductType.CONSUMABLE,
-            id: 'standard',
-            platform: Platform.GOOGLE_PLAY, // Android
-        },
-        {
-            type: ProductType.CONSUMABLE,
-            id: 'economic',
-            platform: Platform.GOOGLE_PLAY, // Android
-        },
+        // {
+        //     type: ProductType.CONSUMABLE,
+        //     id: 'standard',
+        //     platform: Platform.GOOGLE_PLAY, // Android
+        // },
+        // {
+        //     type: ProductType.CONSUMABLE,
+        //     id: 'economic',
+        //     platform: Platform.GOOGLE_PLAY, // Android
+        // },
         {
             type: ProductType.CONSUMABLE,
             id: 'standard',
@@ -44,7 +44,7 @@ function onDeviceReady() {
         }
     ]);
 
-    alert('Setting up event handlers...');
+    console.log('Setting up event handlers...');
 
     // Обработка одобренных транзакций
     store.when().approved(onTransactionApproved);
@@ -52,16 +52,16 @@ function onDeviceReady() {
     // Обработка обновленных продуктов
     store.when().updated(onProductUpdated);
 
-    alert('Event handlers set up. Initializing store...');
+    console.log('Event handlers set up. Initializing store...');
 
     // Инициализация магазина
     store.ready(() => {
-        alert('CdvPurchase is ready');
+        console.log('CdvPurchase is ready');
         checkRegisteredProducts();
     });
 
     store.error((err) => {
-        alert('Store error: ' + JSON.stringify(err));
+        console.log('Store error: ', JSON.stringify(err));
     });
 
     store.initialize([Platform.GOOGLE_PLAY, Platform.APPLE_APPSTORE]);
@@ -75,25 +75,25 @@ function checkRegisteredProducts() {
         price: product.pricing ? product.pricing.price : 'N/A'
     }));
 
-    alert('Registered products: ' + JSON.stringify(registeredProducts));
+    console.log('Registered products: ', JSON.stringify(registeredProducts));
 }
 
 function onProductUpdated(product) {
     // Проверяем, является ли объект продуктом
     if (product.className === 'Product') {
-        alert('Product updated: ' + JSON.stringify(product));
+        console.log('Product updated: ', JSON.stringify(product));
         const index = products.value.findIndex(p => p.id === product.id);
         if (index !== -1) {
-            alert(`Updating product with id: ${product.id}`);
+            console.log(`Updating product with id: ${product.id}`);
             products.value[index].title = product.title;
             products.value[index].description = product.description;
             products.value[index].price = product.pricing.price;
-            alert(`Updated product: ${JSON.stringify(products.value[index])}`);
+            console.log(`Updated product: ${JSON.stringify(products.value[index])}`);
         } else {
-            alert('Product not found in local list: ' + product.id);
+            console.log('Product not found in local list: ', product.id);
         }
     } else {
-        alert('Received an update for a non-product object: ' + JSON.stringify(product));
+        console.log('Received an update for a non-product object: ', JSON.stringify(product));
     }
 }
 
@@ -104,12 +104,12 @@ function buy(productId) {
     if (offer) {
         offer.order();
     } else {
-        alert('Offer not found for product: ' + productId);
+        console.log('Offer not found for product: ', productId);
     }
 }
 
 function onTransactionApproved(transaction) {
-    alert('Transaction approved: ' + JSON.stringify(transaction));
+    console.log('Transaction approved: ', JSON.stringify(transaction));
     transaction.finish();
     emit('orderComplete');
 }
