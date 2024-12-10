@@ -22,16 +22,6 @@ function onDeviceReady() {
 
     // Регистрация продуктов
     store.register([
-        // {
-        //     type: ProductType.CONSUMABLE,
-        //     id: 'standard',
-        //     platform: Platform.GOOGLE_PLAY, // Android
-        // },
-        // {
-        //     type: ProductType.CONSUMABLE,
-        //     id: 'economic',
-        //     platform: Platform.GOOGLE_PLAY, // Android
-        // },
         {
             type: ProductType.CONSUMABLE,
             id: 'standard',
@@ -64,18 +54,7 @@ function onDeviceReady() {
         console.log('Store error: ', JSON.stringify(err));
     });
 
-    store.initialize([Platform.GOOGLE_PLAY, Platform.APPLE_APPSTORE]);
-}
-
-function checkRegisteredProducts() {
-    const registeredProducts = store.products.map(product => ({
-        id: product.id,
-        title: product.title,
-        description: product.description,
-        price: product.pricing ? product.pricing.price : 'N/A'
-    }));
-
-    console.log('Registered products: ', JSON.stringify(registeredProducts));
+    store.initialize([Platform.APPLE_APPSTORE]);
 }
 
 function onProductUpdated(product) {
