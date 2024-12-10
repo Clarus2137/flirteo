@@ -1,11 +1,20 @@
 <template>
-    <pre>{{ storeContent }}</pre>
+    <div class="catalog flex justify-center items-center gap-5">
+        <div v-for="product in products" :key="product.id"
+            class="catalog__item pack gradient-primary flex flex-col gap-3 lexend">
+            <p class="pack__title text-lg">{{ product.title }}</p>
+            <p class="pack__size text-center lexend text-lg">{{ product.description }}</p>
+            <p class="pack__price text-center lexend-bold text-xl">{{ product.offers?.pricingPhases?.[0]?.price ||
+                'Неизвестно' }}</p>
+            <CustomBtn class="order-btn" @click="buy(product.id)"><span>{{ $t('Order') }}</span></CustomBtn>
+        </div>
+    </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 
-const storeContent = ref('');
+const products = ref([]);
 
 onMounted(() => {
     if (window.cordova) {
@@ -14,7 +23,7 @@ onMounted(() => {
             const { store } = window.CdvPurchase;
 
             // Регистрация продуктов
-            const products = [
+            const productDefinitions = [
                 {
                     id: 'economic',
                     type: CdvPurchase.ProductType.CONSUMABLE,
@@ -27,7 +36,7 @@ onMounted(() => {
                 }
             ];
 
-            store.register(products);
+            store.register(productDefinitions);
 
             // Инициализация магазина
             store.initialize([CdvPurchase.Platform.GOOGLE_PLAY]).then(errors => {
@@ -39,8 +48,8 @@ onMounted(() => {
 
                 // Проверка готовности магазина
                 store.ready(() => {
-                    console.log('flrt: Store is ready');
-                    console.log('flrt: Store products:', JSON.stringify(store.products, null, 2));
+                    products.value = store.products;
+                    console.log('flrt: Products:', JSON.stringify(products.value));
                 });
             });
         });
@@ -89,13 +98,5 @@ onMounted(() => {
             }
         }
     }
-}
-
-pre {
-    background-color: #f0f0f0;
-    padding: 10px;
-    border-radius: 5px;
-    overflow-x: auto;
-    max-width: 100%;
 }
 </style>
